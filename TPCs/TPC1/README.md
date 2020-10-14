@@ -1,6 +1,6 @@
 # 1º Trabalho Individual
 
-Criar uma página WEB com um dos seguintes temas:
+Criar uma página HTML com um dos seguintes temas:
 * Gato
 * Glicínias
 * Geriatria
