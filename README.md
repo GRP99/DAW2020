@@ -1,5 +1,5 @@
 # Desenvolvimento Aplicações WEB 2020/2021
-## U.C. Complementar disponibilizada no Mestrado Integrado em Eng. Informática
+## U.C. Complementar do Mestrado Integrado em Eng. Informática
 ### Universidade do Minho 
 
 Esta Unidade Curricular enquadra-se no 1ºSemestre do 4ºAno de MiEI e é concretizada por diferentes instrumentos de avaliação:
