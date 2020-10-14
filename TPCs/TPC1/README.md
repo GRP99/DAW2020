@@ -1,9 +1,9 @@
 # 1º Trabalho Individual
 
 Criar uma página WEB com um dos seguintes temas:
-	* Gato
+*Gato
 	* Glicínias
 	* Geriatria
 	* Galochas
 
-** Tema escolhido foi ... **
+**Tema escolhido foi ...**
