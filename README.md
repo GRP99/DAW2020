@@ -3,7 +3,7 @@
 ### Universidade do Minho 
 
 Esta Unidade Curricular enquadra-se no 1ºSemestre do 4ºAno de MiEI e é concretizada por diferentes instrumentos de avaliação:
-  * [Trabalhos práticos individuais realizados fora do período de funcionamento da respectiva UC;] (https://github.com/GRP99/DAW2020/tree/main/TPCs)
+  [Trabalhos práticos individuais realizados fora do período de funcionamento da respectiva UC;] (https://github.com/GRP99/DAW2020/tree/main/TPCs)
   * Teste Prático;
 
 Todo o repositório foi realizado pelo autor do mesmo, Gonçalo Rodrigues Pinto.
