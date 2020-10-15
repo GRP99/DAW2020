@@ -6,4 +6,4 @@ Criar uma página HTML com um dos seguintes temas:
 * Geriatria
 * Galochas
 
-**Tema escolhido foi Gato**
+**Tema escolhido foi Gato**.
