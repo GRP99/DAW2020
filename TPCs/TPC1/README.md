@@ -1,4 +1,4 @@
-# 1º Trabalho Individual - realizado antes da troca de perfil
+# 1º Trabalho Individual -
 
 Criar uma página HTML com um dos seguintes temas:
 * Gato
@@ -7,3 +7,4 @@ Criar uma página HTML com um dos seguintes temas:
 * Galochas
 
 **Tema escolhido foi Gato**.
+++Nota: realizado antes da troca de perfil
