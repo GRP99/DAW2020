@@ -7,4 +7,4 @@ Criar uma página HTML com um dos seguintes temas:
 * Galochas
 
 **Tema escolhido foi Gato**.
-++Nota: realizado antes da troca de perfil
+*Nota*: realizado antes da troca de perfil
