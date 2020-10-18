@@ -1,4 +1,4 @@
-# 1º Trabalho Individual -
+# 1º Trabalho Individual
 
 Criar uma página HTML com um dos seguintes temas:
 * Gato
