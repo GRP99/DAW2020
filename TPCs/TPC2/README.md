@@ -11,6 +11,6 @@ Como o tipo de "schema" utilizado previamente foi DTD com auxílio do Oxygen XML
 
 *Observação*: Documentos baseados no seguinte [Project Record] disponibilizado e indicado .
 
-                                                                                                                                       *Nota*: realizado após da troca de perfil
+                                                                                                                                       Nota: realizado após da troca de perfil
 
 [Project Record]:http://www4.di.uminho.pt/~jcr/PROJS/micei2002/guilherme/Project%20Record.htm?fbclid=IwAR1zuZH1zjgthfV9jh9OKweuGfbunN8Ua8rWm2QZNVvKUht7JIJUhimwvag 
