@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE PROJECT_RECORD SYSTEM "file:/C:/Users/Gon%C3%A7alo%20Pinto/Desktop/Work/PRI_Praticas/TPC2/project_record.dtd">
+<PROJECT_RECORD>
+    <META>
+        <KEY_NAME></KEY_NAME>
+        <TITLE></TITLE>
+        <SUBTITLE></SUBTITLE>
+        <BEGIN_DATE></BEGIN_DATE>
+        <END_DATE></END_DATE>
+        <SUPERVISOR href=""></SUPERVISOR>
+    </META>
+    <WORKTEAM>
+        <MEMBER>
+            <NAME></NAME>
+            <EMAIL href=""></EMAIL>
+            <NUMBER></NUMBER>
+        </MEMBER>
+    </WORKTEAM>
+    <ABSTRACT>
+        <PARAGRAPH>
+            <TEXT></TEXT>
+        </PARAGRAPH>
+    </ABSTRACT>
+    <DELIVERABLES>
+        <DELIVERABLE href=""></DELIVERABLE>
+    </DELIVERABLES>
+    <DATE></DATE>
+</PROJECT_RECORD>
