@@ -9,7 +9,7 @@ Tal como foi solicitado criou-se um ficheiro DTD ( Document Type Definition ) pa
 Como o tipo de "schema" utilizado previamente foi DTD com auxílio do Oxygen XML Editor (IDE) criou-se os ficheiros XML presentes nesta pasta.
 
 
-*Observação*: Documentos criados foram baseados no seguinte [Project Record] disponibilizado e indicado .
+*Observação*: Documentos criados foram baseados no seguinte [Project Record] tal como foi indicado.
 
                                                                                                                                        Nota: realizado após da troca de perfil
 
