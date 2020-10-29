@@ -3,7 +3,7 @@
 **Documentos criados foram baseados no seguinte [Project Record] tal como foi indicado.**
 
 ## 1º ETAPA -> DTD
-Tal como foi solicitado criou-se um ficheiro DTD ( Document Type Definition ) para definir a estrutura, os elementos e atributos legais de um documento XML pois fornece um formato simples que é flexível o suficiente para acomodar as necessidades extremamente diversas.
+Tal como foi solicitado criou-se um ficheiro DTD ( Document Type Definition ) para definir a estrutura, os elementos e atributos legais de um documento XML.
 
 ## 2º ETAPA -> XML
 Como o tipo de "schema" utilizado previamente foi DTD com auxílio do Oxygen XML Editor (IDE) criou-se os ficheiros XML presentes nesta pasta.
