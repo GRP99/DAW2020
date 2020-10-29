@@ -1,5 +1,5 @@
 # 3º Trabalho Individual
-Documentos criados foram baseados no seguinte [XML] tal como foi indicado.
+**Documentos criados foram baseados no seguinte [XML] tal como foi indicado.**
 
 ## 1º ETAPA -> DTD
 Tal como foi solicitado criou-se um ficheiro DTD ( Document Type Definition ) para definir a estrutura, os elementos e atributos legais do documento XML.
