@@ -45,7 +45,7 @@
         <DELIVERABLE href="arq.xml">arq.xml</DELIVERABLE>
         <DELIVERABLE href="arq.dtd">arq.dtd</DELIVERABLE>
         <DELIVERABLE href="arq_gerado.xml">arq_gerado.xml</DELIVERABLE>
-        <DELIVERABLE href="arq.xslt">arq.xslt</DELIVERABLE>
+        <DELIVERABLE href="arq.xsl">arq.xsl</DELIVERABLE>
         <DELIVERABLE href="arq-Website/tableofcontents.html">arq-Website</DELIVERABLE>
     </DELIVERABLES>
     <DATE>29-10-2020</DATE>
