@@ -4,9 +4,10 @@
 * [TPC2] - Concretização de um ficheiro DTD e posterior geração de documentos em XML;
 * [TPC3] - Execução de um ficheiro DTD como também a criação de um ficheiro XSLT de forma a gerar um Website;
 * [TPC4] - Efetuação de um XSLT para gerar um website bem como um servidor em Node.js de modo a responder a pedidos devolvendo páginas HTML. TPC acompanhado do project record respectivo;
+* [TPC5] - Criação de um servidor em Node.js de forma a responder a pedidos devolvendo páginas com auxílio JSON-Server para criar uma API REST.
 
 [TPC1]: https://github.com/GRP99/PRI2020/tree/main/TPCs/TPC1
 [TPC2]: https://github.com/GRP99/PRI2020/tree/main/TPCs/TPC2
 [TPC3]: https://github.com/GRP99/PRI2020/tree/main/TPCs/TPC3
 [TPC4]: https://github.com/GRP99/PRI2020/tree/main/TPCs/TPC4
-
+[TPC5]: https://github.com/GRP99/PRI2020/tree/main/TPCs/TPC5
