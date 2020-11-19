@@ -21,7 +21,7 @@ function recuperaInfo(request, callback) {
     }
 }
 
-function geraPagTarefasNPendentes(responesTarefasNPendentes, d) {
+function geraPagTarefasNPendentes(responseTarefasNPendentes, d) {
     let pagHTML = `
               <div class="w3-container w3-teal">
                   <h2>Tarefas Realizadas / Canceladas</h2>
@@ -34,7 +34,7 @@ function geraPagTarefasNPendentes(responesTarefasNPendentes, d) {
                       <th>Estado</th>
                   </tr>
     `
-    responesTarefasNPendentes.forEach(t => {
+    responseTarefasNPendentes.forEach(t => {
         pagHTML +=
             ` <tr>
                   <td>${t.datalimite}</td>
@@ -154,12 +154,12 @@ function geraPagPrincipal(res, d) {
         .then(axios.spread((...responses) => {
             var responseTarefas = responses[0].data
             var responseTarefasPendentes = responses[1].data
-            var responesTarefasNPendentes = responses[2].data
+            var responseTarefasNPendentes = responses[2].data
 
             res.writeHead(200, { 'Content-Type': 'text/html;charset=utf-8' })
             res.write(geraFormNovaTarefa(responseTarefas))
             res.write(geraPagTarefasPendentes(responseTarefasPendentes))
-            res.write(geraPagTarefasNPendentes(responesTarefasNPendentes, d))
+            res.write(geraPagTarefasNPendentes(responseTarefasNPendentes, d))
             res.end()
         }))
         .catch(function (erro) {
