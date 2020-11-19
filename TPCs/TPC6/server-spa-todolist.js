@@ -145,9 +145,9 @@ function geraPagPrincipal(res, d) {
     // GET responsaveis
     var requestTarefas = axios.get("http://localhost:3000/tarefas")
     // GET tarefas arealizar
-    var requestTarefasPendentes = axios.get("http://localhost:3000/tarefas?estado=arealizar&_sort=data_limite,responsavel&_order=asc,desc")
+    var requestTarefasPendentes = axios.get("http://localhost:3000/tarefas?estado=arealizar&_sort=datalimite,responsavel&_order=asc,desc")
     // GET tarefas that the estado is not equal(_ne) arealizar  
-    var requestTarefasNPendentes = axios.get("http://localhost:3000/tarefas?estado_ne=arealizar&_sort=data_limite,responsavel&_order=asc,desc")
+    var requestTarefasNPendentes = axios.get("http://localhost:3000/tarefas?estado_ne=arealizar&_sort=datalimite,responsavel&_order=asc,desc")
 
     // Send multiple requests
     axios.all([requestTarefas, requestTarefasPendentes, requestTarefasNPendentes])
