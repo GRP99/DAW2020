@@ -1,0 +1,39 @@
+{
+  "tarefas": [
+    {
+      "descricao": "Projeto 1 de GCS",
+      "responsavel": "Grupo 10",
+      "datalimite": "2020-11-20",
+      "estado": "arealizar",
+      "id": 2
+    },
+    {
+      "descricao": "Trabalho Prático de IATA",
+      "responsavel": "Gonçalo Pinto",
+      "datalimite": "2020-11-17",
+      "estado": "realizada",
+      "id": 3
+    },
+    {
+      "id": "1",
+      "responsavel": "Gonçalo Pinto",
+      "descricao": "Trabalho de casa 6 de PRI",
+      "datalimite": "2020-11-23",
+      "estado": "realizada"
+    },
+    {
+      "id": "4",
+      "responsavel": "GR01",
+      "descricao": "FE04 - BDNSQL",
+      "datalimite": "2020-11-25",
+      "estado": "cancelada"
+    },
+    {
+      "id": "4wY8Wzh",
+      "responsavel": "Gonçalo Pinto",
+      "descricao": "Estudar HTML Forms, Static resources, request body processing",
+      "datalimite": "2020-11-19",
+      "estado": "realizada"
+    }
+  ]
+}
