@@ -84,7 +84,8 @@ function geraPagTarefasPendentes(responseTarefasPendentes) {
                 <input type="hidden" name="datalimite" value="${t.datalimite}"/>
                 <input type="hidden" name="estado" value="realizada"/>
                 <input class="w3-button w3-green w3-circle" type="submit" value=" &#10003"/>
-            </form></td>
+            </form>
+            </td>
             <td>
             <form action="/tarefas" method="POST"  >
                 <input type="hidden" name="id" value="${t.id}"/>
