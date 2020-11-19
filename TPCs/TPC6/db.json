@@ -34,13 +34,6 @@
       "descricao": "Estudar HTML Forms, Static resources, request body processing",
       "datalimite": "2020-11-19",
       "estado": "realizada"
-    },
-    {
-      "id": "HkxqT7_",
-      "responsavel": "Gonçalo Pinto",
-      "descricao": "Rever TPC6 de PRI",
-      "datalimite": "2020-11-20",
-      "estado": "cancelada"
     }
   ]
 }

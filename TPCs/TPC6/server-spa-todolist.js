@@ -196,9 +196,40 @@ var todolistServer = http.createServer(function (req, res) {
                 if (req.url == '/tarefas') {
                     recuperaInfo(req, resultado => {
                         console.log('POST de tarefas:' + JSON.stringify(resultado))
-                        axios.delete('http://localhost:3000/tarefas/' + resultado.id)
-                        axios.post('http://localhost:3000/tarefas', resultado)
-                        geraPagPrincipal(res, d)
+                        if (resultado.estado == 'realizada' || resultado.estado == 'cancelada') {
+                            axios.delete('http://localhost:3000/tarefas/' + resultado.id)
+                                .then(response => {
+                                    axios.post('http://localhost:3000/tarefas', resultado)
+                                        .then(resp => {
+                                            res.writeHead(200, { 'Content-Type': 'text/html;charset=utf-8' })
+                                            res.writeHead(302, { Location: "/" })
+                                            res.end()
+                                        })
+                                        .catch(function (erro) {
+                                            res.writeHead(200, { 'Content-Type': 'text/html;charset=utf-8' })
+                                            res.write("<p>Não foi possível alterar o estado da tarefa...")
+                                            res.end()
+                                        })
+                                })
+                                .catch(function (erro) {
+                                    res.writeHead(200, { 'Content-Type': 'text/html;charset=utf-8' })
+                                    res.write("<p>Não foi possível alterar o estado da tarefa...")
+                                    res.end()
+                                })
+                        }
+                        else if (resultado.estado == 'arealizar') {
+                            axios.post('http://localhost:3000/tarefas', resultado)
+                            .then(response => {
+                                res.writeHead(200, { 'Content-Type': 'text/html;charset=utf-8' })
+                                res.writeHead(302, { Location: "/" })
+                                res.end()
+                            })
+                            .catch(function (erro) {
+                                res.writeHead(200, { 'Content-Type': 'text/html;charset=utf-8' })
+                                res.write("<p>Não foi possível adicionar a tarefa...")
+                                res.end()
+                            })
+                        }
                     })
                 }
                 else {
