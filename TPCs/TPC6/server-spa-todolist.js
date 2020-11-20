@@ -23,7 +23,7 @@ function recuperaInfo(request, callback) {
 
 function geraPagTarefasNPendentes(responseTarefasNPendentes, d) {
     let pagHTML = `
-              <div class="w3-container w3-teal">
+              <div class="w3-container w3-blue-grey">
                   <h2>Tarefas Realizadas / Canceladas</h2>
               </div>
               <table class="w3-table w3-bordered">
@@ -47,7 +47,7 @@ function geraPagTarefasNPendentes(responseTarefasNPendentes, d) {
 
     pagHTML += `
             </table>
-            <div class="w3-container w3-teal">
+            <div class="w3-container w3-blue-grey">
                 <address> Gerado por Gonçalo Pinto::PRI2020 em ${d} --------------</address>
             </div>
         </body>
@@ -59,7 +59,7 @@ function geraPagTarefasNPendentes(responseTarefasNPendentes, d) {
 
 function geraPagTarefasPendentes(responseTarefasPendentes) {
     let pagHTML = `
-            <div class="w3-container w3-teal">
+            <div class="w3-container w3-blue-grey">
                 <h2>Lista de Tarefas Pendentes</h2>
             </div>
             <table class="w3-table w3-bordered">
@@ -76,24 +76,24 @@ function geraPagTarefasPendentes(responseTarefasPendentes) {
             <td>${t.datalimite}</td>
             <td>${t.responsavel}</td>
             <td>${t.descricao}</td>
-            <td>
+            <td style="text-align:center">
             <form action="/tarefas" method="POST"  >
                 <input type="hidden" name="id" value="${t.id}"/>
                 <input type="hidden" name="responsavel" value="${t.responsavel}"/>
                 <input type="hidden" name="descricao" value="${t.descricao}"/>
                 <input type="hidden" name="datalimite" value="${t.datalimite}"/>
                 <input type="hidden" name="estado" value="realizada"/>
-                <input class="w3-button w3-green w3-circle" type="submit" value=" &#10003"/>
+                <input class="w3-button w3-green w3-circle" type="submit" value="&#10003"/>
             </form>
             </td>
-            <td>
+            <td style="text-align:center">
             <form action="/tarefas" method="POST"  >
                 <input type="hidden" name="id" value="${t.id}"/>
                 <input type="hidden" name="responsavel" value="${t.responsavel}"/>
                 <input type="hidden" name="descricao" value="${t.descricao}"/>
                 <input type="hidden" name="datalimite" value="${t.datalimite}"/>
                 <input type="hidden" name="estado" value="cancelada"/>
-                <input class="w3-button w3-red w3-circle" type="submit" value=" &#10008"/>
+                <input class="w3-button w3-red w3-circle" type="submit" value="&#10008"/>
             </form>
             </td>
         </tr>`
@@ -111,16 +111,16 @@ function geraFormNovaTarefa(responseTarefas) {
         <link rel="stylesheet" href="w3.css"/>
     </head>
     <body>
-        <div class="w3-container w3-teal">
+        <div class="w3-container w3-blue-grey">
             <h2>Registar Nova Tarefa</h2>
         </div>
 
         <form class="w3-container" action="/tarefas" method="POST">
 
-            <label class="w3-text-teal"><b>Descrição</b></label>
+            <label class="w3-text-gray"><b>Descrição</b></label>
             <input class="w3-input w3-border w3-light-grey" type="text" name="descricao">
 
-            <label class="w3-text-teal"><b>Responsável</b></label>
+            <label class="w3-text-gray"><b>Responsável</b></label>
             <input class="w3-input w3-border w3-light-grey" type="text" list="responsaveis" name="responsavel">
             <datalist id="responsaveis">
                                 `
@@ -130,7 +130,7 @@ function geraFormNovaTarefa(responseTarefas) {
     })
 
     pagHTML += `</datalist>
-            <label class="w3-text-teal"><b>Data Limite</b></label>
+            <label class="w3-text-gray"><b>Data Limite</b></label>
             <input class="w3-input w3-border w3-light-grey" type="text" name="datalimite">
 
             <input type="hidden" name="estado" value="arealizar"/>
@@ -220,16 +220,16 @@ var todolistServer = http.createServer(function (req, res) {
                         }
                         else if (resultado.estado == 'arealizar') {
                             axios.post('http://localhost:3000/tarefas', resultado)
-                            .then(response => {
-                                res.writeHead(200, { 'Content-Type': 'text/html;charset=utf-8' })
-                                res.writeHead(302, { Location: "/" })
-                                res.end()
-                            })
-                            .catch(function (erro) {
-                                res.writeHead(200, { 'Content-Type': 'text/html;charset=utf-8' })
-                                res.write("<p>Não foi possível adicionar a tarefa...")
-                                res.end()
-                            })
+                                .then(response => {
+                                    res.writeHead(200, { 'Content-Type': 'text/html;charset=utf-8' })
+                                    res.writeHead(302, { Location: "/" })
+                                    res.end()
+                                })
+                                .catch(function (erro) {
+                                    res.writeHead(200, { 'Content-Type': 'text/html;charset=utf-8' })
+                                    res.write("<p>Não foi possível adicionar a tarefa...")
+                                    res.end()
+                                })
                         }
                     })
                 }
