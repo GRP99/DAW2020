@@ -1,5 +1,7 @@
 var http = require('http')
 var axios = require('axios')
+var fs = require('fs')
+
 // Importar o ficheiro static.js
 var static = require('./static')
 // Apenas utilizar a funcao parse da biblioteca querystring
@@ -26,7 +28,7 @@ function geraPagTarefasNPendentes(responseTarefasNPendentes, d) {
               <div class="w3-container w3-blue-grey">
                   <h2>Tarefas Realizadas / Canceladas</h2>
               </div>
-              <table class="w3-table w3-bordered">
+              <table id="TarefasNPendentes" class="w3-table w3-bordered">
                   <tr>
                       <th>Data Limite</th>
                       <th>Responsável</th>
@@ -62,7 +64,7 @@ function geraPagTarefasPendentes(responseTarefasPendentes) {
             <div class="w3-container w3-blue-grey">
                 <h2>Lista de Tarefas Pendentes</h2>
             </div>
-            <table class="w3-table w3-bordered">
+            <table id="TarefasPendentes" class="w3-table w3-bordered">
                 <tr>
                     <th> Data Limite </th>
                     <th> Responsável </th>
@@ -73,28 +75,15 @@ function geraPagTarefasPendentes(responseTarefasPendentes) {
   `
     responseTarefasPendentes.forEach(t => {
         pagHTML += `
+        <tr id=${t.id}>
             <td>${t.datalimite}</td>
             <td>${t.responsavel}</td>
             <td>${t.descricao}</td>
             <td style="text-align:center">
-            <form action="/tarefas" method="POST"  >
-                <input type="hidden" name="id" value="${t.id}"/>
-                <input type="hidden" name="responsavel" value="${t.responsavel}"/>
-                <input type="hidden" name="descricao" value="${t.descricao}"/>
-                <input type="hidden" name="datalimite" value="${t.datalimite}"/>
-                <input type="hidden" name="estado" value="realizada"/>
-                <input class="w3-button w3-green w3-circle" type="submit" value="&#10003"/>
-            </form>
+            <button class="w3-button w3-teal w3-circle" onclick="accomplish(${t.id})" type="submit" value="Realizar">&#10003</button>
             </td>
             <td style="text-align:center">
-            <form action="/tarefas" method="POST"  >
-                <input type="hidden" name="id" value="${t.id}"/>
-                <input type="hidden" name="responsavel" value="${t.responsavel}"/>
-                <input type="hidden" name="descricao" value="${t.descricao}"/>
-                <input type="hidden" name="datalimite" value="${t.datalimite}"/>
-                <input type="hidden" name="estado" value="cancelada"/>
-                <input class="w3-button w3-red w3-circle" type="submit" value="&#10008"/>
-            </form>
+            <button class="w3-button w3-red w3-circle" onclick="cancel(${t.id})" type="submit" value="Cancelar">&#10008</button>
             </td>
         </tr>`
     })
@@ -102,13 +91,15 @@ function geraPagTarefasPendentes(responseTarefasPendentes) {
     return pagHTML
 }
 
-function geraFormNovaTarefa(responseTarefas) {
+function geraFormNovaTarefa() {
     let pagHTML = `<html>
     <head>
         <title>Tarefas</title>
         <meta charset="utf-8"/>
         <link rel="icon" href="favicon.png"/>
         <link rel="stylesheet" href="w3.css"/>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+        <script type="text/javascript" src="functions.js" ></script>
     </head>
     <body>
         <div class="w3-container w3-blue-grey">
@@ -121,16 +112,9 @@ function geraFormNovaTarefa(responseTarefas) {
             <input class="w3-input w3-border w3-light-grey" type="text" name="descricao">
 
             <label class="w3-text-gray"><b>Responsável</b></label>
-            <input class="w3-input w3-border w3-light-grey" type="text" list="responsaveis" name="responsavel">
-            <datalist id="responsaveis">
-                                `
+            <input class="w3-input w3-border w3-light-grey" type="text" name="responsavel">
 
-    responseTarefas.forEach(r => {
-        pagHTML += ` <option>${r.responsavel}</option> `
-    })
-
-    pagHTML += `</datalist>
-            <label class="w3-text-gray"><b>Data Limite</b></label>
+            <label class="w3-text-gray"><b>Data Limite [AAAA-MM-DD]</b></label>
             <input class="w3-input w3-border w3-light-grey" type="text" name="datalimite">
 
             <input type="hidden" name="estado" value="arealizar"/>
@@ -143,22 +127,19 @@ function geraFormNovaTarefa(responseTarefas) {
 
 
 function geraPagPrincipal(res, d) {
-    // GET responsaveis
-    var requestTarefas = axios.get("http://localhost:3000/tarefas")
     // GET tarefas arealizar
     var requestTarefasPendentes = axios.get("http://localhost:3000/tarefas?estado=arealizar&_sort=datalimite,responsavel&_order=asc,desc")
     // GET tarefas that the estado is not equal(_ne) arealizar  
     var requestTarefasNPendentes = axios.get("http://localhost:3000/tarefas?estado_ne=arealizar&_sort=datalimite,responsavel&_order=asc,desc")
 
     // Send multiple requests
-    axios.all([requestTarefas, requestTarefasPendentes, requestTarefasNPendentes])
+    axios.all([requestTarefasPendentes, requestTarefasNPendentes])
         .then(axios.spread((...responses) => {
-            var responseTarefas = responses[0].data
-            var responseTarefasPendentes = responses[1].data
-            var responseTarefasNPendentes = responses[2].data
+            var responseTarefasPendentes = responses[0].data
+            var responseTarefasNPendentes = responses[1].data
 
             res.writeHead(200, { 'Content-Type': 'text/html;charset=utf-8' })
-            res.write(geraFormNovaTarefa(responseTarefas))
+            res.write(geraFormNovaTarefa())
             res.write(geraPagTarefasPendentes(responseTarefasPendentes))
             res.write(geraPagTarefasNPendentes(responseTarefasNPendentes, d))
             res.end()
@@ -187,6 +168,72 @@ var todolistServer = http.createServer(function (req, res) {
                 if ((req.url == "/") || (req.url == "/tarefas")) {
                     geraPagPrincipal(res, d)
                 }
+                else if (/\/tarefas\/*/.test(req.url)) {
+                    var idt = req.url.split("/")[2]
+                    axios.get("http://localhost:3000/tarefas/" + idt).
+                        then(response => {
+                            res.writeHead(200, { 'Content-Type': 'application/json' });
+                            res.end(JSON.stringify(response.data));
+                        })
+                        .catch(function (erro) {
+                            console.log(erro)
+                        })
+                }
+                else if (/\/realizartarefa/.test(req.url)) {
+                    var idt = req.url.split("=")[1]
+                    axios.get("http://localhost:3000/tarefas/" + idt)
+                        .then(response => {
+                            requestget = response.data
+
+                            axios.put("http://localhost:3000/tarefas/" + idt, {
+                                descricao: requestget.descricao,
+                                responsavel: requestget.responsavel,
+                                datalimite: requestget.datalimite,
+                                estado: 'realizada'
+                            })
+                                .then(response => {
+                                    res.end();
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                });
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                }
+                else if (/\/cancelartarefa/.test(req.url)) {
+                    var idt = req.url.split("=")[1]
+                    axios.get("http://localhost:3000/tarefas/" + idt)
+                        .then(response => {
+                            requestget = response.data
+
+                            axios.put("http://localhost:3000/tarefas/" + idt, {
+                                descricao: requestget.descricao,
+                                responsavel: requestget.responsavel,
+                                datalimite: requestget.datalimite,
+                                estado: 'cancelada'
+                            })
+                                .then(response => {
+                                    res.end()
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                });
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                }
+                else if (req.url == "/functions.js") {
+                    fs.readFile("functions.js", function (erro, dados) {
+                        if (!erro) {
+                            res.writeHead(200, { 'Content-Type': 'text/css;charset=utf-8' })
+                            res.write(dados)
+                            res.end()
+                        }
+                    })
+                }
                 else {
                     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
                     res.write("<p>" + req.method + " " + req.url + " não suportado neste serviço. </p>")
@@ -197,28 +244,7 @@ var todolistServer = http.createServer(function (req, res) {
                 if (req.url == '/tarefas') {
                     recuperaInfo(req, resultado => {
                         console.log('POST de tarefas:' + JSON.stringify(resultado))
-                        if (resultado.estado == 'realizada' || resultado.estado == 'cancelada') {
-                            axios.delete('http://localhost:3000/tarefas/' + resultado.id)
-                                .then(response => {
-                                    axios.post('http://localhost:3000/tarefas', resultado)
-                                        .then(resp => {
-                                            res.writeHead(200, { 'Content-Type': 'text/html;charset=utf-8' })
-                                            res.writeHead(302, { Location: "/" })
-                                            res.end()
-                                        })
-                                        .catch(function (erro) {
-                                            res.writeHead(200, { 'Content-Type': 'text/html;charset=utf-8' })
-                                            res.write("<p>Não foi possível alterar o estado da tarefa...")
-                                            res.end()
-                                        })
-                                })
-                                .catch(function (erro) {
-                                    res.writeHead(200, { 'Content-Type': 'text/html;charset=utf-8' })
-                                    res.write("<p>Não foi possível alterar o estado da tarefa...")
-                                    res.end()
-                                })
-                        }
-                        else if (resultado.estado == 'arealizar') {
+                        if (resultado.estado == 'arealizar') {
                             axios.post('http://localhost:3000/tarefas', resultado)
                                 .then(response => {
                                     res.writeHead(200, { 'Content-Type': 'text/html;charset=utf-8' })
