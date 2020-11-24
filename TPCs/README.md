@@ -14,4 +14,4 @@
 [TPC4]: https://github.com/GRP99/PRI2020/tree/main/TPCs/TPC4
 [TPC5]: https://github.com/GRP99/PRI2020/tree/main/TPCs/TPC5
 [TPC6]: https://github.com/GRP99/PRI2020/tree/main/TPCs/TPC6
-[TPC6]: https://github.com/GRP99/PRI2020/tree/main/TPCs/TPC7
+[TPC7]: https://github.com/GRP99/PRI2020/tree/main/TPCs/TPC7
