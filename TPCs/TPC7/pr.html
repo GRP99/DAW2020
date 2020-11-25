@@ -36,7 +36,7 @@
       <p>
          Este trabalho consistiu na construção de um
          <u>servidor</u> 
-         capaz de responder a pedidos de GET e POST na porta 
+         capaz de responder a pedidos de GET, POST, PUT, DELETE na porta 
          <u>7700</u>,
          direcionado a uma base de dados de alunos da unidade curricular presente. 
          </p>
@@ -54,7 +54,8 @@
          desenvolveu-se uma aplicação Web de uma forma muito simples, que permite listar todos
          os alunos armazenados na base de dados e também visualizar mais detalhadamente cada
          aluno.
-         Além de que é possível registar alunos.
+         Além de que é possível registar, editar e eliminar alunos. Ainda é possível adicionar
+         e eliminar TPC's após a criação do aluno.
          </p>
       <p>
          As páginas HTML são geradas a partir de ficheiros 
@@ -65,12 +66,16 @@
       
       <h3>Deliverables: </h3>
       <ul>
-         <li><a href="students-express/views/layout.pug">Layout de todas as páginas (PUG)</a></li>
-         <li><a href="students-express/views/index.pug">Página inicial da aplicação (PUG)</a></li>
-         <li><a href="students-express/views/error.pug">Página de erro (PUG)</a></li>
          <li><a href="students-express/views/aluno.pug">Página usada para visualizar um aluno (PUG)</a></li>
+         <li><a href="students-express/views/atualizar.pug">Página usada para atualizar um aluno(PUG)</a></li>
+         <li><a href="students-express/views/error.pug">Página de erro (PUG)</a></li>
          <li><a href="students-express/views/form.pug">Página usada para registar um aluno(PUG)</a></li>
+         <li><a href="students-express/views/index.pug">Página inicial da aplicação (PUG)</a></li>
+         <li><a href="students-express/views/layout.pug">Layout de todas as páginas (PUG)</a></li>
          <li><a href="students-express/routes/index.js">Rotas da aplicação (JS) </a></li>
+         <li><a href="students-express/public/javascripts/funcoes.js">Funções auxiliares implementadas para as diversas funcionalidades</a></li>
+         <li><a href="students-express/models/aluno.js">Esquema de um aluno</a></li>
+         <li><a href="students-express/controllers/aluno.js">Funções de manipulação dos dados</a></li>
          <li><a href="pr.dtd">pr.dtd</a></li>
          <li><a href="pr.xml">pr.xml</a></li>
          <li><a href="pr.xslt">pr.xslt</a></li>
