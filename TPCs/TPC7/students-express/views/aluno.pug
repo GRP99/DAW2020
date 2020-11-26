@@ -17,13 +17,20 @@ block content
                         td
                             a(href=aluno.Git)= aluno.Git
                 tr  
-                    th TPC 
+                    th TPC
+                        button.w3-btn(onclick="adicionarTPC('" + aluno._id + "')" class='fa fa-plus') 
+                        button.w3-btn(onclick="removerTPC('" + aluno._id + "')" class='fa fa-minus')  
                         td 
                             ul
                                 - var n = 1;
                                 each c in aluno.tpc
                                     li TPC  #{n++}
-
+                tr
+                    th Operações
+                        td  
+                            button.w3-btn(onclick="eliminar('" + aluno._id + "')" class='fa fa-trash-o')
+                            button.w3-btn(onclick="window.location.assign('/alunos/editar/" + aluno._id + "')" class='fa fa-edit')
+                                    
     .w3-container.w3-blue
             footer.w3-container
                 p
