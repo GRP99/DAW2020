@@ -7,6 +7,7 @@
 * [TPC5] - Criação de um servidor em Node.js de forma a responder a pedidos devolvendo páginas com auxílio JSON-Server para criar uma API REST.
 * [TPC6] - Realização de um servidor em Node.js de forma a responder a pedidos devolvendo uma SPA com auxílio JSON-Server para criar uma API REST.
 * [TPC7] - Concretização de um servidor em Node.js de forma a responder a pedidos devolvendo páginas HTML com dados na base de dados utilizada, MongoDB, com auxílio Express.js para criar uma aplicação WEB.
+* [TPC8] - Execução de um servidor em Node.js de forma a efectuar o download e upload de ficheiros.
 
 [TPC1]: https://github.com/GRP99/PRI2020/tree/main/TPCs/TPC1
 [TPC2]: https://github.com/GRP99/PRI2020/tree/main/TPCs/TPC2
@@ -15,3 +16,4 @@
 [TPC5]: https://github.com/GRP99/PRI2020/tree/main/TPCs/TPC5
 [TPC6]: https://github.com/GRP99/PRI2020/tree/main/TPCs/TPC6
 [TPC7]: https://github.com/GRP99/PRI2020/tree/main/TPCs/TPC7
+[TPC8]: https://github.com/GRP99/PRI2020/tree/main/TPCs/TPC8
