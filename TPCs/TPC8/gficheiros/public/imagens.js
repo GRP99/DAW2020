@@ -23,20 +23,16 @@ $(function () {
         // ...without preventing does not allow to add new file because it disappears when click is triggered
         e.preventDefault()
 
-        var qtd = 1
-
-        qtd++
-
         // Create a container to append the list of uploads
-        var upload = $('<div class="w3-container" id="file' + qtd + '"></div>')
+        var upload = $('<div class="w3-container" id="file"></div>')
 
         // Create container to add another file (label and input file)
-        var file = $('<div class="w3-cell-row" id="myFile' + qtd + '"></div>')
+        var file = $('<div class="w3-cell-row" id="myFile"></div>')
         var fileLabel = $('<label class="w3-text-blue"><b>Select file</b></label>')
         var fileupload = $('<input class="w3-input w3-border w3-light-blue" type="file" name="myFile">')
 
         $("#list").append(upload)
-        $("#file" + qtd).append(file)
-        $("#myFile" + qtd).append(fileLabel, fileupload)
+        $("#file").append(file)
+        $("#myFile").append(fileLabel, fileupload)
     })
 })
