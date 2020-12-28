@@ -67,6 +67,7 @@ passport.use(new JWTStrategy({
 var app = express();
 
 app.use(passport.initialize());
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -76,8 +77,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // #################### ROUTES ####################
 app.use('/recursos', recursosRouter);
 app.use('/users', usersRouter);
-app.user('/noticias', noticiasRouter);
-app.user('/', noticiasRouter);
+app.use('/noticias', noticiasRouter);
+app.use('/', noticiasRouter);
 
 // #################### ERROR HANDLER ####################
 // catch 404 and forward to error handler

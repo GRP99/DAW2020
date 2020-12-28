@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var Noticias = require('../controllers/noticias');
-const {route} = require('./users');
 
 /* GET noticias listing. */
 router.get('/', function (req, res) {
@@ -36,3 +35,5 @@ router.delete('/:id', function (req, res) {
         res.status(500).jsonp(e)
     })
 })
+
+module.exports = router;
