@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    #display.w3-card-4.modal
+    .w3-card-4
+        header.w3-container.w3-blue-grey
+            h4 Biblioteca de Ficheiros
+    div(style='margin:50x; padding:8px; border: 1px solid black;') 
+        table.w3-table.w3-bordered
+            tr
+                th Date
+                th File
+                th Type
+                th Size
+                th Author
+            each a in lista
+                if a.privacy == 0
+                    tr
+                        td= a.date
+                        td(onclick="showFile(\""+a.name+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")= a.name
+                        td= a.mimetype
+                        td= a.size
+                        each u in users
+                            if u._id == a.autor
+                                td= u.name
+    footer.w3-container.w3-blue-grey
+        pre a85954 

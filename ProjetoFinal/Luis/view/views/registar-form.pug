@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    .w3-card-4
+        header.w3-container.w3-blue-grey
+            h4 Registe as suas credenciais
+    ul#ulist
+    div(style='margin:45px; padding:8px; border: 1px solid black;')
+        form.w3-container(action='/registar' method='POST')
+            label.w3-text-blue-grey
+                b Nome
+                    input.w3-input.w3-border.w3-light-grey(type='text' name='name')
+            label.w3-text-blue-grey
+            label.w3-text-blue-grey
+                b Email
+                    input.w3-input.w3-border.w3-light-grey(type='text' name='_id')
+            label.w3-text-blue-grey
+                b Password
+                    input.w3-input.w3-border.w3-light-grey(type='password' name='password')
+            input.w3-btn.w3-blue-grey-blue-greyw3-btn.w3-border.w3-margin-bottom.w3-left.w3-blue-grey(type='submit' value='Registar')
+            input.w3-btn.w3-border.w3-margin-bottom.w3-right.w3-blue-grey(type='reset' value='Limpar valores')
+    footer.w3-container.w3-blue-grey
+        pre a85954         
