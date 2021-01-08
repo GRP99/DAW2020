@@ -8,7 +8,7 @@ block content
         if path == 0
             img(src="https://www.inmosenna.com/wp-content/uploads/2018/07/avatar-user-business-man-399587fe24739d5a-512x512-300x300.png" alt="User" style="width:120px; height:120px; object-fit: cover; margin-left:10px")
         else 
-            img(src="http://localhost:3001/"+user_id+"/profilepic.jpeg", alt="UserI", style="width:120px; height:120px; border-radius: 30%;  object-fit: cover; margin-left:10px")
+            img(src="http://localhost:3001/"+user_id+"/profilepic.jpeg?token="+token, alt="UserI", style="width:120px; height:120px; border-radius: 30%;  object-fit: cover; margin-left:10px")
         button(type='button', onclick="mudafoto(\"" + user_id + "\",\"" + token +"\");", style="margin-left:130px")
             i(class="fa fa-gear")   Alterar foto
         dl
@@ -46,7 +46,7 @@ block content
                             //i(class="fa fa-lock")
                             a(href="http://localhost:3002/files/changeprivacy/"+a._id+'?token='+token, class="fa fa-unlock")
                     td
-                        a(href="http://localhost:3002/files/delete/"+user_id+"/"+a._id) 
+                        a(href="http://localhost:3002/files/delete/"+a._id+"?token="+token) 
                             button(class="w3-button w3-red" onclick='return confirm("Do you want to delete this file?")')
                                 i(class="fa fa-trash" style="font-size:15px") 
     div(style='margin:10px 50px 25px 270px; padding:8px; border: 1px solid black;') 
@@ -67,7 +67,7 @@ block content
             input.w3-btn.w3-blue-grey(type='submit' value='Submit' id='addFile')
     footer.w3-container.w3-blue-grey(style="text-align:right")
         pre
-            a(href="http://localhost:3002/biblioteca?token="+token)
+            a(href="http://localhost:3002/files/biblioteca?token="+token)
                 i(class="fa fa-search" style="font-size:16px")      
             a(href="/users?token="+token)
                 i(class="fa fa-user" style="font-size:16px")      

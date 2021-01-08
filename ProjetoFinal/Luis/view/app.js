@@ -5,7 +5,8 @@ var logger = require('morgan');
 var jwt = require('jsonwebtoken');
 
 var indexRouter = require('./routes/index');
-//var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/users');
+var filesRouter = require('./routes/files')
 
 var app = express();
 
@@ -21,17 +22,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req,res,next){
   if(req.query.token == null){
-    console.log('Este é o meu pedido '+req.url)
     switch(req.url){
-      case "/registar": next(); break;
-      case "/login": next();break;
+      case "/users/registar": next(); break;
+      case "/users/login":  next(); break;
       case "/favicon.ico": next();break;
-      default:res.redirect("/login");  break;
+      default:res.redirect('/users/login');  break;
     }
   }
   else{
     jwt.verify(req.query.token,'PRI2020',function(e,payload){
-      if(e) res.redirect('/login')
+      if(e) res.redirect('/users/login')
       else{
         req.user = {
           level:payload.level, _id: payload._id
@@ -45,7 +45,8 @@ app.use(function(req,res,next){
 })
 
 app.use('/', indexRouter);
-//app.use('/users', usersRouter);
+app.use('/users', usersRouter);
+app.use('/files',filesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

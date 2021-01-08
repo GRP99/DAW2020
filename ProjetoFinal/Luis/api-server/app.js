@@ -5,6 +5,7 @@ var logger = require('morgan');
 var mongoose = require('mongoose')
 var indexRouter = require('./routes/index');
 var cors = require('cors')
+var jwt =require('jsonwebtoken');
 
 /* Estabelecer conexão à base de dados */
 var mongoDB = 'mongodb://127.0.0.1/myFiles'
@@ -28,7 +29,23 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+
 /* Este servidor só retorna json, não há views, páginas estáticas... */
+
+/*Verificar a origem do pedido*/
+app.use(function(req,res,next){
+  if(req.query.token != null){
+    jwt.verify(req.query.token,'PRI2020',function(e,payload){
+      if(e) res.status(401).jsonp({error:'Token sent is invalid'});
+      else{                
+        next()
+      } 
+    })
+  }
+  else res.status(401).jsonp({error:'Client did not send any token'});  
+})
+
+
 
 app.use('/', indexRouter);
 
