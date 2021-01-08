@@ -34,8 +34,8 @@ app.use(function(req,res,next){
       if(e) res.redirect('/login')
       else{
         req.user = {
-                            level:payload.level, _id: payload._id
-                          }                 
+          level:payload.level, _id: payload._id
+        }                 
         next()
       } 
     })
@@ -43,9 +43,6 @@ app.use(function(req,res,next){
 
   
 })
-
-
-
 
 app.use('/', indexRouter);
 //app.use('/users', usersRouter);

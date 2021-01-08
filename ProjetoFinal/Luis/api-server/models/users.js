@@ -4,6 +4,7 @@ var UserSchema = new mongoose.Schema({
     name: String,
     _id: String,
     password: String,
+    level: String,
     profilepic: Number
 })
 

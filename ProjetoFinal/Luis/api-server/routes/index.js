@@ -8,6 +8,10 @@ var FControl = require('../controllers/files')
 var User = require('../controllers/users')
 var jwt = require('jsonwebtoken')
 
+function verificaAutoriadade(autor, usr){
+  return autor==usr
+}
+
 /* GET all files. */
 router.get('/files', function(req, res, next) {
   FControl.list()
@@ -23,6 +27,8 @@ router.get('/files/:id', function(req, res, next) {
 });
 
 router.get('/download/:id_autor/:filename', function(req, res){
+  // Se for privado e for autorizado -> verificaAutoridade siga
+  // Ou é público.
   res.download(__dirname + '/../public/fileStore/' + req.params.id_autor + "/" + req.params.filename)
 })
 
