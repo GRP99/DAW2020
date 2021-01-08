@@ -12,7 +12,7 @@ router.get('/changeprivacy/:id', function(req, res, next) {
       .then(axios.spread((...response) => {
         var user = response[0].data.autor;
         console.log(user)
-        axios.put('http://localhost:3001/files/changeprivacy/'+req.params.id+'?user='+req.user_id+"&token="+req.query.token)
+        axios.put('http://localhost:3001/files/changeprivacy/'+req.params.id+'?token='+req.query.token)
           .then(function (resp){
             res.redirect('/users?token'+req.query.token);
           })

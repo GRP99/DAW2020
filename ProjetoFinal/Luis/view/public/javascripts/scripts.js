@@ -6,7 +6,7 @@ const token = urlParams.get('token')
 
 $(()=>{
     /* usar AJAX */
-    $.get("http://localhost:3001/files?token="+token, function(data){
+    $.get("http://localhost:3001/files/fromUser?token="+token, function(data){
         data.forEach(p => {
             $("#tableFiles").append("<tr onclick='showImage(\"" + p.name + "\",\"" + p.mimetype + "\");'>" 
             +"<td>" + p.date + "</td> <td>" + p.name + "</td> <td>" + 
@@ -35,7 +35,7 @@ function showFile(name, type, autor, desc, token) {
 }
 
 function mudafoto(id, token) {
-    var file = $("<form class=\"w3-container\" style=\"margin:50px\" action=\"http://localhost:3001/changeprofile?token="+token+"\" method=\"POST\" enctype=\"multipart/form-data\">"
+    var file = $("<form class=\"w3-container\" style=\"margin:50px\" action=\"http://localhost:3001/users/changeprofile?token="+token+"\" method=\"POST\" enctype=\"multipart/form-data\">"
     + "<pre> <b> Mudar Foto de Perfil </b> </pre>"
     + "<input class=\"w3-input w3-border w3-light-grey\" type=\"file\" name=\"myProfilePic\" />"
     + "<input type=\"hidden\" name=\"autor\" value=\"" + id + "\"/>"
@@ -69,14 +69,15 @@ function validate() {
     return true;
 }
 /*
-function mudarprivacidade(id,autor){
+function mudarprivacidade(id,autorToken){
     //a(href="http://localhost:3002/files/changeprivacy/"+a._id, class="fa fa-lock")
     $.ajax({
-        url: "http://localhost:3001/changeprivacy/"+id,
+        url: "http://localhost:3001/files/changeprivacy/"+id+"?token="+autorToken,
         type: 'PUT',
         success: function(response) {
-            window.location.replace("http://localhost:3002/users/"+autor);
+            window.location.replace("http://localhost:3002/users?token="+autorToken);
         }
      });
-} */
+} 
 
+*/

@@ -34,7 +34,7 @@ router.get('/registar', function(req, res) {
 });
 
 router.post('/registar', function(req, res){
-  axios.post('http://localhost:3001/registar?token='+token,req.body)
+  axios.post('http://localhost:3001/users/registar?token='+token,req.body)
       .then(dados =>{
         res.redirect('/login')
       })
@@ -42,14 +42,11 @@ router.post('/registar', function(req, res){
 })
 
 router.post('/login',function(req, res){
-  axios.post('http://localhost:3001/login?token='+token,req.body)
+  axios.post('http://localhost:3001/users/login?token='+token,req.body)
       .then(dados =>{
         res.redirect("/users?token="+dados.data.token)
       })
       .catch(error=>{console.log(error)})
 })
-
-
-
 
 module.exports = router;

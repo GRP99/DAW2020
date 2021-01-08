@@ -5,6 +5,10 @@ module.exports.list = () => {
     return Files.find().exec()
 }
 
+module.exports.publicFiles = ()=>{
+    return Files.find({privacy:0}).exec()
+}
+
 /* Returns a file record */
 module.exports.lookup = id => {
     return Files.findOne({_id: id}).exec()
@@ -31,7 +35,8 @@ module.exports.remove = id => {
 
 /* Changes security */
 module.exports.editS = (id) => {
-    Files.findOne({_id: id}).exec().then((result) => {
+    Files.findOne({_id: id}).exec()
+    .then((result) => {
         if(result.privacy == 0) {
             result.privacy = 1;
         }
