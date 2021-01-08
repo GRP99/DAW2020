@@ -1,0 +1,20 @@
+{
+    "ficheiros": [
+        {
+            "titulo": "help",
+            "tipo": "txt",
+            "meta": [{
+                "nome":"please"
+            }]
+        },
+        {
+            "titulo": "me",
+            "tipo": "txt",
+            "meta": [{
+                "nome":"ggg"
+            }]
+        }
+    ],
+    "pastas": [
+    ]
+}
