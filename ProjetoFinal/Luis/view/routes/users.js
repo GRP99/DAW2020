@@ -83,7 +83,9 @@ router.post('/login',function(req, res){
       .catch(error=>{console.log(error)})
 })
 
-
+router.get('/logout',function(req,res){
+  res.redirect('/login')
+})
 
 
 module.exports = router;

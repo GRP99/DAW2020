@@ -68,6 +68,11 @@ function validate() {
     })
     return true;
 }
+
+function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+
 /*
 function mudarprivacidade(id,autorToken){
     //a(href="http://localhost:3002/files/changeprivacy/"+a._id, class="fa fa-lock")

@@ -24,4 +24,8 @@ block content
                             if u._id == a.autor
                                 td= u.name
     footer.w3-container.w3-blue-grey.footer
-        pre a85954 
+        pre     
+            a(href="/users?token="+token)
+                i(class="fa fa-user" style="font-size:16px")      
+            a(href="/users/logout?token="+token)
+                i(class="fa fa-power-off" style="font-size:16px") 

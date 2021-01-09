@@ -69,12 +69,16 @@ block content
             // button.w3-btn.w3-teal(type='button' onclick='add()') +
             input(type='hidden' name='autor' value=""+user_id)
             input.w3-btn.w3-blue-grey(type='submit' value='Submit' id='addFile')
+    script(type='text/javascript').
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };  
     footer.w3-container.w3-blue-grey.footer(style="text-align:right")
         pre
             a(href="http://localhost:3002/files/biblioteca?token="+token)
                 i(class="fa fa-search" style="font-size:16px")      
             a(href="/users?token="+token)
                 i(class="fa fa-user" style="font-size:16px")      
-            a(href="/terminasessão?token="+token)
+            a(href="/users/logout?token="+token onclick="preventBack()")
                 i(class="fa fa-power-off" style="font-size:16px")      
 
