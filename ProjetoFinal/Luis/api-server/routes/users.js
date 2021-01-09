@@ -12,16 +12,27 @@ var jwt = require('jsonwebtoken')
 
 /* GET all users */
 router.get("/", function (req, res, next) {
+  if(req.user.level == 'admin'){
   User.listUsers()
     .then((data) => res.status(200).jsonp(data))
     .catch((err) => res.status(500).jsonp(err));
+  }
+  else res.status(401).jsonp({error:'Nao podes'})
 });
 
 /* Get one User by id*/
 router.get("/:id", function (req, res, next) {
   id_autor = req.params.id;
   User.lookUp(id_autor)
-    .then((data) => res.status(200).jsonp(data))
+    .then((data) =>{
+      user = {
+        name:data.name,
+        _id:data._id,
+        level:data.level,
+        profilepic:data.profilepic
+      }
+      res.status(200).jsonp(user)
+    })
     .catch((err) => res.status(500).jsonp(err));
 });
 
@@ -33,7 +44,7 @@ router.post("/login", function (req, res) {
     } else {
       if (req.body.password == user.password) {
         jwt.sign(
-          { _id: user._id, level: "admin", expiresIn: "1d" },
+          { _id: user._id, level: user.level, expiresIn: "1d" },
           "PRI2020",
           function (err, token) {
             if (err) {
@@ -62,6 +73,7 @@ router.post("/registar", function (req, res) {
 
 /* Foto de perfil de um autor */
 router.post("/changeprofile", upload.single("myProfilePic"), (req, res) => {
+
   if (req.file.mimetype == "image/png" || req.file.mimetype == "image/jpeg") {
     let quarantinePath = __dirname + "/../" + req.file.path;
     let dirpath = __dirname + "/../public/images/" + req.body.autor;
@@ -78,14 +90,19 @@ router.post("/changeprofile", upload.single("myProfilePic"), (req, res) => {
         console.log("ERROR" + error);
       }
     });
-
-    FControl.updatePhoto(req.body.autor);
-    res.redirect("http://localhost:3002/users/" + req.body.autor);
+    User.updatePhoto(req.body.autor);
+    res.redirect("http://localhost:3002/users?token=" + req.query.token);
   } else {
     console.log("ERRO: Não é uma imagem!");
-    res.redirect("http://localhost:3002/users/" + req.body.autor);
+    res.redirect("http://localhost:3002/users?token=" + req.query.token);
   }
 });
+
+router.get('/:_id/profilepic.jpeg',function(req,res){
+  var userID = req.params._id
+  res.sendFile(path.resolve(__dirname+'/../public/images/'+userID+'/profilepic.jpeg'));
+})
+
 
 
 module.exports = router;

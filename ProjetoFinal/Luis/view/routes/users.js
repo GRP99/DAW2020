@@ -18,12 +18,46 @@ router.get(['/'], function(req, res, next) {
         var nome = user.name
         var mail = user._id
         var profilepic = user.profilepic
-        res.render('user', {token: req.query.token, lista: ficheiros, user_id: _id, user_name: nome, user_mail: mail, path: profilepic});
+        switch(req.user.level){
+          case 'consumer':
+            renderConsumer(req,res,user)
+            break;
+          default:   
+          res.render('user', {token: req.query.token, lista: ficheiros, user_id: _id, user_name: nome, user_mail: mail, path: profilepic});
+          break;
+        }
+        
       }))
       .catch(function(erro){
         console.log("ERROR Página User: " + erro)
       })
 });
+
+function renderConsumer(req,res,user){
+  var requestUser = axios.get(
+    "http://localhost:3001/users?token=" + token
+  );
+  var requestFicheiros = axios.get(
+    "http://localhost:3001/files/public?token=" + req.query.token
+  );
+  axios
+    .all([requestUser, requestFicheiros])
+    .then(
+      axios.spread((...response) => {
+        var users = response[0].data;
+        var ficheiros = response[1].data;
+        console.log(user)
+        var nome = user.name
+        var mail = user._id
+        var profilepic = user.profilepic
+        res.render('consumer', {token: req.query.token, lista: ficheiros, user_id: mail, user_name: nome, user_mail: mail, path: profilepic,users:users});
+      })
+    )
+    .catch(function (erro) {
+      console.log("ERROR Página Biblioteca: " + erro);
+    });
+}
+
 
 router.get('/login', function(req, res) {
   res.render('login-form',{ title: 'Login' });
@@ -48,5 +82,8 @@ router.post('/login',function(req, res){
       })
       .catch(error=>{console.log(error)})
 })
+
+
+
 
 module.exports = router;

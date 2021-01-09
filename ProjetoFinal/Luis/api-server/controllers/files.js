@@ -27,6 +27,9 @@ module.exports.filesbyUser = id => {
     return Files.find({autor: id}).exec()
 }
 
+module.exports.findByName = name =>{
+    return Files.findOne({name: name}).exec()
+}
 
 /* Delete a paragraph */
 module.exports.remove = id => {

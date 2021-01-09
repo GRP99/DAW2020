@@ -17,11 +17,11 @@ block content
                 if a.privacy == 0
                     tr
                         td= a.date
-                        td(onclick="showFile(\""+a.name+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")= a.name
+                        td(onclick="showFile(\""+a._id+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")= a.name
                         td= a.mimetype
                         td= a.size
                         each u in users
                             if u._id == a.autor
                                 td= u.name
-    footer.w3-container.w3-blue-grey
+    footer.w3-container.w3-blue-grey.footer
         pre a85954 

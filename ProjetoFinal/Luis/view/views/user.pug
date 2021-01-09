@@ -46,9 +46,13 @@ block content
                             //i(class="fa fa-lock")
                             a(href="http://localhost:3002/files/changeprivacy/"+a._id+'?token='+token, class="fa fa-unlock")
                     td
+                        button(class="w3-button w3-green" onclick="showFile(\""+a._id+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")
+                                i(class="fa fa-download" style="font-size:15px")        
+                    td
                         a(href="http://localhost:3002/files/delete/"+a._id+"?token="+token) 
                             button(class="w3-button w3-red" onclick='return confirm("Do you want to delete this file?")')
-                                i(class="fa fa-trash" style="font-size:15px") 
+                                i(class="fa fa-trash" style="font-size:15px")
+ 
     div(style='margin:10px 50px 25px 270px; padding:8px; border: 1px solid black;') 
         .w3-container.w3-blue-grey
             h4 UPLOAD
@@ -65,7 +69,7 @@ block content
             // button.w3-btn.w3-teal(type='button' onclick='add()') +
             input(type='hidden' name='autor' value=""+user_id)
             input.w3-btn.w3-blue-grey(type='submit' value='Submit' id='addFile')
-    footer.w3-container.w3-blue-grey(style="text-align:right")
+    footer.w3-container.w3-blue-grey.footer(style="text-align:right")
         pre
             a(href="http://localhost:3002/files/biblioteca?token="+token)
                 i(class="fa fa-search" style="font-size:16px")      

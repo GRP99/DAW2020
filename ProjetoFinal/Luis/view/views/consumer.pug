@@ -1,0 +1,47 @@
+extends layout
+
+block content
+    #df.w3-card-4.modal
+    #display.w3-card-4.modal
+    div(class="sidenav" id="useraboutme")
+        h3(style="text-align:center; color: #064579; font-weight: bold;") ABOUT ME
+        if path == 0
+            img(src="https://www.inmosenna.com/wp-content/uploads/2018/07/avatar-user-business-man-399587fe24739d5a-512x512-300x300.png" alt="User" style="width:120px; height:120px; object-fit: cover; margin-left:10px")
+        else 
+            img(src="http://localhost:3001/users/"+user_id+"/profilepic.jpeg?token="+token, alt="UserI", style="width:120px; height:120px; border-radius: 30%;  object-fit: cover; margin-left:10px")
+        button(type='button', onclick="mudafoto(\"" + user_id + "\",\"" + token +"\");", style="margin-left:130px")
+            i(class="fa fa-gear")   Alterar foto
+        dl
+            dt 
+                b Nome:
+            dd= user_name 
+            dt 
+                b Email de Contacto:
+            dd= user_mail
+    div(style='margin:50px 50px 10px 270px; padding:8px; border: 1px solid black;') 
+        table.w3-table.w3-bordered
+            tr
+                th Date
+                th File
+                th Type
+                th Size
+                th Author
+            each a in lista
+                if a.privacy == 0
+                    tr
+                        td= a.date
+                        td(onclick="showFile(\""+a._id+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")= a.name
+                        td= a.mimetype
+                        td= a.size
+                        each u in users
+                            if u._id == a.autor
+                                td= u.name
+    footer.w3-container.w3-blue-grey.footer(style="text-align:right")
+        pre
+            a(href="http://localhost:3002/files/biblioteca?token="+token)
+                i(class="fa fa-search" style="font-size:16px")      
+            a(href="/users?token="+token)
+                i(class="fa fa-user" style="font-size:16px")      
+            a(href="/terminasessão?token="+token)
+                i(class="fa fa-power-off" style="font-size:16px")      
+

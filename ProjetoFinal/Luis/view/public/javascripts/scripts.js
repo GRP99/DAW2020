@@ -21,13 +21,13 @@ function add() {
     $("#addeds").append(file)
 }
 
-function showFile(name, type, autor, desc, token) {
+function showFile(name, type, autor, desc) {
     
     var file = $("<pre><b>Nome do Ficheiro: </b>" + name + "</pre>" +
     "<pre><b>Tipo do Ficheiro: </b>" + type + "</pre>" +
     "<table><tr><pre><b>Descrição: </b></td><pre><textarea rows=\"4\" cols=\"70\" style=\"font-size: 11px;\" readonly>"+desc+"</textarea>"
         + "</td></tr></table>")
-    var download = $('<div style="margin: auto; width: 25%; border: 2px solid black; text-align: center;"><a href="http://localhost:3001/download/' + autor + "/" + name + '?token='+token+'"> Download <i class="fa fa-download"></i></a></div>')
+    var download = $('<div style="margin: auto; width: 25%; border: 2px solid black; text-align: center;"><a href="http://localhost:3001/files/download/' + autor + "/" + name + '?token='+token+'"> Download <i class="fa fa-download"></i></a></div>')
 
     $("#display").empty()
     $("#display").append(file, download)
