@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req,res,next){
   if(req.query.token == null){
     switch(req.url){
-      case "/users/registar": next(); break;
+      case "/users/signup": next(); break;
       case "/users/login":  next(); break;
       case "/favicon.ico": next();break;
       default:res.redirect('/users/login');  break;

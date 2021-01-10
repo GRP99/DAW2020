@@ -6,31 +6,35 @@ var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhZG1pbiIsImxldmVsIj
 
 /* GET UserHome Page. */
 router.get(['/'], function(req, res, next) {
+  res.render('home',{token:req.query.token})
+});
 
-    var _id = req.user._id
-    // render invoca o pug
-    var requestUser = axios.get("http://localhost:3001/users/" + _id+"?token="+token)
-    var requestFicheiros = axios.get("http://localhost:3001/files/autor/" + _id+"?token="+token)
-    axios.all([requestUser, requestFicheiros])
-      .then(axios.spread((...response) => {
-        var user = response[0].data;
-        var ficheiros = response[1].data;
-        var nome = user.name
-        var mail = user._id
-        var profilepic = user.profilepic
-        switch(req.user.level){
-          case 'consumer':
-            renderConsumer(req,res,user)
-            break;
-          default:   
-          res.render('user', {token: req.query.token, lista: ficheiros, user_id: _id, user_name: nome, user_mail: mail, path: profilepic});
+router.get(['/account'], function(req, res, next) {
+
+  var _id = req.user._id
+  // render invoca o pug
+  var requestUser = axios.get("http://localhost:3001/users/" + _id+"?token="+token)
+  var requestFicheiros = axios.get("http://localhost:3001/files/autor/" + _id+"?token="+token)
+  axios.all([requestUser, requestFicheiros])
+    .then(axios.spread((...response) => {
+      var user = response[0].data;
+      var ficheiros = response[1].data;
+      var nome = user.name
+      var mail = user._id
+      var profilepic = user.profilepic
+      switch(req.user.level){
+        case 'consumer':
+          renderConsumer(req,res,user)
           break;
-        }
-        
-      }))
-      .catch(function(erro){
-        console.log("ERROR Página User: " + erro)
-      })
+        default:   
+        res.render('user', {token: req.query.token, lista: ficheiros, user_id: _id, user_name: nome, user_mail: mail, path: profilepic});
+        break;
+      }
+      
+    }))
+    .catch(function(erro){
+      console.log("ERROR Página User: " + erro)
+    })
 });
 
 function renderConsumer(req,res,user){
@@ -60,14 +64,14 @@ function renderConsumer(req,res,user){
 
 
 router.get('/login', function(req, res) {
-  res.render('login-form',{ title: 'Login' });
+  res.render('login',{ title: 'Login' });
 });
 
-router.get('/registar', function(req, res) {
-  res.render('registar-form',{ title: 'Registar' });
+router.get('/signup', function(req, res) {
+  res.render('signup',{ title: 'Registar' });
 });
 
-router.post('/registar', function(req, res){
+router.post('/signup', function(req, res){
   axios.post('http://localhost:3001/users/registar?token='+token,req.body)
       .then(dados =>{
         res.redirect('/login')

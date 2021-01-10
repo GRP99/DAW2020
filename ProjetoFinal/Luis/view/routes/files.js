@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 var axios = require("axios");
 var jwt = require("jsonwebtoken");
+var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhZG1pbiIsImxldmVsIjoiYWRtaW4iLCJleHBpcmVzSW4iOiIzbSIsImlhdCI6MTYxMDExODM1OX0.omYqB6hz4vSrRjIBEAi0mg6TNVti0OaqXW6n95JljiM';
+
 
 /* Privacidade - Público ou Privado */
 router.get("/changeprivacy/:id", function (req, res, next) {
@@ -36,7 +38,7 @@ router.get("/changeprivacy/:id", function (req, res, next) {
 /* Biblioteca all files */
 router.get("/biblioteca", (req, res) => {
   var requestUser = axios.get(
-    "http://localhost:3001/users?token=" + req.query.token
+    "http://localhost:3001/users?token=" + token
   );
   var requestFicheiros = axios.get(
     "http://localhost:3001/files/public?token=" + req.query.token
@@ -47,7 +49,7 @@ router.get("/biblioteca", (req, res) => {
       axios.spread((...response) => {
         var user = response[0].data;
         var ficheiros = response[1].data;
-        res.render("biblioteca", { lista: ficheiros, users: user });
+        res.render("library", { lista: ficheiros, users: user, token:req.query.token });
       })
     )
     .catch(function (erro) {
