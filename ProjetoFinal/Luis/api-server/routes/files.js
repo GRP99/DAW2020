@@ -5,9 +5,8 @@ var upload = multer({ dest: "uploads/" });
 var fs = require("fs");
 var path = require("path");
 var FControl = require("../controllers/files");
+var NControl = require("../controllers/news");
 var User = require("../controllers/users");
-var jwt = require("jsonwebtoken");
-
 function verificaAutoriadade(autor, usr) {
   return autor == usr;
 }
@@ -106,12 +105,30 @@ router.post("/", upload.single("myFile"), (req, res) => {
       name: req.file.originalname,
       mimetype: req.file.mimetype,
       size: req.file.size,
-      privacy: 1,
+      privacy: req.body.privacy,
       descricao: req.body.descricao,
     };
+
+    if (req.body.privacy==0){
+      User.lookUp(req.body.autor)
+        .then(dados=>{
+          var news = {
+            date: d,
+            autorID:req.body.autor,
+            autor: dados.name,
+            descricao: 'O ' + dados.name + ' adicionou o ficheiro ' + req.file.originalname
+          }
+          NControl.insert(news)
+        })
+      
+    }
+
+    
+    
+
     FControl.insert(fD, correctedPath)
       .then(
-        res.redirect("http://localhost:3002/users/account?token=" + req.query.token)
+        res.redirect("http://localhost:3002/users/account?token=" + req.query.token),
       )
       .catch((err) => res.status(500).jsonp(err));
   }

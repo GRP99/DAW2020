@@ -71,7 +71,8 @@ function validate() {
 
 function openUploadModal(user){
     var file = $("<form class=\"w3-container\" onSubmit=\"return confirm(&quot;Do you want to submit?&quot;)\" action=\"http://localhost:3001/files?token="+ token+ " \"method=\"POST\" enctype=\"multipart/form-data\" id=\"myForm\"><label class=\"w3-text-blue-grey\"><b>Select file</b></label><!-- #addeds--><input class=\"w3-input w3-border w3-light-grey\" type=\"file\" name=\"myFile\" />"+
-    "<table>"+
+    "<p><b class=\"w3-text-blue-grey\">Acess: <select id=\"level\" name=\"privacy\" type=\"num\" ><option value=\"1\">Private</option><option value=\"0\">Public</option></select></b></p>"
+    +"<table>"+
         "<tr>"+
             "<td>Descrição:</td>"+
             "<td><textarea rows=\"3\" cols=\"30\" name=\"descricao\"></textarea></td>"+
