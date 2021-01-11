@@ -123,9 +123,6 @@ router.post("/", upload.single("myFile"), (req, res) => {
       
     }
 
-    
-    
-
     FControl.insert(fD, correctedPath)
       .then(
         res.redirect("http://localhost:3002/users/account?token=" + req.query.token),

@@ -86,6 +86,21 @@ function openUploadModal(user){
     $("#display").modal()
 }
 
+function openWarningModal(user){
+    var file = $("<form class=\"w3-container\" onSubmit=\"return confirm(&quot;Do you want to submit?&quot;)\" action=\"http://localhost:3001/news?token="+ token+ " \"method=\"POST\" enctype=\"multipart/form-data\" id=\"myForm\">"
+    +"<table>"+
+        "<tr>"+
+            "<td>Warning:</td>"+
+            "<td><textarea rows=\"3\" cols=\"30\" name=\"descricao\"></textarea></td>"+
+        "</tr>"+
+    "</table><button.w3-btn.w3-teal(type='button' onclick='add()') +--><input type=\"hidden\" name=\"autor\" value=\""+user+"\" /><input class=\"w3-btn w3-blue-grey\" type=\"submit\" value=\"Submit\" id=\"addFile\" />"+
+"</form>")
+
+
+    $("#display").empty()
+    $("#display").append(file)
+    $("#display").modal()
+}
 
 
 
