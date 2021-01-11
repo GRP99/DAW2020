@@ -111,7 +111,7 @@ router.post("/", upload.single("myFile"), (req, res) => {
     };
     FControl.insert(fD, correctedPath)
       .then(
-        res.redirect("http://localhost:3002/users?token=" + req.query.token)
+        res.redirect("http://localhost:3002/users/account?token=" + req.query.token)
       )
       .catch((err) => res.status(500).jsonp(err));
   }

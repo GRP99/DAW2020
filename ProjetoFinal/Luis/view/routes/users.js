@@ -27,7 +27,7 @@ router.get(['/account'], function(req, res, next) {
           renderConsumer(req,res,user)
           break;
         default:   
-        res.render('user', {token: req.query.token, lista: ficheiros, user_id: _id, user_name: nome, user_mail: mail, path: profilepic});
+        res.render('account', {token: req.query.token, lista: ficheiros, user_id: _id, user_name: nome, user_mail: mail, path: profilepic});
         break;
       }
       

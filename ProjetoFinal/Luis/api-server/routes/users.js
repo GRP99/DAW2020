@@ -91,10 +91,10 @@ router.post("/changeprofile", upload.single("myProfilePic"), (req, res) => {
       }
     });
     User.updatePhoto(req.body.autor);
-    res.redirect("http://localhost:3002/users?token=" + req.query.token);
+    res.redirect("http://localhost:3002/users/account?token=" + req.query.token);
   } else {
     console.log("ERRO: Não é uma imagem!");
-    res.redirect("http://localhost:3002/users?token=" + req.query.token);
+    res.redirect("http://localhost:3002/users/account?token=" + req.query.token);
   }
 });
 

@@ -23,10 +23,10 @@ router.get("/changeprivacy/:id", function (req, res, next) {
               req.query.token
           )
           .then(function (resp) {
-            res.redirect("/users?token=" + req.query.token);
+            res.redirect("/users/account?token=" + req.query.token);
           })
           .catch(function (error) {
-            res.redirect("/users?token=" + req.query.token);
+            res.redirect("/users/account?token=" + req.query.token);
           });
       })
     )
@@ -66,7 +66,7 @@ router.get("/delete/:id", (req, res) => {
       "http://localhost:3001/files/" + id_file + "?token=" + req.query.token
     )
     .then(function (resp) {
-      res.redirect("/users?token=" + req.query.token);
+      res.redirect("/users/account?token=" + req.query.token);
     })
     .catch(function (error) {
       console.log("Erro ao dar delete " + error);
