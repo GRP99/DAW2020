@@ -1,99 +1,82 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var createError = require("http-errors");
+var express = require("express");
+var path = require("path");
+var logger = require("morgan");
+var mongoose = require("mongoose");
+var indexRouter = require("./routes/index");
+var usersRouter = require("./routes/users");
+var filesRouter = require("./routes/files");
+var newsRouter = require("./routes/news");
+var cors = require("cors");
+var jwt = require("jsonwebtoken");
 
-var mongoose = require('mongoose');
-
-var passport = require('passport');
-var JWTStrategy = require('passport-jwt').Strategy;
-var ExtractJWT = require('passport-jwt').ExtractJwt;
-
-// #################### MONGO CONNECTION ####################
-var mongoDB = 'mongodb://127.0.0.1/PGDREApp'
+/* Estabelecer conexão à base de dados */
+var mongoDB = "mongodb://127.0.0.1/myFiles";
 mongoose.connect(mongoDB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-
-var db = mongoose.connection
-
-db.on('error', () => {
-    console.log('MongoDB connection error ... ')
-})
-db.once('open', () => {
-    console.log('MongoDB connection successful ... ')
-})
-
-// #################### ROUTES ####################
-
-var recursosRouter = require('./routes/recursos');
-var usersRouter = require('./routes/users');
-var noticiasRouter = require('./routes/noticias');
-
-// #################### AUTHENTICATION ####################
-var extractFromQS = req => {
-    var token = null
-    if (req.query && req.query.token) {
-        token = req.query.token
-    }
-    return token
-}
-
-var extractFromBody = req => {
-    var token = null
-    if (req.body && req.body.token) {
-        token = req.body.token
-    }
-    return token
-}
-
-passport.use(new JWTStrategy({
-    secretOrKey: 'pri2020',
-    jwtFromRequest: ExtractJWT.fromExtractors(
-        [extractFromQS, extractFromBody]
-    )
-}, async (payload, done) => {
-    try {
-        return done(null, payload)
-    } catch (error) {
-        return done(error)
-    }
-}))
-
-// #################### MIDDLEWARE ####################
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+});
+var db = mongoose.connection;
+db.on("error", () => {
+  console.log("MongoDB connection failed...");
+});
+db.once("open", () => {
+  console.log("MongoDB connection successful...");
+});
+/*-------------------------------------*/
 
 var app = express();
 
-app.use(passport.initialize());
+// view engine setup
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "jade");
 
-app.use(logger('dev'));
+/* Tratar dos ficheiros estáticos que estão na pasta public/ */
+app.use(express.static("public/images"));
+
+app.use(cors());
+app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: false }));
 
-// #################### ROUTES ####################
-app.use('/recursos', recursosRouter);
-app.use('/users', usersRouter);
-app.use('/noticias', noticiasRouter);
-app.use('/', noticiasRouter);
+/* Este servidor só retorna json, não há views, páginas estáticas... */
 
-// #################### ERROR HANDLER ####################
+/*Verificar a origem do pedido*/
+app.use(function (req, res, next) {
+  if (req.query.token != null) {
+    jwt.verify(req.query.token, "PRI2020", function (e, payload) {
+      if (e) res.status(401).jsonp({ error: "Token sent is invalid" });
+      else {
+        req.user= {
+          _id:payload._id,
+          level:payload.level,
+        }
+        next();
+      }
+    });
+  } else res.status(401).jsonp({ error: "Client did not send any token" });
+});
+
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
+app.use("/files", filesRouter);
+app.use("/news", newsRouter);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-    next(createError(404));
+  next(createError(404));
 });
 
 // error handler
-app.use(function (err, req, res, next) { // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(function (err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get("env") === "development" ? err : {};
 
-    // render the error page
-    res.status(err.status || 500).jsonp(err);
+  // render the error page
+  res.status(err.status || 500).jsonp(err);
 });
 
-// ########################################
+
 module.exports = app;
