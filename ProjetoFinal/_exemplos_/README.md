@@ -8,4 +8,4 @@ Todo o projecto foi realizado pelo grupo :
   * Luís Francisco Mendes Lopes - A85367
   * Luís Mário Macedo Ribeiro - A85954
  
-manifesto:[https://github.com/GRP99/PRI2020/blob/main/ProjetoFinal/_exemplos_/manifestoExemplo.json]
+[manifesto]: https://github.com/GRP99/PRI2020/blob/main/ProjetoFinal/_exemplos_/manifestoExemplo.json
