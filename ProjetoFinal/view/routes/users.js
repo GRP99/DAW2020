@@ -5,9 +5,7 @@ var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhZG1pbiIsImxldmVsIj
 
 
 /* GET UserHome Page. */
-router.get(['/'], function(req, res, next) {
-  res.render('home',{token:req.query.token})
-});
+
 
 router.get(['/account'], function(req, res, next) {
 

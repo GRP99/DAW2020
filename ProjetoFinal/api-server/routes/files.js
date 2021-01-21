@@ -38,9 +38,6 @@ router.get("/:id", function (req, res, next) {
             res.status(200).jsonp(data);
         } else 
             res.status(401);
-        
-
-
     }).catch((err) => res.status(500).jsonp(err));
 });
 

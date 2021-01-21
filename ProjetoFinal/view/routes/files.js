@@ -47,8 +47,9 @@ router.get("/biblioteca", (req, res) => {
     .all([requestUser, requestFicheiros])
     .then(
       axios.spread((...response) => {
+        
         var user = response[0].data;
-        var ficheiros = response[1].data;
+        var ficheiros = response[1].data; console.log(ficheiros)
         res.render("library", { lista: ficheiros, users: user, token:req.query.token });
       })
     )

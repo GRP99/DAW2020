@@ -16,15 +16,9 @@ block content
                   div
                     ul
                       div
-                        li
-                          div
-                            p Noticia 1
-                            p data 1 
-                        li
-                          div
-                            p Noticia 1
-                            p data 1 
-                        li
-                          div
-                            p Noticia 1
-                            p data 1 
+                        each not in noticias
+                          li
+                            div
+                              p=not.descricao
+                              p=not.date
+                        

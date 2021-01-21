@@ -4,10 +4,16 @@ var multer = require('multer')
 var upload = multer({dest: 'uploads/'})
 var fs = require('fs')
 var path = require('path');
-var UControl = require('../controllers/news')
+var NControl = require('../controllers/news')
 var User = require('../controllers/users')
 
-/* USERS */
+
+router.get('/',function(req,res){
+  NControl.list()
+  .then((data) => res.status(200).jsonp(data))
+  .catch((err) => res.status(500).jsonp(err));
+})
+
 
 /* Post warning */
 router.post("/", function (req, res, next) {

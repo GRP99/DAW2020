@@ -19,6 +19,13 @@ module.exports.insert = (p, path) => {
     console.log(JSON.stringify(p))
     var newFile = new Files(p)
     newFile.filepath = path
+    estrelas = {
+        type:0,
+        autores:[]
+    }
+    newFile.comentarios = []
+    newFile.estrelas = estrelas;
+    console.log(newFile)
     return newFile.save()
 }
 
