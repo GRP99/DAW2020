@@ -80,7 +80,7 @@ router.post('/signup', function(req, res){
 router.post('/login',function(req, res){
   axios.post('http://localhost:3001/users/login?token='+token,req.body)
       .then(dados =>{
-        res.redirect("/users?token="+dados.data.token)
+        res.redirect("/homepage?token="+dados.data.token)
       })
       .catch(error=>{console.log(error)})
 })
