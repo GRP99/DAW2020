@@ -55,26 +55,15 @@ router.put("/changeprivacy/:id", function (req, res, next) { /* console.log("mud
     FControl.editS(id_file).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
 });
 
-/*Make Download. Works*/
+/* Download */
 router.get("/download/:id_autor/:id", function (req, res) {
     FControl.lookup(req.params.id).then((file) => {
         if (req.user.level == "admin" || req.user._id == file.autor || file.privacy == 0) {
-            console.log(file.name);
             let path = __dirname + '/../public/fileStore/' + req.params.id_autor + "/" + file.name
-            console.log(path);
             SIP.zip(path, file.name);
             res.download(path + file.name);
-
-            /*
-            var pa = __dirname + "/../public/fileStore/" + req.params.id_autor + "/" + file.name
-            console.log(pa)
-            res.download(__dirname + "/../public/fileStore/" + req.params.id_autor + "/" + file.name);
-            */
         } else 
             res.status(401);
-        
-
-
     });
 });
 
@@ -143,12 +132,6 @@ router.post("/", upload.single("myFile"), (req, res) => {
                         descricao: req.body.descricao
                     }
 
-                    FControl.insert(fD, correctedPath).then(() => {
-                        res.redirect("http://localhost:3002/users/account?token=" + req.query.token)
-                    }).catch(err => {
-                        res.status(500).jsonp(err);
-                    });
-
                     if (req.body.privacy == 0) {
                         User.lookUp(req.body.autor).then(dados => {
                             var news = {
@@ -162,8 +145,15 @@ router.post("/", upload.single("myFile"), (req, res) => {
         
                     }
 
+                    FControl.insert(fD, correctedPath).then(() => {
+                        res.redirect("http://localhost:3002/users/account?token=" + req.query.token)
+                    }).catch(err => {
+                        res.status(500).jsonp(err);
+                    });
+
                 } else {
-                    Limpa.eliminaPasta(__dirname + '/../' + req.file.path + 'dir');
+                    Limpa.eliminaPasta(__dirname + '/../' + req.file.path + 'sip');
+                    res.redirect("http://localhost:3002/users/account?token=" + req.query.token)
                 }
             }
 

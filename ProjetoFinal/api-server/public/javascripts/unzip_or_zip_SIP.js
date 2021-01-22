@@ -12,16 +12,16 @@ module.exports.unzip = (ficheiro) => {
     fs.unlinkSync(ficheiro);
 }
 
-module.exports.zip = (path, nome) => {
+module.exports.zip = (path, name) => {
     var zip = new AdmZip();
 
     fs.readdirSync(path).forEach((file) => {
-        if (fs.lstatSync(path + file).isDirectory()) {
-            zip.addLocalFolder(path + file);
+        if (fs.lstatSync(path + "/" + file).isDirectory()) {
+            zip.addLocalFolder(path + "/" + file);
         } else {
-            zip.addLocalFile(path + file);
+            zip.addLocalFile(path + "/" + file);
         }
     });
 
-    zip.writeZip(path + nome);
+    zip.writeZip(path + name);
 }
