@@ -7,6 +7,11 @@ var path = require("path");
 var FControl = require("../controllers/files");
 var NControl = require("../controllers/news");
 var User = require("../controllers/users");
+
+var Limpa = require('../public/javascripts/limpa')
+var SIP = require('../public/javascripts/unzip_or_zip_SIP')
+var Manifesto = require('../public/javascripts/verificaManifesto')
+
 function verificaAutoriadade(autor, usr) {
     return autor == usr;
 }
@@ -38,6 +43,9 @@ router.get("/:id", function (req, res, next) {
             res.status(200).jsonp(data);
         } else 
             res.status(401);
+        
+
+
     }).catch((err) => res.status(500).jsonp(err));
 });
 
@@ -51,9 +59,17 @@ router.put("/changeprivacy/:id", function (req, res, next) { /* console.log("mud
 router.get("/download/:id_autor/:id", function (req, res) {
     FControl.lookup(req.params.id).then((file) => {
         if (req.user.level == "admin" || req.user._id == file.autor || file.privacy == 0) {
+            console.log(file.name);
+            let path = __dirname + '/../public/fileStore/' + req.params.id_autor + "/" + file.name
+            console.log(path);
+            SIP.zip(path, file.name);
+            res.download(path + file.name);
+
+            /*
             var pa = __dirname + "/../public/fileStore/" + req.params.id_autor + "/" + file.name
             console.log(pa)
             res.download(__dirname + "/../public/fileStore/" + req.params.id_autor + "/" + file.name);
+            */
         } else 
             res.status(401);
         
@@ -64,7 +80,7 @@ router.get("/download/:id_autor/:id", function (req, res) {
 
 /* POST de files de um autor. Works*/
 router.post("/", upload.single("myFile"), (req, res) => {
-    if (req.user.level != "consumer") {
+    if (req.user.level != "consumer") { /*
         let quarantinePath = __dirname + "/../" + req.file.path;
         let dirpath = __dirname + "/../public/fileStore/" + req.body.autor;
         fs.mkdirSync(dirpath, {recursive: true});
@@ -74,7 +90,7 @@ router.post("/", upload.single("myFile"), (req, res) => {
         var normalizedPath = path.normalize(newPath);
         var correctedPath = normalizedPath.replace(/\\/g, "/");
 
-        /* dá move do ficheiro */
+        /* dá move do ficheiro 
         fs.rename(quarantinePath, newPath, function (error) {
             if (error) {
                 console.log("ERROR" + error);
@@ -92,21 +108,69 @@ router.post("/", upload.single("myFile"), (req, res) => {
             privacy: req.body.privacy,
             descricao: req.body.descricao
         };
+        */
 
-        if (req.body.privacy == 0) {
-            User.lookUp(req.body.autor).then(dados => {
-                var news = {
-                    date: d,
-                    autorID: req.body.autor,
-                    autor: dados.name,
-                    descricao: 'O ' + dados.name + ' adicionou o ficheiro ' + req.file.originalname
+        if (req.file != null) {
+            if (req.file.mimetype == 'application/x-zip-compressed') {
+                SIP.unzip(req.file.path);
+                if (Manifesto.verifica(__dirname + '/../' + req.file.path + 'sip')) {
+                    var obj_json = __dirname + '/../' + req.file.path + 'sip' + '/manifesto.json'
+                    req.body.manifesto = JSON.stringify(require(obj_json));
+                    let quarantinePath = __dirname + '/../' + req.file.path + 'sip'
+                    let dirpath = __dirname + "/../public/fileStore/" + req.body.autor
+
+                    fs.mkdirSync(dirpath, {recursive: true})
+
+                    let newPath = dirpath + "/" + req.file.originalname
+                    var normalizedPath = path.normalize(newPath)
+                    var correctedPath = normalizedPath.replace(/\\/g, '/')
+
+                    fs.rename(quarantinePath, newPath, function (error) {
+                        if (error) {
+                            console.log("ERROR" + error)
+                        }
+                    })
+
+                    var d = new Date().toISOString().substr(0, 16);
+
+                    var fD = {
+                        date: d,
+                        autor: req.body.autor,
+                        name: req.file.originalname,
+                        mimetype: req.file.mimetype,
+                        size: req.file.size,
+                        privacy: 1,
+                        descricao: req.body.descricao
+                    }
+
+                    FControl.insert(fD, correctedPath).then(() => {
+                        res.redirect("http://localhost:3002/users/account?token=" + req.query.token)
+                    }).catch(err => {
+                        res.status(500).jsonp(err);
+                    });
+
+                    if (req.body.privacy == 0) {
+                        User.lookUp(req.body.autor).then(dados => {
+                            var news = {
+                                date: d,
+                                autorID: req.body.autor,
+                                autor: dados.name,
+                                descricao: 'O ' + dados.name + ' adicionou o ficheiro ' + req.file.originalname
+                            }
+                            NControl.insert(news)
+                        })
+        
+                    }
+
+                } else {
+                    Limpa.eliminaPasta(__dirname + '/../' + req.file.path + 'dir');
                 }
-                NControl.insert(news)
-            })
+            }
 
+            
+        } else {
+            res.status(500).jsonp(err);
         }
-
-        FControl.insert(fD, correctedPath).then(res.redirect("http://localhost:3002/users/account?token=" + req.query.token),).catch((err) => res.status(500).jsonp(err));
     }
 });
 
@@ -174,7 +238,6 @@ router.post('/:id/estrelas/:idU', function (req, res) {
     }).catch(e => {
         res.status(500).jsonp(e)
     })
-})
-
+});
 
 module.exports = router;
