@@ -17,7 +17,8 @@ module.exports.zip = (path, name) => {
 
     fs.readdirSync(path).forEach((file) => {
         if (fs.lstatSync(path + "/" + file).isDirectory()) {
-            zip.addLocalFolder(path + "/" + file);
+            console.log(path + "/" + file);
+            zip.addLocalFolder(path + "/" + file + "/");
         } else {
             zip.addLocalFile(path + "/" + file);
         }
