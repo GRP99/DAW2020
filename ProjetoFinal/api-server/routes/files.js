@@ -50,9 +50,29 @@ router.get("/:id", function (req, res, next) {
 });
 
 /* Privacidade - Público ou Privado. Works with minor bug */
-router.put("/changeprivacy/:id", function (req, res, next) { /* console.log("mudar") */
+router.put("/classificar/:id", function (req, res, next) { /* console.log("mudar") */
+    id_user = req.user._id
     id_file = req.params.id;
-    FControl.editS(id_file).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
+    classificacao = req.query.class
+    FControl.classifica(id_file, id_user, classificacao).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
+});
+
+/* Add UserId to Favourites of a File */
+router.put("/addAsFavourite/:id", function (req, res, next) { /* console.log("mudar") */
+    id_user = req.user._id
+    id_file = req.params.id;
+    FControl.addFav(id_file, id_user).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
+});
+
+/* Privacidade - Público ou Privado. Works with minor bug */
+router.put("/changeprivacy/:id", function (req, res, next) { /* console.log("mudar") */
+    FControl.lookup(req.params.id).then((result) => {
+        if (req.user.level == "admin" || req.user._id == result.autor) { 
+            FControl.editS(id_file).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
+        } else {
+            res.status(401)
+        }
+    });
 });
 
 /* Download */
@@ -167,7 +187,8 @@ router.post("/", upload.single("myFile"), (req, res) => {
 /* DELETE de Files. Works*/
 router.delete("/:id", (req, res) => {
     FControl.lookup(req.params.id).then((result) => {
-        if (req.user.level == "admin" || req.user._id == result.autor) { /* Apagar ficheiro da pasta */
+        if (req.user.level == "admin" || req.user._id == result.autor) { 
+            /* Apagar ficheiro da pasta */
             let fpath = "public/fileStore/" + result.autor + "/" + result.name;
             fs.unlink(fpath, (error) => {
                 if (error) {
@@ -208,6 +229,7 @@ router.post('/:id/removerComentario', function (req, res) {
     })
 });
 
+/* Classificar */
 router.post('/:id/estrelas/:idU', function (req, res) {
     var flag;
     FControl.getEstrelas(req.params.id).then(estrelas => {

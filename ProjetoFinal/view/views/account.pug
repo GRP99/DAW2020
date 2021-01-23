@@ -21,13 +21,13 @@ block content
                   dl
                     dt
                         b Nome:
-                            dd=user_name
+                        dd=user_name
                     dt
                         b Email de Contacto:
-                            dd= user_mail
+                        dd= user_mail
                 button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-2(onclick="openUploadModal(\""+user_id+"\")") Upload
                 .u-table.u-table-responsive.u-table-1
-                  table.u-table-entity
+                  table.u-table-entity(style="margin:22px;font-size:12px")
                     colgroup
                       col(width='16.666666%')
                       col(width='16.666666%')
@@ -47,22 +47,22 @@ block content
                         th.u-table-cell
                     tbody.u-table-body
                       each a in lista
-                        tr(style='height: 106px;')
+                        tr(style='height: 86px;')
                             td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.date
-                            td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell(onclick="showFile(\""+a.name+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+",\""+token+"\");")= a.name
+                            td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell(onclick="showFile(\""+a._id+"\",\""+a.name+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")= a.name
                             td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.mimetype
                             td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.size
                             if a.privacy == 1
                                 td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
-                                    b Privado
+                                    b Privado 
                                     a(href="http://localhost:3002/files/changeprivacy/"+a._id+'?token='+token, class="fa fa-lock")
                             else
                                 td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
-                                    b Público
+                                    b Público 
                                     a(href="http://localhost:3002/files/changeprivacy/"+a._id+'?token='+token, class="fa fa-unlock") 
                             td
-                                button(class="w3-button w3-green" onclick="showFile(\""+a._id+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")
-                                    i(class="fa fa-download" style="font-size:15px")        
+                                button(class="w3-button w3-green" onclick="showFile(\""+a._id+"\",\""+a.name+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")
+                                    i(class="fa fa-download" style="font-size:15px")
                             td
                                 a(href="http://localhost:3002/files/delete/"+a._id+"?token="+token) 
                                   button(class="w3-button w3-red" onclick='return confirm("Do you want to delete this file?")')

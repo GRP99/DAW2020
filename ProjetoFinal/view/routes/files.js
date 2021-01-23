@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 var axios = require("axios");
 var jwt = require("jsonwebtoken");
+//var popup = require('popups');
+const { request } = require("../app");
 var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhZG1pbiIsImxldmVsIjoiYWRtaW4iLCJleHBpcmVzSW4iOiIzbSIsImlhdCI6MTYxMDExODM1OX0.omYqB6hz4vSrRjIBEAi0mg6TNVti0OaqXW6n95JljiM';
 
 
@@ -34,6 +36,75 @@ router.get("/changeprivacy/:id", function (req, res, next) {
       console.log("ERROR ao mudar privacidade: " + erro);
     });
 });
+
+/* Um user adiciona um ficheiro aos favoritos */
+router.get("/addAsFavourite/:id", function (req, res, next) {
+  var requestFich = axios.get(
+    "http://localhost:3001/files/" + req.params.id + "?token=" + req.query.token
+  );
+  axios
+    .all([requestFich])
+    .then(
+      axios.spread((...response) => {
+        if(requestFich.data.favourites.includes(req.user._id)){
+          alert("ERRO: Este ficheiro já se encontra nos seus favoritos!");
+        }
+        else {
+          axios
+          .put(
+            "http://localhost:3001/files/addAsFavourite/" +
+              req.params.id +
+              "?token=" +
+              req.query.token
+            )
+            .then(function (resp) {
+              res.redirect("/biblioteca?token=" + req.query.token);
+            })
+            .catch(function (error) {
+              res.redirect("/biblioteca?token=" + req.query.token);
+           });
+      }})
+    )
+    .catch(function (erro) {
+      console.log("ERROR: Erro ao adicioanr aos favoritos: " + erro);
+    });
+});
+
+
+/* Um user classifica um ficheiro na Library */
+router.get("/classificar/:id", function (req, res, next) {
+  var requestFich = axios.get(
+    "http://localhost:3001/files/" + req.params.id + "?token=" + req.query.token
+  );
+  axios
+    .all([requestFich])
+    .then(
+      axios.spread((...response) => {
+        if(requestFich.data.estrelas.autores.includes(req.user._id)){
+          alert('ERRO: Já classificou este ficheiro!')
+        }
+        else {
+          axios
+          .put(
+            "http://localhost:3001/files/classificar/" +
+              req.params.id +
+              "?token=" +
+              req.query.token
+              + "&class=" + req.query.class
+            )
+            .then(function (resp) {
+              res.redirect("/biblioteca?token=" + req.query.token);
+            })
+            .catch(function (error) {
+              res.redirect("/biblioteca?token=" + req.query.token);
+            });
+        }})
+    )
+    .catch(function (erro) {
+      console.log("ERROR: Erro ao classificar: " + erro);
+    });
+});
+
 
 /* Biblioteca all files */
 router.get("/biblioteca", (req, res) => {

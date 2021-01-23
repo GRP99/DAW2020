@@ -6,7 +6,6 @@ var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhZG1pbiIsImxldmVsIj
 
 /* GET UserHome Page. */
 
-
 router.get(['/account'], function(req, res, next) {
 
   var _id = req.user._id

@@ -18,22 +18,47 @@ block content
               th.u-table-cell File
               th.u-table-cell Type
               th.u-table-cell Size
-              th.u-table-cell Likes
+              th.u-table-cell Classification
               th.u-table-cell Author 
-              th.u-table-cell 
+              th.u-table-cell
+              th.u-table-cell  
           tbody.u-custom-font.u-font-ubuntu.u-table-body
               each a in lista
                   if a.privacy==0
                       tr(style='height: 75px;')
                           td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.date
-                          td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell(onclick="showFile(\""+a._id+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")= a.name
+                          td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell(onclick="showFile(\""+a._id+"\",\""+a.name+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")= a.name
                           td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.mimetype
                           td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.size
-                          td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.estrelas.numero
+                          td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                            div(class="rating")
+                                if (a.estrelas.numero > 4.5) 
+                                  span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(5,\""+a._id+"\"):'';") ★ 
+                                else 
+                                  span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(5,\""+a._id+"\"):'';") ☆
+                                if (a.estrelas.numero > 3.5) 
+                                  span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(4,\""+a._id+"\"):'';") ★ 
+                                else 
+                                  span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(4,\""+a._id+"\"):'';") ☆
+                                if (a.estrelas.numero > 2.5) 
+                                  span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(3,\""+a._id+"\"):'';") ★ 
+                                else 
+                                  span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(3,\""+a._id+"\"):'';") ☆
+                                if (a.estrelas.numero > 1.5) 
+                                  span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(2,\""+a._id+"\"):'';") ★ 
+                                else 
+                                  span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(2,\""+a._id+"\"):'';") ☆
+                                if (a.estrelas.numero > 0.5) 
+                                  span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(1,\""+a._id+"\"):'';") ★ 
+                                else 
+                                  span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(1,\""+a._id+"\"):'';") ☆
                           each u in users
                               if u._id == a.autor
                                   td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=u.name
                           td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
-                            button(class="w3-button w3-green" onclick="showFile(\""+a._id+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")
+                            button(class="w3-button w3-green" onclick="showFile(\""+a._id+"\",\""+a.name+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")
                               i(class="fa fa-download" style="font-size:15px")
+                          td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                            button(class="w3-button w3-yellow" onclick="addAsFavourite(\""+a._id+"\");")
+                              i(class="fa fa-star" style="font-size:15px")
   div(id='display')                                         

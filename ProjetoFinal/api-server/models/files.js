@@ -43,6 +43,11 @@ var FileSchema = new mongoose.Schema({
     estrelas: {
         type: estrelaSchema,
         required: true
+    },
+    favourites: {
+        type:[String],
+        default:[],
+        required:true
     }
 })
 

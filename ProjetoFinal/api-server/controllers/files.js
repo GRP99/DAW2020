@@ -44,23 +44,20 @@ module.exports.remove = id => {
 }
 
 /* Changes security */
-module.exports.editS = (id) => {
+module.exports.addFav = (id, user) => {
     Files.findOne({_id: id}).exec().then((result) => {
-        if (result.privacy == 0) {
-            result.privacy = 1;
-        } else {
-            result.privacy = 0;
-        }
-        return Files.findByIdAndUpdate(id, result, {new: true})
+        result.favourites.add(user);
+        return Files.findByIdAndUpdate(id, result, {new: true});
     })
-    /*console.log(file.body)
-    if(file.privacy == 0) {
-        file.privacy = 1;
-    }
-    else {
-        file.privacy = 0;
-    }
-    return Files.findByIdAndUpdate(id, file, {new: true})*/
+}
+
+/* Add classificação e calcula nova média */
+module.exports.classifica = (id, user, classi) => {
+    Files.findOne({_id: id}).exec().then((result) => {
+        result.numero = ((result.numero * result.autores.length) + classi) / (result.autores.length + 1);
+        result.autores = result.autores.add(user);
+        return Files.findByIdAndUpdate(id, result, {new: true});
+    })
 }
 
 

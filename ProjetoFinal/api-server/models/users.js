@@ -5,7 +5,7 @@ var UserSchema = new mongoose.Schema({
     _id: String,
     password: String,
     level: String,
-    profilepic: Number
+    profilepic: Number,
 })
 
 module.exports = mongoose.model('users', UserSchema)
