@@ -114,9 +114,26 @@ router.put("/changeprivacy/:id", function (req, res, next) { // console.log("mud
 router.get("/download/:id_autor/:id", function (req, res) {
     FControl.lookup(req.params.id).then((file) => {
         if (req.user.level == "admin" || req.user._id == file.autor || file.privacy == 0) {
-            let path = __dirname + '/../public/fileStore/' + req.params.id_autor + "/" + file.name
-            SIP.zip(path, file.name);
-            res.download(path + file.name);
+            let path = __dirname + '/../public/fileStore/' + req.params.id_autor + "/uploads/" + file.name
+
+            SIP.zip(path);
+            
+            let quarantinePath = path + "_dip"
+
+            let dirpath = __dirname + "/../public/fileStore/" + req.params.id_autor + "/downloads"
+
+            fs.mkdirSync(dirpath, {recursive: true});
+
+            let newPath = dirpath + "/" + file.name
+
+            fs.rename(quarantinePath, newPath, function (error) {
+                if (error) {
+                    res.status(500).jsonp({error: "ERRO : Erro na pasta de downloads."});
+                }
+            })
+
+            res.download(newPath);
+
         } else {
             res.status(401);
         }
@@ -160,11 +177,11 @@ router.post("/", upload.single("myFile"), (req, res) => {
         if (req.file != null) {
             if (req.file.mimetype == 'application/x-zip-compressed') {
                 SIP.unzip(req.file.path);
-                if (Manifesto.verifica(__dirname + '/../' + req.file.path + 'sip')) {
-                    var obj_json = __dirname + '/../' + req.file.path + 'sip' + '/manifesto.json'
+                if (Manifesto.verifica(__dirname + '/../' + req.file.path + '_sip')) {
+                    var obj_json = __dirname + '/../' + req.file.path + '_sip' + '/manifesto.json'
                     req.body.manifesto = JSON.stringify(require(obj_json));
-                    let quarantinePath = __dirname + '/../' + req.file.path + 'sip'
-                    let dirpath = __dirname + "/../public/fileStore/" + req.body.autor
+                    let quarantinePath = __dirname + '/../' + req.file.path + '_sip'
+                    let dirpath = __dirname + "/../public/fileStore/" + req.body.autor + "/uploads/"
 
                     fs.mkdirSync(dirpath, {recursive: true})
 
@@ -206,16 +223,17 @@ router.post("/", upload.single("myFile"), (req, res) => {
                     FControl.insert(fD, correctedPath).then(() => {
                         res.redirect("http://localhost:3002/users/account?token=" + req.query.token)
                     }).catch(err => {
-                        res.status(500).jsonp(err);
+                        res.status(500).jsonp({error: "ERRO : Erro na pasta de uploads."});
                     });
 
                 } else {
                     Limpa.eliminaPasta(__dirname + '/../' + req.file.path + 'sip');
                     res.redirect("http://localhost:3002/users/account?token=" + req.query.token)
                 }
+            } else {
+                Limpa.eliminaPasta(__dirname + '/../' + req.file.path);
+                res.redirect("http://localhost:3002/users/account?token=" + req.query.token)
             }
-
-
         } else {
             res.status(500).jsonp(err);
         }

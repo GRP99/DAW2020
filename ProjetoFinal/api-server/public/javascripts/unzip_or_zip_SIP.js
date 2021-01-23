@@ -2,7 +2,7 @@ var AdmZip = require('adm-zip');
 const fs = require('fs');
 
 module.exports.unzip = (ficheiro) => {
-    var destino = ficheiro + 'sip'
+    var destino = ficheiro + '_sip'
 
     fs.mkdirSync(destino);
 
@@ -12,17 +12,16 @@ module.exports.unzip = (ficheiro) => {
     fs.unlinkSync(ficheiro);
 }
 
-module.exports.zip = (path, name) => {
+module.exports.zip = (path) => {
     var zip = new AdmZip();
 
     fs.readdirSync(path).forEach((file) => {
-        if (fs.lstatSync(path + "/" + file).isDirectory()) {
-            console.log(path + "/" + file);
+        if (fs.lstatSync(path + "/" + file + "/").isDirectory()) {
             zip.addLocalFolder(path + "/" + file + "/");
         } else {
             zip.addLocalFile(path + "/" + file);
         }
     });
 
-    zip.writeZip(path + name);
+    zip.writeZip(path + "_dip");
 }
