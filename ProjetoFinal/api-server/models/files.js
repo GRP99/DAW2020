@@ -1,4 +1,4 @@
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
 
 var estrelaSchema = new mongoose.Schema({
     numero: {
@@ -7,7 +7,7 @@ var estrelaSchema = new mongoose.Schema({
         required: true
     },
     autores: [String]
-})
+});
 
 var comentarioSchema = new mongoose.Schema({
     id: String,
@@ -44,11 +44,11 @@ var FileSchema = new mongoose.Schema({
         type: estrelaSchema,
         required: true
     },
-    favourites: {
-        type:[String],
-        default:[],
-        required:true
+    favoritos: {
+        type: [String],
+        default: [],
+        required: true
     }
-})
+});
 
 module.exports = mongoose.model('files', FileSchema)

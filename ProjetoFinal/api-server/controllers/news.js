@@ -1,24 +1,24 @@
-/* PARAGRAPH CONTROLLER */
-var News = require('../models/news')
+// NEWS CONTROLLER
 
-/* Return list of news */
+var News = require('../models/news');
+
+// retorna all the news
 module.exports.list = () => {
     return News.find().exec()
 }
 
-module.exports.last10News = ()=>{
-    return News.find().sort({_id:1}).limit(10).exec()
+// return the last 10 news
+module.exports.last10News = () => {
+    return News.find().sort({_id: 1}).limit(10).exec()
 }
 
-/* Returns a file record */
+// return only one new 
 module.exports.lookup = id => {
     return News.findOne({_id: id}).exec()
-} 
+}
 
-/* Inserts a new paragraph */
+// record new news
 module.exports.insert = (news) => {
     var newNews = new News(news)
     return newNews.save()
 }
-
-

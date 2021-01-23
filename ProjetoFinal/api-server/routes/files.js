@@ -4,6 +4,7 @@ var multer = require("multer");
 var upload = multer({dest: "uploads/"});
 var fs = require("fs");
 var path = require("path");
+
 var FControl = require("../controllers/files");
 var NControl = require("../controllers/news");
 var User = require("../controllers/users");
@@ -12,82 +13,119 @@ var Limpa = require('../public/javascripts/limpa')
 var SIP = require('../public/javascripts/unzip_or_zip_SIP')
 var Manifesto = require('../public/javascripts/verificaManifesto')
 
+/*
 function verificaAutoriadade(autor, usr) {
     return autor == usr;
 }
+*/
 
-/* GET all files. Works */
+// get all files (works)
 router.get("/", function (req, res, next) {
     if (req.user.level == "admin") {
-        FControl.list().then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
+        FControl.list().then((data) => {
+            res.status(200).jsonp(data);
+        }).catch((err) => {
+            res.status(500).jsonp(err);
+        });
     } else {
         res.status(401);
     }
 });
 
-/* Get All Public Files. Works */
+
+// get all public files (works)
 router.get("/public", function (req, res, next) {
-    FControl.publicFiles().then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
+    FControl.publicFiles().then((data) => {
+        res.status(200).jsonp(data);
+    }).catch((err) => {
+        res.status(500).jsonp(err);
+    });
 });
 
-/*Get Files from User. Works*/
+
+// get files from user (works)
 router.get("/fromUser", function (req, res) {
     var userID = req.user.id;
-    FControl.filesbyUser(userID).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
+    FControl.filesbyUser(userID).then((data) => {
+        res.status(200).jsonp(data);
+    }).catch((err) => {
+        res.status(500).jsonp(err);
+    });
 });
 
-/* GET file by id. Work.*/
+
+// get file by id (works)
 router.get("/:id", function (req, res, next) {
     FControl.lookup(req.params.id).then((data) => {
         if (data.autor == req.user._id || req.user.level == "admin") {
             res.status(200).jsonp(data);
-        } else 
-            res.status(401);
-        
-
-
-    }).catch((err) => res.status(500).jsonp(err));
-});
-
-/* Privacidade - Público ou Privado. Works with minor bug */
-router.put("/classificar/:id", function (req, res, next) { /* console.log("mudar") */
-    id_user = req.user._id
-    id_file = req.params.id;
-    classificacao = req.query.class
-    FControl.classifica(id_file, id_user, classificacao).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
-});
-
-/* Add UserId to Favourites of a File */
-router.put("/addAsFavourite/:id", function (req, res, next) { /* console.log("mudar") */
-    id_user = req.user._id
-    id_file = req.params.id;
-    FControl.addFav(id_file, id_user).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
-});
-
-/* Privacidade - Público ou Privado. Works with minor bug */
-router.put("/changeprivacy/:id", function (req, res, next) { /* console.log("mudar") */
-    FControl.lookup(req.params.id).then((result) => {
-        if (req.user.level == "admin" || req.user._id == result.autor) { 
-            FControl.editS(id_file).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
         } else {
-            res.status(401)
+            res.status(401);
+        }
+    }).catch((err) => {
+        res.status(500).jsonp(err);
+    });
+});
+
+// privacy (works with minor bug)
+router.put("/classificar/:id", function (req, res, next) { // console.log("mudar")
+    id_user = req.user._id
+    id_file = req.params.id
+    classificacao = req.query.class
+
+    FControl.classifica(id_file, id_user, classificacao).then((data) => {
+        res.status(200).jsonp(data);
+    }).catch((err) => {
+        res.status(500).jsonp(err);
+    });
+});
+
+
+// add userid to favourites of a file
+router.put("/addAsFavourite/:id", function (req, res, next) { // console.log("mudar")
+    id_user = req.user._id
+    id_file = req.params.id;
+
+    FControl.addFav(id_file, id_user).then((data) => {
+        res.status(200).jsonp(data);
+    }).catch((err) => {
+        res.status(500).jsonp(err);
+    });
+});
+
+
+// privacy (works with minor bug)
+router.put("/changeprivacy/:id", function (req, res, next) { // console.log("mudar")
+    FControl.lookup(req.params.id).then((result) => {
+        if (req.user.level == "admin" || req.user._id == result.autor) {
+            FControl.editS(id_file).then((data) => {
+                res.status(200).jsonp(data);
+            }).catch((err) => {
+                res.status(500).jsonp(err);
+            });
+        } else {
+            res.status(401);
         }
     });
 });
 
-/* Download */
+
+// download
 router.get("/download/:id_autor/:id", function (req, res) {
     FControl.lookup(req.params.id).then((file) => {
         if (req.user.level == "admin" || req.user._id == file.autor || file.privacy == 0) {
             let path = __dirname + '/../public/fileStore/' + req.params.id_autor + "/" + file.name
             SIP.zip(path, file.name);
             res.download(path + file.name);
-        } else 
+        } else {
             res.status(401);
+        }
+
     });
 });
 
-/* POST de files de um autor. Works*/
+
+// upload file (works)
 router.post("/", upload.single("myFile"), (req, res) => {
     if (req.user.level != "consumer") { /*
         let quarantinePath = __dirname + "/../" + req.file.path;
@@ -162,7 +200,7 @@ router.post("/", upload.single("myFile"), (req, res) => {
                             }
                             NControl.insert(news)
                         })
-        
+
                     }
 
                     FControl.insert(fD, correctedPath).then(() => {
@@ -177,18 +215,18 @@ router.post("/", upload.single("myFile"), (req, res) => {
                 }
             }
 
-            
+
         } else {
             res.status(500).jsonp(err);
         }
     }
 });
 
-/* DELETE de Files. Works*/
+
+// delete file (works)
 router.delete("/:id", (req, res) => {
     FControl.lookup(req.params.id).then((result) => {
-        if (req.user.level == "admin" || req.user._id == result.autor) { 
-            /* Apagar ficheiro da pasta */
+        if (req.user.level == "admin" || req.user._id == result.autor) { // apagar ficheiro da pasta
             let fpath = "public/fileStore/" + result.autor + "/" + result.name;
             fs.unlink(fpath, (error) => {
                 if (error) {
@@ -203,14 +241,19 @@ router.delete("/:id", (req, res) => {
     });
 });
 
-/* Todos os ficheiros de um user TO SEE UTILITY */
+
+// all the files from user TO SEE UTILITY
 router.get("/autor/:id", function (req, res, next) {
     id_autor = req.params.id;
-    FControl.filesbyUser(id_autor).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
+    FControl.filesbyUser(id_autor).then((data) => {
+        res.status(200).jsonp(data);
+    }).catch((err) => {
+        res.status(500).jsonp(err);
+    });
 });
 
 
-// Adicionar um comentario
+// add comment
 router.post('/:id/adicionarComentario', function (req, res) {
     FControl.adicionarComentario(req.params.id, req.body).then(dados => {
         res.jsonp(dados)
@@ -219,7 +262,8 @@ router.post('/:id/adicionarComentario', function (req, res) {
     })
 });
 
-// Remover um comentario
+
+// remove comment
 router.post('/:id/removerComentario', function (req, res) {
     var idC = req.query.comentario
     FControl.removerComentario(req.params.id, idC).then(dados => {
@@ -229,7 +273,8 @@ router.post('/:id/removerComentario', function (req, res) {
     })
 });
 
-/* Classificar */
+
+// classify
 router.post('/:id/estrelas/:idU', function (req, res) {
     var flag;
     FControl.getEstrelas(req.params.id).then(estrelas => {

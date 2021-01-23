@@ -8,8 +8,8 @@ block content
         if path == 0
             img(src="https://www.inmosenna.com/wp-content/uploads/2018/07/avatar-user-business-man-399587fe24739d5a-512x512-300x300.png" alt="User" style="width:120px; height:120px; object-fit: cover; margin-left:10px")
         else 
-            img(src="http://localhost:3001/users/"+user_id+"/profilepic.jpeg?token="+token, alt="UserI", style="width:120px; height:120px; border-radius: 30%;  object-fit: cover; margin-left:10px")
-        button(type='button', onclick="mudafoto(\"" + user_id + "\",\"" + token +"\");", style="margin-left:130px")
+            img(src="http://localhost:3001/users/"+user_id+"/profilepic.jpeg?token="+token, alt="UserI" style="width:120px; height:120px; border-radius: 30%;  object-fit: cover; margin-left:10px")
+        button(type='button' onclick="mudafoto(\"" + user_id + "\",\"" + token +"\");" style="margin-left:130px")
             i(class="fa fa-gear")   Alterar foto
         dl
             dt 

@@ -1,57 +1,70 @@
-/* PARAGRAPH CONTROLLER */
-var Files = require('../models/files')
-/* Return list of paragraphs */
+// FILES CONTROLLER
+
+var Files = require('../models/files');
+
+
+// return all files
 module.exports.list = () => {
-    return Files.find().exec()
+    return Files.find().exec();
 }
 
+
+// return only public files
 module.exports.publicFiles = () => {
-    return Files.find({privacy: 0}).exec()
+    return Files.find({privacy: 0}).exec();
 }
 
-/* Returns a file record */
+
+// find that file
 module.exports.lookup = id => {
-    return Files.findOne({_id: id}).exec()
+    return Files.findOne({_id: id}).exec();
 }
 
-/* Inserts a new paragraph */
+
+// insert a new file
 module.exports.insert = (p, path) => {
-    console.log(JSON.stringify(p))
+    // console.log(JSON.stringify(p));
     var newFile = new Files(p)
     newFile.filepath = path
     estrelas = {
-        type:0,
-        autores:[]
+        type: 0,
+        autores: []
     }
     newFile.comentarios = []
     newFile.estrelas = estrelas;
-    console.log(newFile)
-    return newFile.save()
+    // console.log(newFile)
+    return newFile.save();
 }
 
 
+// all the files that user
 module.exports.filesbyUser = id => {
-    return Files.find({autor: id}).exec()
+    return Files.find({autor: id}).exec();
 }
 
+
+// find a file with a given name
 module.exports.findByName = name => {
     return Files.findOne({name: name}).exec()
 }
 
-/* Delete a paragraph */
+
+// delete file
 module.exports.remove = id => {
     return Files.deleteOne({_id: id})
 }
 
-/* Changes security */
+
+// change security
 module.exports.addFav = (id, user) => {
     Files.findOne({_id: id}).exec().then((result) => {
-        result.favourites.add(user);
+        result.favoritos.add(user);
         return Files.findByIdAndUpdate(id, result, {new: true});
     })
 }
 
-/* Add classificação e calcula nova média */
+
+// add classification and calculate the average
 module.exports.classifica = (id, user, classi) => {
     Files.findOne({_id: id}).exec().then((result) => {
         result.numero = ((result.numero * result.autores.length) + classi) / (result.autores.length + 1);
@@ -61,7 +74,7 @@ module.exports.classifica = (id, user, classi) => {
 }
 
 
-// Adicionar um novo comentario
+// add a new comentary
 module.exports.adicionarComentario = (idR, comentario) => {
     return Files.update({
         _id: idR
@@ -72,7 +85,8 @@ module.exports.adicionarComentario = (idR, comentario) => {
     }).exec()
 }
 
-// Remover um comentario
+
+// remove comentary
 module.exports.removerComentario = (idR, idC) => {
     return Files.update({
         _id: idR
@@ -82,20 +96,22 @@ module.exports.removerComentario = (idR, idC) => {
                 _id: idC
             }
         }
-    }).exec()
+    }).exec();
 }
 
-// Obter estrelas
+
+// get stars
 module.exports.getEstrelas = (id) => {
     return Files.find({
         _id: id
     }, {
         _id: 0,
         estrelas: 1
-    }).exec()
+    }).exec();
 };
 
-// Adicionar uma nova estrela
+
+// add star
 module.exports.incrementarEstrelas = (idR, idU) => {
     return Files.updateOne({
         _id: idR
@@ -106,10 +122,11 @@ module.exports.incrementarEstrelas = (idR, idU) => {
         $inc: {
             "estrelas.numero": 1
         }
-    }).exec()
+    }).exec();
 }
 
-// Remover uma estrela
+
+// remove star
 module.exports.decrementarEstrelas = (idR, idU) => {
     return Files.updateOne({
         _id: idR
@@ -120,5 +137,5 @@ module.exports.decrementarEstrelas = (idR, idU) => {
         $inc: {
             "estrelas.numero": -1
         }
-    }).exec()
+    }).exec();
 }

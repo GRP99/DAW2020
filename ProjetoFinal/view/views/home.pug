@@ -1,24 +1,24 @@
 extends layout
 
 block content
-  link(rel='stylesheet' href='/stylesheets/homepage.css' media='screen')
-  section#sec-63c0.u-clearfix.u-section-1
-    .u-clearfix.u-sheet.u-valign-middle.u-sheet-1
-      .u-clearfix.u-expanded-width.u-gutter-0.u-layout-wrap.u-layout-wrap-1
-        .u-layout
-          .u-layout-row
-            .u-container-style.u-layout-cell.u-size-46.u-layout-cell-1
-              .u-border-2.u-border-custom-color-1.u-container-layout.u-container-layout-1
-            .u-container-style.u-custom-color-1.u-layout-cell.u-size-14.u-layout-cell-2
-              .u-border-2.u-border-custom-color-1.u-container-layout.u-valign-middle.u-container-layout-2
-                h3.u-align-center.u-custom-font.u-font-ubuntu.u-text.u-text-1 News
-                .u-align-center.u-clearfix.u-custom-html.u-custom-html-1
-                  div
-                    ul
-                      div
-                        each not in noticias
-                          li
-                            div
-                              p=not.descricao
-                              p=not.date
-                        
+    link(rel='stylesheet' href='/stylesheets/homepage.css' media='screen')
+    section#sec-63c0.u-clearfix.u-section-1
+        .u-clearfix.u-sheet.u-valign-middle.u-sheet-1
+            .u-clearfix.u-expanded-width.u-gutter-0.u-layout-wrap.u-layout-wrap-1
+                .u-layout
+                    .u-layout-row
+                        .u-container-style.u-layout-cell.u-size-46.u-layout-cell-1
+                            .u-border-2.u-border-custom-color-1.u-container-layout.u-container-layout-1
+                        .u-container-style.u-custom-color-1.u-layout-cell.u-size-14.u-layout-cell-2
+                            .u-border-2.u-border-custom-color-1.u-container-layout.u-valign-middle.u-container-layout-2
+                                h3.u-align-center.u-custom-font.u-font-ubuntu.u-text.u-text-1 News
+                                .u-align-center.u-clearfix.u-custom-html.u-custom-html-1
+                                    div
+                                        ul
+                                            div
+                                                each not in noticias
+                                                    li
+                                                        div
+                                                            p=not.descricao
+                                                            p=not.date
+
