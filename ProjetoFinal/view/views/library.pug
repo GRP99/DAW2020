@@ -16,9 +16,9 @@ block content
                         tr(style='height: 21px;')
                             th.u-table-cell Date
                             th.u-table-cell File
-                            th.u-table-cell Type
                             th.u-table-cell Size
-                            th.u-table-cell Classification
+                            th.u-table-cell Average Classification 
+                            th.u-table-cell Your Classification
                             th.u-table-cell Author 
                             th.u-table-cell
                             th.u-table-cell  
@@ -28,29 +28,51 @@ block content
                                 tr(style='height: 75px;')
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.date
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell(onclick="showFile(\""+a._id+"\",\""+a.name+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")= a.name
-                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.mimetype
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.size
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
-                                        div(class="rating")
-                                            if (a.estrelas.numero > 4.5) 
-                                                span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(5,\""+a._id+"\"):'';") ★ 
-                                            else 
+                                        if (a.estrelas.numero >= 4.0)
+                                            b(style="color: green")= a.estrelas.numero
+                                        if (a.estrelas.numero < 4.0 && a.estrelas.numero >= 2.0)
+                                            b(style="color: orange")= a.estrelas.numero
+                                        if (a.estrelas.numero < 2.0 && a.estrelas.numero > 0)
+                                            b(style="color: red")= a.estrelas.numero
+                                        if (a.estrelas.numero == 0)
+                                            b No classification
+                                    - var found = 0
+                                    each autoresClassificados in a.estrelas.autores
+                                        if autoresClassificados[0] == idUser
+                                            - found = 1
+                                            - var temp_classi = autoresClassificados[1]
+                                    if found == 1
+                                        td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                            div(class="rating" onclick="return alert(\"You already rated this file!\"")
+                                                if (autoresClassificados[1] == 5) 
+                                                    span ★ 
+                                                else 
+                                                    span ☆
+                                                if (autoresClassificados[1] >= 4) 
+                                                    span ★ 
+                                                else 
+                                                    span ☆
+                                                if (autoresClassificados[1] >= 3) 
+                                                    span ★ 
+                                                else 
+                                                    span ☆
+                                                if (autoresClassificados[1] >= 2) 
+                                                    span ★ 
+                                                else 
+                                                    span ☆
+                                                if (autoresClassificados[1] >= 1) 
+                                                    span ★ 
+                                                else 
+                                                    span ☆
+                                    else
+                                        td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                            div(class="rating")
                                                 span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(5,\""+a._id+"\"):'';") ☆
-                                            if (a.estrelas.numero > 3.5) 
-                                                span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(4,\""+a._id+"\"):'';") ★ 
-                                            else 
                                                 span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(4,\""+a._id+"\"):'';") ☆
-                                            if (a.estrelas.numero > 2.5) 
-                                                span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(3,\""+a._id+"\"):'';") ★ 
-                                            else 
-                                                span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(3,\""+a._id+"\"):'';") ☆
-                                            if (a.estrelas.numero > 1.5) 
-                                                span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(2,\""+a._id+"\"):'';") ★ 
-                                            else 
+                                                span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(3,\""+a._id+"\"):'';") ☆       
                                                 span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(2,\""+a._id+"\"):'';") ☆
-                                            if (a.estrelas.numero > 0.5) 
-                                                span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(1,\""+a._id+"\"):'';") ★ 
-                                            else 
                                                 span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(1,\""+a._id+"\"):'';") ☆
                                     each u in users
                                         if u._id == a.autor
@@ -58,7 +80,15 @@ block content
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
                                         button(class="w3-button w3-green" onclick="showFile(\""+a._id+"\",\""+a.name+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")
                                             i(class="fa fa-download" style="font-size:15px")
-                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
-                                        button(class="w3-button w3-yellow" onclick="addAsFavourite(\""+a._id+"\");")
-                                            i(class="fa fa-star" style="font-size:15px")
+                                    // if favoritos contains user
+                                    each fav in a.favoritos
+                                        // idUser is req.user._id
+                                        if fav == idUser
+                                            td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                                button(class="w3-button w3-green" onclick="return confirm('Do you want to remove this file from your favourites?')?removeFavourite(\""+a._id+"\"):'';")
+                                                    i(class="fa fa-check" style="font-size:15px")
+                                    else  
+                                        td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                            button(class="w3-button w3-yellow" onclick="return confirm('Do you want to add this file as your favourite?')?addAsFavourite(\""+a._id+"\"):'';")
+                                                i(class="fa fa-star" style="font-size:15px")
     div(id='display')                                         

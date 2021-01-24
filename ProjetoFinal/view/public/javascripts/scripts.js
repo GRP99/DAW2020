@@ -23,14 +23,17 @@ function add() {
 
 
 function classificar(nmr, idF) {
-    $.get("http://localhost:3001/files/classificar/" + idF + "?token=" + token + "&class=" + nmr);
+    $.get("http://localhost:3002/files/classificar/" + idF + "?token=" + token + "&class=" + nmr);
 }
 
 
 function addAsFavourite(idF) {
-    $.get("http://localhost:3001/files/addAsFavourite/" + idF + "?token=" + token);
+    $.get("http://localhost:3002/files/addAsFavourite/" + idF + "?token=" + token);
 }
 
+function removeFavourite(idF) {
+    $.get("http://localhost:3002/files/removeFavourite/" + idF + "?token=" + token);
+}
 
 function showFile(id, name, type, autor, desc) {
     var file = $("<pre><b>Nome do Ficheiro: </b>" + name + "</pre>" + "<pre><b>Tipo do Ficheiro: </b>" + type + "</pre>" + "<table><tr><pre><b>Descrição: </b></td><pre><textarea rows=\"4\" cols=\"70\" style=\"font-size: 11px;\" readonly>" + desc + "</textarea>" + "</td></tr></table>");

@@ -27,35 +27,48 @@ router.get("/addAsFavourite/:id", function (req, res, next) {
     var requestFich = axios.get("http://localhost:3001/files/" + req.params.id + "?token=" + req.query.token);
 
     axios.all([requestFich]).then(axios.spread((...response) => {
-        if (requestFich.data.favourites.includes(req.user._id)) {
-            alert("ERRO: Este ficheiro já se encontra nos seus favoritos!");
-        } else {
             axios.put("http://localhost:3001/files/addAsFavourite/" + req.params.id + "?token=" + req.query.token).then(function (resp) {
                 res.redirect("/biblioteca?token=" + req.query.token);
             }).catch(function (error) {
                 res.redirect("/biblioteca?token=" + req.query.token);
             });
-        }
     })).catch(function (erro) {
         console.log("ERROR: Erro ao adicioanr aos favoritos: " + erro);
     });
 });
 
-
-// a user sorts a file in the Library
-router.get("/classificar/:id", function (req, res, next) {
+// a user removes file from favourites
+router.get("/removeFavourite/:id", function (req, res, next) {
     var requestFich = axios.get("http://localhost:3001/files/" + req.params.id + "?token=" + req.query.token);
 
     axios.all([requestFich]).then(axios.spread((...response) => {
-        if (requestFich.data.estrelas.autores.includes(req.user._id)) {
-            alert('ERRO: Já classificou este ficheiro!')
-        } else {
-            axios.put("http://localhost:3001/files/classificar/" + req.params.id + "?token=" + req.query.token + "&class=" + req.query.class).then(function (resp) {
+            axios.put("http://localhost:3001/files/removeFavourite/" + req.params.id + "?token=" + req.query.token).then(function (resp) {
                 res.redirect("/biblioteca?token=" + req.query.token);
             }).catch(function (error) {
                 res.redirect("/biblioteca?token=" + req.query.token);
             });
         }
+    )).catch(function (erro) {
+        console.log("ERROR: Erro ao remover dos favoritos: " + erro);
+    });
+});
+
+
+// a user rates a file in the Library
+router.get("/classificar/:id", function (req, res, next) {
+    var requestFich = axios.get("http://localhost:3001/files/" + req.params.id + "?token=" + req.query.token);
+
+    axios.all([requestFich]).then(axios.spread((...response) => {
+            var classi = req.query.class
+            var size = response[0].data.estrelas.autores.length
+            var oldmedia = response[0].data.estrelas.numero
+            var added = ((oldmedia * size) + parseInt(classi))
+            var media = added / (size + 1)
+            axios.put("http://localhost:3001/files/classificar/" + req.params.id + "?token=" + req.query.token + "&media=" + media + "&class=" + req.query.class).then(function (resp) {
+                res.redirect("/biblioteca?token=" + req.query.token);
+            }).catch(function (error) {
+                res.redirect("/biblioteca?token=" + req.query.token);
+            });
     })).catch(function (erro) {
         console.log("ERROR: Erro ao classificar: " + erro);
     });
@@ -70,11 +83,11 @@ router.get("/biblioteca", (req, res) => {
     axios.all([requestUser, requestFicheiros]).then(axios.spread((...response) => {
         var user = response[0].data;
         var ficheiros = response[1].data;
-        console.log(ficheiros)
         res.render("library", {
             lista: ficheiros,
             users: user,
-            token: req.query.token
+            token: req.query.token,
+            idUser: req.user._id
         });
     })).catch(function (erro) {
         console.log("ERROR Página Biblioteca: " + erro);

@@ -4,6 +4,7 @@ var multer = require("multer");
 var upload = multer({dest: "uploads/"});
 var fs = require("fs");
 var path = require("path");
+var rimraf = require("rimraf");
 
 var FControl = require("../controllers/files");
 var NControl = require("../controllers/news");
@@ -71,39 +72,48 @@ router.get("/:id", function (req, res, next) {
 router.put("/classificar/:id", function (req, res, next) { // console.log("mudar")
     id_user = req.user._id
     id_file = req.params.id
-    classificacao = req.query.class
+    media = req.query.media
 
-    FControl.classifica(id_file, id_user, classificacao).then((data) => {
-        res.status(200).jsonp(data);
+    FControl.classifica(id_file, id_user, req.query.class, media).then((data) => {
+        res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token)
     }).catch((err) => {
-        res.status(500).jsonp(err);
+        res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token)
     });
 });
 
 
 // add userid to favourites of a file
-router.put("/addAsFavourite/:id", function (req, res, next) { // console.log("mudar")
+router.put("/addAsFavourite/:id", (req, res) => { // console.log("mudar")
     id_user = req.user._id
     id_file = req.params.id;
 
     FControl.addFav(id_file, id_user).then((data) => {
-        res.status(200).jsonp(data);
+        res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token)
     }).catch((err) => {
-        res.status(500).jsonp(err);
+        res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token)
+    });
+});
+
+// add userid to favourites of a file
+router.put("/removeFavourite/:id", function (req, res, next) { // console.log("mudar")
+    id_user = req.user._id
+    id_file = req.params.id;
+
+    FControl.removeFav(id_file, id_user).then((data) => {
+        res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token)
+    }).catch((err) => {
+        res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token)
     });
 });
 
 
 // privacy (works with minor bug)
-router.put("/changeprivacy/:id", function (req, res, next) { // console.log("mudar")
+router.put("/changeprivacy/:id", (req, res) => { // console.log("mudar")
     FControl.lookup(req.params.id).then((result) => {
         if (req.user.level == "admin" || req.user._id == result.autor) {
-            FControl.editS(id_file).then((data) => {
-                res.status(200).jsonp(data);
-            }).catch((err) => {
-                res.status(500).jsonp(err);
-            });
-        } else {
+            FControl.changeprivacy(req.params.id).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
+        }
+        else {
             res.status(401);
         }
     });
@@ -203,7 +213,7 @@ router.post("/", upload.single("myFile"), (req, res) => {
                         name: req.file.originalname,
                         mimetype: req.file.mimetype,
                         size: req.file.size,
-                        privacy: 1,
+                        privacy: req.body.privacy,
                         descricao: req.body.descricao
                     }
 
@@ -245,14 +255,17 @@ router.post("/", upload.single("myFile"), (req, res) => {
 router.delete("/:id", (req, res) => {
     FControl.lookup(req.params.id).then((result) => {
         if (req.user.level == "admin" || req.user._id == result.autor) { // apagar ficheiro da pasta
-            let fpath = "public/fileStore/" + result.autor + "/" + result.name;
-            fs.unlink(fpath, (error) => {
+            let fpath = "public/fileStore/" + result.autor + "/uploads/" + result.name;
+            /* fs.unlink(fpath, (error) => {
                 if (error) {
                     console.error(error);
                     return;
                 }
                 FControl.remove(req.params.id).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
-            });
+            }); */
+            // Dá delete à pasta
+            rimraf(fpath, function () { console.log("Filepath deleted."); });
+            FControl.remove(req.params.id).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
         } else {
             res.status(401)
         }
