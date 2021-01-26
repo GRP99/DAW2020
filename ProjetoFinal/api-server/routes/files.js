@@ -64,11 +64,11 @@ router.put("/classificar/:id", function (req, res, next) { // console.log("mudar
     id_user = req.user._id
     id_file = req.params.id
     media = req.query.media
-
-    FControl.classifica(id_file, id_user, req.query.class, media).then((data) => {
-        res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token)
+    FControl.classifica(id_file, id_user, req.query.class, media)
+    .then((data) => {
+        res.status(200).jsonp({classificacao:data.numero});
     }).catch((err) => {
-        res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token)
+        res.status(200).jsonp(err);
     });
 });
 
@@ -78,8 +78,8 @@ router.put("/addAsFavourite/:id", (req, res) => { // console.log("mudar")
     id_user = req.user._id
     id_file = req.params.id;
     FControl.addFav(id_file, id_user)
-    .then((data) => res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token))
-    .catch((err) => res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token));
+    .then((data) => res.status(200).jsonp(data))
+    .catch((err) => res.status(500).jsonp(err));
 });
 
 // remove userid to favourites of a file
@@ -87,8 +87,8 @@ router.put("/removeFavourite/:id", function (req, res, next) { // console.log("m
     id_user = req.user._id
     id_file = req.params.id;
     FControl.removeFav(id_file, id_user)
-    .then((data) => res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token))
-    .catch((err) => res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token));
+    .then((data) => res.status(200).jsonp(data))
+    .catch((err) => res.status(500).jsonp(err));
 });
 
 // privacy (works with minor bug)

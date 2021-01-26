@@ -7,21 +7,6 @@ const {request} = require("../app");
 var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhZG1pbiIsImxldmVsIjoiYWRtaW4iLCJleHBpcmVzSW4iOiIzbSIsImlhdCI6MTYxMDExODM1OX0.omYqB6hz4vSrRjIBEAi0mg6TNVti0OaqXW6n95JljiM';
 
 
-/*changeprivacy
-router.get("/changeprivacy/:id", function (req, res, next) {
-    var requestFich = axios.get("http://localhost:3001/files/" + req.params.id + "?token=" + req.query.token);
-
-    axios.all([requestFich]).then(axios.spread((...response) => {
-        axios.put("http://localhost:3001/files/changeprivacy/" + req.params.id + "?token=" + req.query.token).then(function (resp) {
-            res.redirect("/users/account?token=" + req.query.token);
-        }).catch(function (error) {
-            res.redirect("/users/account?token=" + req.query.token);
-        });
-    })).catch(function (erro) {
-        console.log("ERROR ao mudar privacidade: " + erro);
-    });
-});*/
-
 // a user bookmarks a file
 router.get("/addAsFavourite/:id", function (req, res, next) {
     var requestFich = axios.get("http://localhost:3001/files/" + req.params.id + "?token=" + req.query.token);
@@ -94,15 +79,5 @@ router.get("/biblioteca", (req, res) => {
     });
 });
 
-// delete of a file
-router.get("/delete/:id", (req, res) => {
-    var id_file = req.params.id;
-    var id_autor = req.params.autor;
-    axios.delete("http://localhost:3001/files/" + id_file + "?token=" + req.query.token).then(function (resp) {
-        res.redirect("/users/account?token=" + req.query.token);
-    }).catch(function (error) {
-        console.log("Erro ao dar delete " + error);
-    });
-});
 
 module.exports = router;

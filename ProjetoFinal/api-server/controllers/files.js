@@ -57,7 +57,7 @@ module.exports.remove = id => {
 
 // add a user to favourites list from file 
 module.exports.addFav = (id, user) => {
-    Files.findOne({_id: id}).exec().then((result) => {
+    return Files.findOne({_id: id}).exec().then((result) => {
         result.favoritos.push(user);
         return Files.findByIdAndUpdate(id, result, {new: true});
     })
@@ -65,7 +65,7 @@ module.exports.addFav = (id, user) => {
 
 // removes a user to favourites list from file 
 module.exports.removeFav = (id, user) => {
-    Files.findOne({_id: id}).exec().then((result) => {
+    return Files.findOne({_id: id}).exec().then((result) => {
         var arrFavs = []
         result.favoritos.forEach(a =>{
             if (a != user){
@@ -80,9 +80,13 @@ module.exports.removeFav = (id, user) => {
 // add classification and calculate the average
 module.exports.classifica = (id, user, classi, media) => {
     return Files.findOne({_id: id}).exec().then((result) => {
-        result.estrelas.numero = media
+        var size = result.estrelas.autores.length
+        var oldmedia = result.estrelas.numero
+        var added = ((oldmedia * size) + parseInt(classi))
+        var media = added / (size + 1)
+        result.estrelas.numero = media;
         var pair = user + " - " + classi
-        result.estrelas.autores = result.estrelas.autores.push(pair);
+        result.estrelas.autores.push(pair);
         return Files.findByIdAndUpdate(id, result, {new: true});
     })
 }

@@ -42,26 +42,23 @@ router.get(['/account'], function (req, res, next) {
 });
 
 function renderConsumer(req, res, user) {
-    var requestUser = axios.get("http://localhost:3001/users?token=" + token);
-    var requestFicheiros = axios.get("http://localhost:3001/files/public?token=" + req.query.token);
-
-    axios.all([requestUser, requestFicheiros]).then(axios.spread((...response) => {
-        var users = response[0].data;
-        var ficheiros = response[1].data;
-        console.log(user)
+    axios.get(api_serverURL+'/files/public?token=' + req.query.token)
+    .then(resposta => {
+        files = resposta.data;
         var nome = user.name
         var mail = user._id
         var profilepic = user.profilepic
         res.render('consumer', {
             token: req.query.token,
-            lista: ficheiros,
+            lista: files,
             user_id: mail,
             user_name: nome,
             user_mail: mail,
             path: profilepic,
             users: users
         });
-    })).catch(function (erro) {
+    })
+    .catch(function (erro) {
         console.log("ERROR Página Biblioteca: " + erro);
     });
 }
@@ -83,7 +80,7 @@ router.post('/signup', function (req, res) {
 })
 
 router.post('/login', function (req, res) {
-    axios.post(autenticaURl+'/login?token=' + token, req.body).then(dados => {
+    axios.post(autenticaURL+'/login?token=' + token, req.body).then(dados => {
         res.redirect("/homepage?token=" + dados.data.token);
     }).catch(error => {
         console.log(error);
