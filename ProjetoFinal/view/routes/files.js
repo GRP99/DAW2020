@@ -7,7 +7,7 @@ const {request} = require("../app");
 var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhZG1pbiIsImxldmVsIjoiYWRtaW4iLCJleHBpcmVzSW4iOiIzbSIsImlhdCI6MTYxMDExODM1OX0.omYqB6hz4vSrRjIBEAi0mg6TNVti0OaqXW6n95JljiM';
 
 
-// changeprivacy
+/*changeprivacy
 router.get("/changeprivacy/:id", function (req, res, next) {
     var requestFich = axios.get("http://localhost:3001/files/" + req.params.id + "?token=" + req.query.token);
 
@@ -20,7 +20,7 @@ router.get("/changeprivacy/:id", function (req, res, next) {
     })).catch(function (erro) {
         console.log("ERROR ao mudar privacidade: " + erro);
     });
-});
+});*/
 
 // a user bookmarks a file
 router.get("/addAsFavourite/:id", function (req, res, next) {
@@ -28,9 +28,9 @@ router.get("/addAsFavourite/:id", function (req, res, next) {
 
     axios.all([requestFich]).then(axios.spread((...response) => {
             axios.put("http://localhost:3001/files/addAsFavourite/" + req.params.id + "?token=" + req.query.token).then(function (resp) {
-                res.redirect("/biblioteca?token=" + req.query.token);
+                res.redirect("/files/biblioteca?token=" + req.query.token);
             }).catch(function (error) {
-                res.redirect("/biblioteca?token=" + req.query.token);
+                res.redirect("/files/biblioteca?token=" + req.query.token);
             });
     })).catch(function (erro) {
         console.log("ERROR: Erro ao adicioanr aos favoritos: " + erro);
@@ -43,9 +43,9 @@ router.get("/removeFavourite/:id", function (req, res, next) {
 
     axios.all([requestFich]).then(axios.spread((...response) => {
             axios.put("http://localhost:3001/files/removeFavourite/" + req.params.id + "?token=" + req.query.token).then(function (resp) {
-                res.redirect("/biblioteca?token=" + req.query.token);
+                res.redirect("/files/biblioteca?token=" + req.query.token);
             }).catch(function (error) {
-                res.redirect("/biblioteca?token=" + req.query.token);
+                res.redirect("/files/biblioteca?token=" + req.query.token);
             });
         }
     )).catch(function (erro) {

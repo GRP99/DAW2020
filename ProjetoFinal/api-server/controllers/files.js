@@ -79,7 +79,7 @@ module.exports.removeFav = (id, user) => {
 
 // add classification and calculate the average
 module.exports.classifica = (id, user, classi, media) => {
-    Files.findOne({_id: id}).exec().then((result) => {
+    return Files.findOne({_id: id}).exec().then((result) => {
         result.estrelas.numero = media
         var pair = user + " - " + classi
         result.estrelas.autores = result.estrelas.autores.push(pair);
@@ -89,14 +89,18 @@ module.exports.classifica = (id, user, classi, media) => {
 
 /* Changes security */
 module.exports.changeprivacy = (id) => {
-    Files.findOne({_id: id}).exec().then((result) => {
+    return Files.findOne({_id: id}).exec().then((result) => {
         if(result.privacy == 0) {
-            result.privacy = 1;
+            p = 1;
         }
         else {
-            result.privacy = 0;
+            p = 0;
         }
-        return Files.findByIdAndUpdate(id, result, {new: true})
+        return Files.findOneAndUpdate(id, {privacy:p}, {
+            new: true,
+            upsert: true,
+            rawResult: true // Return the raw result from the MongoDB driver
+          });
     })
 }
 

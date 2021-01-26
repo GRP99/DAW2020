@@ -1,14 +1,20 @@
 var express = require('express');
 var router = express.Router();
 var axios = require('axios')
-var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhZG1pbiIsImxldmVsIjoiYWRtaW4iLCJleHBpcmVzSW4iOiIzbSIsImlhdCI6MTYxMDExODM1OX0.omYqB6hz4vSrRjIBEAi0mg6TNVti0OaqXW6n95JljiM';
+var autenticaURL  = "http://localhost:3535"
+var api_serverURL = "http://localhost:3001"
+var token;
+
+
+key = {key:'2cf7a71be6dc9665aba1f32451e887442cb5a9a208b29e1598611236e60b490'}
+axios.post(autenticaURL+'/autenticarApp',key).then(t=>{token=t.data.token}).catch(e=>console.log(e))
 
 /* get user page */
 router.get(['/account'], function (req, res, next) {
     var _id = req.user._id
 
-    var requestUser = axios.get("http://localhost:3001/users/" + _id + "?token=" + token);
-    var requestFicheiros = axios.get("http://localhost:3001/files/autor/" + _id + "?token=" + token);
+    var requestUser = axios.get(api_serverURL+'/users/' + _id + "?token=" + req.query.token);
+    var requestFicheiros = axios.get(api_serverURL+'/files/autor/' + _id + "?token=" + req.query.token);
 
     axios.all([requestUser, requestFicheiros]).then(axios.spread((...response) => {
         var user = response[0].data;
@@ -35,7 +41,6 @@ router.get(['/account'], function (req, res, next) {
     })
 });
 
-
 function renderConsumer(req, res, user) {
     var requestUser = axios.get("http://localhost:3001/users?token=" + token);
     var requestFicheiros = axios.get("http://localhost:3001/files/public?token=" + req.query.token);
@@ -61,28 +66,24 @@ function renderConsumer(req, res, user) {
     });
 }
 
-
 router.get('/login', function (req, res) {
     res.render('login', {title: 'Login'});
 });
-
 
 router.get('/signup', function (req, res) {
     res.render('signup', {title: 'Registar'});
 });
 
-
 router.post('/signup', function (req, res) {
-    axios.post('http://localhost:3001/users/registar?token=' + token, req.body).then(dados => {
+    axios.post(autenticaURl+'/registar?token=' + token, req.body).then(dados => {
         res.redirect('/login');
     }).catch(error => {
         console.log(error);
     })
 })
 
-
 router.post('/login', function (req, res) {
-    axios.post('http://localhost:3001/users/login?token=' + token, req.body).then(dados => {
+    axios.post(autenticaURl+'/login?token=' + token, req.body).then(dados => {
         res.redirect("/homepage?token=" + dados.data.token);
     }).catch(error => {
         console.log(error);

@@ -104,15 +104,22 @@ window.onunload = function () {
     null
 };
 
-/*
-function mudarprivacidade(id,autorToken){
-    //a(href="http://localhost:3002/files/changeprivacy/"+a._id, class="fa fa-lock")
+
+function changePrivacy(id){
+    console.log(id)
     $.ajax({
-        url: "http://localhost:3001/files/changeprivacy/"+id+"?token="+autorToken,
+        url: "http://localhost:3001/files/changeprivacy/"+id+"?token="+token,
         type: 'PUT',
         success: function(response) {
-            window.location.replace("http://localhost:3002/users?token="+autorToken);
+            console.log(document.getElementById("privacy "+id).innerHTML)
+            if(document.getElementById("privacy "+id).innerHTML == "Privado "){
+                document.getElementById("privacy "+id).innerHTML = "Público ";
+                document.getElementById("button "+id).className = "fa fa-unlock";
+            }
+            else {
+                document.getElementById("privacy "+id).innerHTML = "Privado ";
+                document.getElementById("button "+id).className = "fa fa-lock";
+            }
         }
      });
 } 
-*/

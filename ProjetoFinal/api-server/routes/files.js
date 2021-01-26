@@ -20,52 +20,43 @@ function verificaAutoriadade(autor, usr) {
 }
 */
 
-// get all files (works)
+//This route gets all files, but u need to be admin to have access to all files
+//First we see if request is sent by a admin, if not we responde with error 401, if it is proceed.
 router.get("/", function (req, res, next) {
     if (req.user.level == "admin") {
-        FControl.list().then((data) => {
-            res.status(200).jsonp(data);
-        }).catch((err) => {
-            res.status(500).jsonp(err);
-        });
-    } else {
-        res.status(401);
-    }
+        FControl.list()
+        .then((data) => res.status(200).jsonp(data))
+        .catch((err) => res.status(500).jsonp(err));
+    } 
+    else res.status(401).jsonp({error:'Only Admins are allowed!'});
 });
 
-
-// get all public files (works)
+// This route gets all public files. If they are public everyone has access to them xD
 router.get("/public", function (req, res, next) {
-    FControl.publicFiles().then((data) => {
-        res.status(200).jsonp(data);
-    }).catch((err) => {
-        res.status(500).jsonp(err);
-    });
+    FControl.publicFiles()
+    .then((data) => res.status(200).jsonp(data))
+    .catch((err) => res.status(500).jsonp(err));
 });
 
-
-// get files from user (works)
+//This route gets all files from a user, only the user or the admin can get them.
 router.get("/fromUser", function (req, res) {
     var userID = req.user.id;
-    FControl.filesbyUser(userID).then((data) => {
-        res.status(200).jsonp(data);
-    }).catch((err) => {
-        res.status(500).jsonp(err);
-    });
+    FControl.filesbyUser(userID)
+    .then((data) => res.status(200).jsonp(data))
+    .catch((err) => res.status(500).jsonp(err));
 });
 
-
-// get file by id (works)
+//This route gets an file by it's ID, it's only available if it is public, or it's the autor or the admin
 router.get("/:id", function (req, res, next) {
-    FControl.lookup(req.params.id).then((data) => {
-        if (data.autor == req.user._id || req.user.level == "admin") {
+    FControl.lookup(req.params.id)
+    .then((data) => {
+        if (data.autor == req.user._id || req.user.level == "admin" || data.privacy == 1) {
             res.status(200).jsonp(data);
-        } else {
-            res.status(401);
-        }
-    }).catch((err) => {
-        res.status(500).jsonp(err);
-    });
+        } 
+        else {
+            res.status(401).jsonp({error:'You are not allowed to view this file!'});
+        }})
+    .catch((err) => res.status(500).jsonp(err));
 });
 
 // privacy (works with minor bug)
@@ -86,68 +77,54 @@ router.put("/classificar/:id", function (req, res, next) { // console.log("mudar
 router.put("/addAsFavourite/:id", (req, res) => { // console.log("mudar")
     id_user = req.user._id
     id_file = req.params.id;
-
-    FControl.addFav(id_file, id_user).then((data) => {
-        res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token)
-    }).catch((err) => {
-        res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token)
-    });
+    FControl.addFav(id_file, id_user)
+    .then((data) => res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token))
+    .catch((err) => res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token));
 });
 
-// add userid to favourites of a file
+// remove userid to favourites of a file
 router.put("/removeFavourite/:id", function (req, res, next) { // console.log("mudar")
     id_user = req.user._id
     id_file = req.params.id;
-
-    FControl.removeFav(id_file, id_user).then((data) => {
-        res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token)
-    }).catch((err) => {
-        res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token)
-    });
+    FControl.removeFav(id_file, id_user)
+    .then((data) => res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token))
+    .catch((err) => res.redirect("http://localhost:3002/files/biblioteca?token=" + req.query.token));
 });
-
 
 // privacy (works with minor bug)
 router.put("/changeprivacy/:id", (req, res) => { // console.log("mudar")
-    FControl.lookup(req.params.id).then((result) => {
+    FControl.lookup(req.params.id)
+    .then((result) => {
         if (req.user.level == "admin" || req.user._id == result.autor) {
-            FControl.changeprivacy(req.params.id).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
+            FControl.changeprivacy(req.params.id)
+            .then((data) => res.status(200).jsonp(data))
+            .catch((err) => res.status(500).jsonp(err));
         }
         else {
-            res.status(401);
+            res.status(401).jsonp({error:'You are not allowed to do this!'});
         }
     });
 });
-
 
 // download
 router.get("/download/:id_autor/:id", function (req, res) {
     FControl.lookup(req.params.id).then((file) => {
         if (req.user.level == "admin" || req.user._id == file.autor || file.privacy == 0) {
             let path = __dirname + '/../public/fileStore/' + req.params.id_autor + "/uploads/" + file.name
-
             SIP.zip(path);
-            
             let quarantinePath = path + "_dip"
-
             let dirpath = __dirname + "/../public/fileStore/" + req.params.id_autor + "/downloads"
-
             fs.mkdirSync(dirpath, {recursive: true});
-
             let newPath = dirpath + "/" + file.name
-
             fs.rename(quarantinePath, newPath, function (error) {
                 if (error) {
                     res.status(500).jsonp({error: "ERRO : Erro na pasta de downloads."});
                 }
             })
-
             res.download(newPath);
-
         } else {
             res.status(401);
         }
-
     });
 });
 
@@ -314,7 +291,7 @@ router.post('/:id/estrelas/:idU', function (req, res) {
             FControl.incrementarEstrelas(req.params.id, req.params.idU).then(dados => {
                 res.jsonp(dados)
             }).catch(e => {
-                res.status(500).jsonp(e)
+                res.status(500).jsonp(console.log(e))
             })
         } else {
             FControl.decrementarEstrelas(req.params.id, req.params.idU).then(dados => {

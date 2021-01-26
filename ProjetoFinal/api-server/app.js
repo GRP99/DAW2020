@@ -9,7 +9,6 @@ var jwt = require("jsonwebtoken");
 
 
 // #################### ROUTES ####################
-var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var filesRouter = require("./routes/files");
 var newsRouter = require("./routes/news");
@@ -65,7 +64,6 @@ app.use(function (req, res, next) {
 
 
 // #################### ROUTES ####################
-app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/files", filesRouter);
 app.use("/news", newsRouter);
