@@ -12,7 +12,7 @@ var jwt = require("jsonwebtoken");
 var usersRouter = require("./routes/users");
 var filesRouter = require("./routes/files");
 var newsRouter = require("./routes/news");
-
+var typesRouter = require("./routes/types");
 
 // #################### MONGO CONNECTION ####################
 var mongoDB = "mongodb://127.0.0.1/myFiles";
@@ -67,7 +67,7 @@ app.use(function (req, res, next) {
 app.use("/users", usersRouter);
 app.use("/files", filesRouter);
 app.use("/news", newsRouter);
-
+app.use("/types", typesRouter);
 
 // #################### ERROR HANDLER ####################
 // catch 404 and forward to error handler
