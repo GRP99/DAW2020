@@ -26,7 +26,7 @@ router.get('/:id', function (req, res) {
 
 router.post('/', function (req, res) {
     if (req.user.level != 'consumer') {
-        TypesControl.insert(req.body.type).then(data => {
+        TypesControl.insert(req.body).then(data => {
             if (data != null) {
                 res.status(200).jsonp(data);
             } else {

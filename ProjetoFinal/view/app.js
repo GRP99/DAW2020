@@ -8,7 +8,8 @@ var jwt = require('jsonwebtoken');
 // #################### ROUTES ####################
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var filesRouter = require('./routes/files')
+var filesRouter = require('./routes/files');
+var typesRouter = require('./routes/types');
 
 
 // #################### MIDDLEWARE ####################
@@ -57,6 +58,7 @@ app.use(function (req, res, next) {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/files', filesRouter);
+app.use('/types', typesRouter);
 
 
 // #################### ERROR HANDLER ####################

@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    .w3-container.w3-blue
+        h2 Add new type
+        form.w3-container(action='/types' method='POST' enctype='multipart/form-data')
+            #list.w3-container
+                .w3-container        
+                    .w3-cell-row
+                        label.w3-text-blue
+                            label.w3-text-gray
+                                b Campo
+                            input.w3-input.w3-border.w3-light-grey(type='text' name='campo')
+            button#mais1campo.w3-btn.w3-cyan  + 
+            input.w3-btn.w3-blue-grey(type='submit' value='Adicionar')

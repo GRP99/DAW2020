@@ -210,3 +210,20 @@ function deleteFile(id) {
   }
   else false;
 }
+
+
+$(function () {
+  $("#mais1campo").click(e => {
+      e.preventDefault()
+      var campos = $('<div class="w3-container" id="campos"></div>')
+
+      // Create container to add another file (label and input file)
+      var campo = $('<div class="w3-cell-row" id="campo"></div>')
+      var campoLabel = $('<label class="w3-text-gray"><b>Campo</b></label>')
+      var campoInput = $('<input class="w3-input w3-border w3-light-grey" type="text" name="campo">')
+
+      $("#list").append(campos)
+      $("#campos").append(campo)
+      $("#campo").append(campoLabel, campoInput)
+  })
+})

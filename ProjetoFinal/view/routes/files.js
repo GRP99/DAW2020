@@ -18,7 +18,7 @@ router.get("/addAsFavourite/:id", function (req, res, next) {
                 res.redirect("/files/biblioteca?token=" + req.query.token);
             });
     })).catch(function (erro) {
-        console.log("ERROR: Erro ao adicioanr aos favoritos: " + erro);
+        console.log("ERROR: Erro ao adicionar aos favoritos: " + erro);
     });
 });
 
