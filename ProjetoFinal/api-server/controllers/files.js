@@ -78,14 +78,14 @@ module.exports.removeFav = (id, user) => {
 }
 
 // add classification and calculate the average
-module.exports.classifica = (id, user, classi, media) => {
+module.exports.classifica = (id, user, classi) => {
     return Files.findOne({_id: id}).exec().then((result) => {
         var size = result.estrelas.autores.length
         var oldmedia = result.estrelas.numero
         var added = ((oldmedia * size) + parseInt(classi))
         var media = added / (size + 1)
         result.estrelas.numero = media;
-        var pair = user + " - " + classi
+        var pair = user + "?;" + classi
         result.estrelas.autores.push(pair);
         return Files.findByIdAndUpdate(id, result, {new: true});
     })
@@ -172,4 +172,37 @@ module.exports.decrementarEstrelas = (idR, idU) => {
             "estrelas.numero": -1
         }
     }).exec();
+}
+
+// Search files
+module.exports.search = (text) => {
+    return Files.find({title :{$regex:text}}).exec();
+}
+
+/****** HOME - TOP 3 ********/
+
+module.exports.topclassificados = () => {
+    console.log("entrei")
+    return Files.find().sort({"estrelas.numero":-1}).limit(3).exec();
+}
+
+module.exports.topfavoritos = () => {
+    return Files.aggregate([
+       { $addFields: {nmrFavs: {$size: "$favoritos"}}},
+       {
+        $sort: {
+          nmrFavs: -1
+        }
+      },
+      {$limit: 3} 
+    ]).exec()
+}
+
+module.exports.topautores = () => {
+    return Files.aggregate([
+        {$group: {_id: "$autor", filesbyA: {$push: "$_id"}}},
+        {$addFields: {nmrUploads: {$size: "$filesbyA"}}},
+        {$sort: {nmrUploads: -1}},
+        {$limit: 3}
+    ]).exec()
 }

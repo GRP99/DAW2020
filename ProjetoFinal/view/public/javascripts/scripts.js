@@ -57,15 +57,18 @@ function removeFavourite(idF) {
   });
 }
 
-function showFile(id, name, type, autor, desc) {
+function showFile(size, id, name, type, autor, desc) {
   var file = $(
-    "<pre><b>Nome do Ficheiro: </b>" +
+    "<pre><b>File name: </b>" +
       name +
       "</pre>" +
-      "<pre><b>Tipo do Ficheiro: </b>" +
+      "<pre><b>Size: </b>" +
+      size +
+      "</pre>" +
+      "<pre><b>File Type: </b>" +
       type +
       "</pre>" +
-      '<table><tr><pre><b>Descrição: </b></td><pre><textarea rows="4" cols="70" style="font-size: 11px;" readonly>' +
+      '<table><tr><pre><b>Description: </b></td><pre><textarea rows="4" cols="70" style="font-size: 11px;" readonly>' +
       desc +
       "</textarea>" +
       "</td></tr></table>"
@@ -90,7 +93,7 @@ function mudafoto(id, token) {
     '<form class="w3-container" style="margin:50px" action="http://localhost:3001/users/changeprofile?token=' +
       token +
       '" method="POST" enctype="multipart/form-data">' +
-      "<pre> <b> Mudar Foto de Perfil </b> </pre>" +
+      "<pre> <b> Change your profile pic </b> </pre>" +
       '<input class="w3-input w3-border w3-light-grey" type="file" name="myProfilePic" />' +
       '<input type="hidden" name="autor" value="' +
       id +

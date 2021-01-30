@@ -6,7 +6,7 @@ var jwt = require("jsonwebtoken");
 const {request} = require("../app");
 var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhZG1pbiIsImxldmVsIjoiYWRtaW4iLCJleHBpcmVzSW4iOiIzbSIsImlhdCI6MTYxMDExODM1OX0.omYqB6hz4vSrRjIBEAi0mg6TNVti0OaqXW6n95JljiM';
 
-
+/*
 // a user bookmarks a file
 router.get("/addAsFavourite/:id", function (req, res, next) {
     var requestFich = axios.get("http://localhost:3001/files/" + req.params.id + "?token=" + req.query.token);
@@ -58,7 +58,7 @@ router.get("/classificar/:id", function (req, res, next) {
         console.log("ERROR: Erro ao classificar: " + erro);
     });
 });
-
+*/
 
 // all files library
 router.get("/biblioteca", (req, res) => {

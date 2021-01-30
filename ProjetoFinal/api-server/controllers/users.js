@@ -30,3 +30,8 @@ module.exports.updatePhoto = (id) => {
         return result.save()
     });
 }
+
+// Search users
+module.exports.search = (text) => {
+    return Users.find({name :{$regex:text}}).exec();
+}

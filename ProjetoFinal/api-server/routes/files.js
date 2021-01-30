@@ -46,6 +46,35 @@ router.get("/fromUser", function (req, res) {
     .catch((err) => res.status(500).jsonp(err));
 });
 
+/******** HOME - TOP 3  ********/
+
+// Top 3 classified files
+router.get("/topClass", function (req, res) {
+    FControl.topclassificados().then((data) => {
+        res.status(200).jsonp(data);
+    }).catch((err) => {
+        res.status(500).jsonp(err);
+    });
+});
+
+// Top 3 Favourites Files
+router.get("/topFavs", function (req, res) {
+    FControl.topfavoritos().then((data) => {
+        res.status(200).jsonp(data);
+    }).catch((err) => {
+        res.status(500).jsonp(err);
+    });
+});
+
+// Top 3 Authors by number of Uploads
+router.get("/topAut", function (req, res) {
+    FControl.topautores().then((data) => {
+        res.status(200).jsonp(data);
+    }).catch((err) => {
+        res.status(500).jsonp(err);
+    });
+});
+
 //This route gets an file by it's ID, it's only available if it is public, or it's the autor or the admin
 router.get("/:id", function (req, res, next) {
     FControl.lookup(req.params.id)
@@ -63,8 +92,7 @@ router.get("/:id", function (req, res, next) {
 router.put("/classificar/:id", function (req, res, next) { // console.log("mudar")
     id_user = req.user._id
     id_file = req.params.id
-    media = req.query.media
-    FControl.classifica(id_file, id_user, req.query.class, media)
+    FControl.classifica(id_file, id_user, req.query.class)
     .then((data) => {
         res.status(200).jsonp({classificacao:data.numero});
     }).catch((err) => {
@@ -187,7 +215,7 @@ router.post("/", upload.single("myFile"), (req, res) => {
                     var fD = {
                         title:req.body.title,
                         subtitle:req.body.subtitle,
-                        creationDate:req.body.date,
+                        creationDate: req.body.date,
                         registrationDate: d,
                         autor: req.body.autor,
                         name: req.file.originalname,

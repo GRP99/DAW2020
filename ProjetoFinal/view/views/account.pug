@@ -20,14 +20,14 @@ block content
                                 .u-clearfix.u-custom-html.u-custom-html-1
                                     dl
                                         dt
-                                            b Nome:
+                                            b Your name:
                                             dd=user_name
                                         dt
-                                            b Email de Contacto:
+                                            b Your email:
                                             dd= user_mail
                                 button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-2(onclick="openUploadModal(\""+user_id+"\")") Upload
                                 .u-table.u-table-responsive.u-table-1
-                                    table.u-table-entity(style="margin:22px;font-size:12px")
+                                    table.u-table-entity(style="margin:22px;font-size:12px;text-align:center")
                                         colgroup
                                             col(width='16.666666%')
                                             col(width='16.666666%')
@@ -39,7 +39,7 @@ block content
                                         thead.u-custom-color-1.u-table-header.u-table-header-1
                                             tr(style='height: 46px;')
                                                 th.u-table-cell Date
-                                                th.u-table-cell File
+                                                th.u-table-cell File Title
                                                 th.u-table-cell Type
                                                 th.u-table-cell Size
                                                 th.u-table-cell Security Mode
@@ -48,8 +48,8 @@ block content
                                         tbody.u-table-body
                                             each a in lista
                                                 tr(id=a._id, style='height: 86px;')
-                                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.date
-                                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell(onclick="showFile(\""+a._id+"\",\""+a.name+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")= a.name
+                                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.creationDate
+                                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell(onclick="showFile(\""+a.size +"\",\""+a._id+"\",\""+a.name+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")= a.title
                                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.mimetype
                                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.size
                                                     if a.privacy == 1
@@ -61,7 +61,7 @@ block content
                                                             b(id="privacy "+a._id) Público 
                                                             button(id="button "+a._id,onClick="changePrivacy(\""+a._id+"\")", class="fa fa-unlock")
                                                     td
-                                                        button(class="w3-button w3-green" onclick="showFile(\""+a._id+"\",\""+a.name+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")
+                                                        button(class="w3-button w3-green" onclick="location.href='http://localhost:3001/files/download/"+a.autor+"/"+a._id+"?token="+token+"';")
                                                             i(class="fa fa-download" style="font-size:15px")
                                                     td
                                                         button(class="w3-button w3-red" onclick="deleteFile(\""+a._id+"\")")

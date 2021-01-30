@@ -13,6 +13,8 @@ var usersRouter = require("./routes/users");
 var filesRouter = require("./routes/files");
 var newsRouter = require("./routes/news");
 var typesRouter = require("./routes/types");
+var searchRouter = require("./routes/search");
+
 
 // #################### MONGO CONNECTION ####################
 var mongoDB = "mongodb://127.0.0.1/myFiles";
@@ -68,6 +70,7 @@ app.use("/users", usersRouter);
 app.use("/files", filesRouter);
 app.use("/news", newsRouter);
 app.use("/types", typesRouter);
+app.use("/search", searchRouter);
 
 // #################### ERROR HANDLER ####################
 // catch 404 and forward to error handler
