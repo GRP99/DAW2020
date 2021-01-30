@@ -185,7 +185,10 @@ router.post("/", upload.single("myFile"), (req, res) => {
                     var d = new Date().toISOString().substr(0, 16);
 
                     var fD = {
-                        date: d,
+                        title:req.body.title,
+                        subtitle:req.body.subtitle,
+                        creationDate:req.body.date,
+                        registrationDate: d,
                         autor: req.body.autor,
                         name: req.file.originalname,
                         mimetype: req.file.mimetype,

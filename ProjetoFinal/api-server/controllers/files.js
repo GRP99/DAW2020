@@ -43,9 +43,9 @@ module.exports.filesbyUser = id => {
 }
 
 
-// find a file with a given name
-module.exports.findByName = name => {
-    return Files.findOne({name: name}).exec()
+// find a file with a given title
+module.exports.findByName = t => {
+    return Files.findOne({title: t}).exec()
 }
 
 

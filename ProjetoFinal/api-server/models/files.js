@@ -31,7 +31,16 @@ var comentarioSchema = new mongoose.Schema({
 });
 
 var FileSchema = new mongoose.Schema({
-    date: String,
+    title: {
+        type: String,
+        required: true
+    },
+    subtitle: {
+        type: String,
+        default: ""
+    },
+    creationDate: String,
+    registrationDate: String,
     autor: String,
     name: String,
     mimetype: String,

@@ -139,6 +139,12 @@ function openUploadModal(user) {
       "<td>Descrição:</td>" +
       '<td><textarea rows="3" cols="30" name="descricao"></textarea></td>' +
       "</tr>" +
+      '<label class="w3-text-gray"><b>Título</b></label>' +
+      '<input class="w3-input w3-border w3-light-grey" type="text" name="title">'+
+      '<label class="w3-text-gray"><b>SubTítulo</b></label>'+
+      '<input class="w3-input w3-border w3-light-grey" type="text" name="subtitle">'+
+      '<label class="w3-text-gray"><b>Data Criação [AAAA-MM-DD]</b></label>'+
+      '<input class="w3-input w3-border w3-light-grey" type="text" name="date">'+
       '</table><button.w3-btn.w3-teal(type=\'button\' onclick=\'add()\') +--><input type="hidden" name="autor" value="' +
       user +
       '" /><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />' +
