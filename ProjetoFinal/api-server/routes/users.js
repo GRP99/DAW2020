@@ -28,10 +28,15 @@ router.get("/:id", function (req, res) {
     id_autor = req.params.id;
     User.lookUp(id_autor).then((data) => {
         user = {
-            name: data.name,
             _id: data._id,
+            name: data.name,
             level: data.level,
-            profilepic: data.profilepic
+            profilepic: data.profilepic,
+            registrationDate: data.registrationDate,
+            git: data.git,
+            role: data.affiliation.role,
+            course: data.affiliation.course,
+            department: data.affiliation.department,
         }
         res.status(200).jsonp(user);
     }).catch((err) => {

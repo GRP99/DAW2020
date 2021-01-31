@@ -16,7 +16,7 @@ block content
                                     img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src='https://www.inmosenna.com/wp-content/uploads/2018/07/avatar-user-business-man-399587fe24739d5a-512x512-300x300.png' alt='' data-image-width='300' data-image-height='300')
                                 else 
                                     img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src="http://localhost:3001/users/"+user_id+"/profilepic.jpeg?token="+token alt='' data-image-width='300' data-image-height='300')
-                                button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-1(type='button' onclick="mudafoto(\"" + user_id + "\",\"" + token +"\");") Change Pic
+                                button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-1(type='button' onclick="mudafoto(\"" + user_id + "\",\"" + token +"\");") Change Profile Photo
                                 .u-clearfix.u-custom-html.u-custom-html-1
                                     dl
                                         dt
@@ -25,7 +25,7 @@ block content
                                         dt
                                             b Your email:
                                             dd= user_mail
-                                button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-2(onclick="openUploadModal(\""+user_id+"\")") Upload
+                                button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-2(onclick="openUploadModal(\""+user_id+"\")") UPLOAD
                                 .u-table.u-table-responsive.u-table-1
                                     table.u-table-entity(style="margin:22px;font-size:12px;text-align:center")
                                         colgroup
@@ -54,12 +54,12 @@ block content
                                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.size
                                                     if a.privacy == 1
                                                         td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
-                                                            b(id="privacy "+a._id) Privado 
-                                                            button(id="button "+a._id,onClick="changePrivacy(\""+a._id+"\")", class="fa fa-lock")
+                                                            b(id="privacy "+a._id) Private 
+                                                            button(id="button "+a._id,onClick="changePrivacy(\""+a._id+"\")" class="fa fa-lock")
                                                     else
                                                         td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
-                                                            b(id="privacy "+a._id) Público 
-                                                            button(id="button "+a._id,onClick="changePrivacy(\""+a._id+"\")", class="fa fa-unlock")
+                                                            b(id="privacy "+a._id) Public 
+                                                            button(id="button "+a._id,onClick="changePrivacy(\""+a._id+"\")" class="fa fa-unlock")
                                                     td
                                                         button(class="w3-button w3-green" onclick="location.href='http://localhost:3001/files/download/"+a.autor+"/"+a._id+"?token="+token+"';")
                                                             i(class="fa fa-download" style="font-size:15px")
