@@ -38,8 +38,8 @@ block content
                                             b Your Department:
                                             dd= user_department
                                 button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-2(onclick="openUploadModal(\""+user_id+"\")") UPLOAD
-                                .u-table.u-table-responsive.u-table-1
-                                    table.u-table-entity(style="margin:22px;font-size:12px;text-align:center")
+                                .u-table.u-table-responsive.u-table-1(style="overflow-y: auto; overflow-x: hidden")
+                                    table.u-table-entity(style="margin: 22px; font-size:12px;text-align:center;")
                                         colgroup
                                             col(width='16.666666%')
                                             col(width='16.666666%')
@@ -47,19 +47,18 @@ block content
                                             col(width='16.666666%')
                                             col(width='16.666666%')
                                             col(width='16.666666%')
-
+                                            col(width='16.666666%')
                                         thead.u-custom-color-1.u-table-header.u-table-header-1
-                                            tr(style='height: 46px;')
+                                            tr(style='height: 30px;')
                                                 th.u-table-cell Date
                                                 th.u-table-cell File Title
                                                 th.u-table-cell Type
                                                 th.u-table-cell Size
                                                 th.u-table-cell Security Mode
                                                 th.u-table-cell
-                                                th.u-table-cell
                                         tbody.u-table-body
                                             each a in lista
-                                                tr(id=a._id, style='height: 86px;')
+                                                tr(id=a._id, style='height: 75px;')
                                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.creationDate
                                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell(onclick="showFile(\""+a.size +"\",\""+a._id+"\",\""+a.name+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")= a.title
                                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.mimetype
@@ -75,7 +74,7 @@ block content
                                                     td
                                                         button(class="w3-button w3-green" onclick="location.href='http://localhost:3001/files/download/"+a.autor+"/"+a._id+"?token="+token+"';")
                                                             i(class="fa fa-download" style="font-size:15px")
-                                                    td
+                                                        b           
                                                         button(class="w3-button w3-red" onclick="deleteFile(\""+a._id+"\")")
                                                             i(class="fa fa-trash" style="font-size:15px")
                                 if (user_level=='admin')  

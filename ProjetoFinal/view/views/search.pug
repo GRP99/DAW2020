@@ -19,11 +19,15 @@ block content
                     tbody.u-custom-font.u-font-ubuntu.u-table-body
                         each a in lista
                             tr(style='height: 75px;')
-                                td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
-                                    img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src="http://localhost:3001/users/"+a._id+"/profilepic.jpeg?token="+token alt='' width="75" height="75")
+                                if a.profilepic == 0
+                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                       img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src='https://www.inmosenna.com/wp-content/uploads/2018/07/avatar-user-business-man-399587fe24739d5a-512x512-300x300.png' alt='' width="75" height="75") 
+                                else
+                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                        img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src="http://localhost:3001/users/"+a._id+"/profilepic.jpeg?token="+token alt='' width="75" height="75")
                                 td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.name
                                 td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell 
-                                    a(href=a.git)= a.git
+                                    a(href="https://github.com/"+a.git)= a.git
     else                                
       section#sec-a877.u-clearfix.u-section-1
         .u-clearfix.u-sheet.u-sheet-1

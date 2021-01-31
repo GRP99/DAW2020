@@ -281,9 +281,9 @@ router.get("/autor/:id", function (req, res, next) {
 // add comment
 router.post('/:id/adicionarComentario', function (req, res) {
     FControl.adicionarComentario(req.params.id, req.body).then(dados => {
-        res.jsonp(dados)
+        res.redirect("http://localhost:3002/files/"+req.params.id+"?token=" + req.query.token)
     }).catch(erro => {
-        res.status(500).jsonp(erro)
+        res.redirect("http://localhost:3002/files/"+req.params.id+"?token=" + req.query.token)
     })
 });
 
@@ -298,7 +298,7 @@ router.post('/:id/removerComentario', function (req, res) {
     })
 });
 
-
+/*
 // classify
 router.post('/:id/estrelas/:idU', function (req, res) {
     var flag;
@@ -320,6 +320,6 @@ router.post('/:id/estrelas/:idU', function (req, res) {
     }).catch(e => {
         res.status(500).jsonp(e)
     })
-});
+}); */
 
 module.exports = router;

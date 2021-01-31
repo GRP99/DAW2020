@@ -4,16 +4,57 @@ const urlParams = new URLSearchParams(queryString);
 const token = urlParams.get("token");
 
 /*
-$(()=>{
-    // usar AJAX
-    $.get("http://localhost:3001/files/fromUser?token="+token, function(data){
-        data.forEach(p => {
-            $("#tableFiles").append("<tr onclick='showImage(\"" + p.name + "\",\"" + p.mimetype + "\");'>" 
-            +"<td>" + p.date + "</td> <td>" + p.name + "</td> <td>" + 
-            p.mimetype + "</td> <td>" + p.size +"</td> </tr>")
-        });
-    })
-})*/
+function showComments(idF, idU) {
+    $.ajax({
+        url: "http://localhost:3001/files/" + idF + "?token=" + token,
+        type: "GET",
+        success: function (data) {
+            let cdiv = "<fieldset class=\"w3-container w3-margin\">" + 
+                "<legend>Comments</legend>"
+                + "<table id=\"tableComentarios\">"
+            data.comentarios.forEach(c =>{
+                    cdiv +=
+                    "<tr style=\"font-size:10px\"> " + c.autor + " commented: </tr>" + 
+                    "<tr style=\"font-size:6px\">" + c.data + "<tr>" +
+                    "<tr> <textarea style=\"resize: none;\" rows=\"3\" cols=\"37\" readonly>" + c.descricao + "</textarea> </tr>"
+            }) 
+            cdiv+= "</table> </fieldset>"
+            var d= new Date().toISOString().substr(0,16);
+            $("#displayComments").empty();
+            $("#displayComments").append(cdiv)
+            $("#displayComments").append("<form class=\"w3-container\" method=\"POST\" onSubmit=\"return confirm(&quot;Do you want to add this Comment?&quot;)\" action=\"http://localhost:3001/files/"+idF+"/adicionarComentario?token="+token+"\">"+
+            "<fieldset class=\"w3-container w3-margin\">" + 
+                "<legend>New Comment</legend>"
+                + "<input type=\"hidden\" name=\"autor\" value=\""+idU+"\"/>"
+                + "<input type=\"hidden\" name=\"data\" value=\""+d+"\"/>"
+                + "<table>" +
+                    "<tr>"
+                        + "<td> <textarea style=\"resize: none;\" rows=\"3\" cols=\"35\" name=\"descricao\"> </textarea> </td> </tr> </table>" +
+                "<input class=\"w3-btn w3-blue-grey w3-margin\" type=\"submit\" value=\"Add Comment\"/>"
+            + "</fieldset>" +
+        "</form>");
+            $("#displayComments").modal();
+        }
+    });
+} */
+
+function showComments(idF, idU) {
+            var d= new Date().toISOString().substr(0,16);
+            $("#displayComments").empty();
+            $("#displayComments").append("<form class=\"w3-container\" method=\"POST\" onSubmit=\"return confirm(&quot;Do you want to add this Comment?&quot;)\" action=\"http://localhost:3001/files/"+idF+"/adicionarComentario?token="+token+"\">"+
+            "<fieldset class=\"w3-container w3-margin\">" + 
+                "<legend>New Comment</legend>"
+                + "<input type=\"hidden\" name=\"autor\" value=\""+idU+"\"/>"
+                + "<input type=\"hidden\" name=\"data\" value=\""+d+"\"/>"
+                + "<table>" +
+                    "<tr>"
+                        + "<td> <textarea style=\"resize: none;\" rows=\"3\" cols=\"35\" name=\"descricao\"> </textarea> </td> </tr> </table>" +
+                "<input class=\"w3-btn w3-blue-grey w3-margin\" type=\"submit\" value=\"Add Comment\"/>"
+            + "</fieldset>" +
+        "</form>");
+            $("#displayComments").modal();
+}
+
 
 function add() {
     var file = $('<input class="w3-input w3-border w3-light-grey" type="file" name="myFile">');
@@ -51,7 +92,7 @@ function removeFavourite(idF) {
 }
 
 function showFile(size, id, name, type, autor, desc) {
-    var file = $("<pre><b>File name: </b>" + name + "</pre>" + "<pre><b>Size: </b>" + size + "</pre>" + "<pre><b>File Type: </b>" + type + "</pre>" + '<table><tr><pre><b>Description: </b></td><pre><textarea rows="4" cols="70" style="font-size: 11px;" readonly>' + desc + "</textarea>" + "</td></tr></table>");
+    var file = $("<pre><b>File name: </b>" + name + "</pre>" + "<pre><b>Size: </b>" + size + "</pre>" + "<pre><b>File Type: </b>" + type + "</pre>" + '<table><tr><pre><b>Description: </b></td><pre><textarea rows="4" cols="70" style="font-size: 11px; resize: none;" readonly>' + desc + "</textarea>" + "</td></tr></table>");
     var download = $('<div style="margin: auto; width: 25%; border: 2px solid black; text-align: center;"><a href="http://localhost:3001/files/download/' + autor + "/" + id + "?token=" + token + '"> Download <i class="fa fa-download"></i></a></div>');
 
     $("#display").empty();
@@ -89,7 +130,7 @@ function validate() {
 }
 
 function openUploadModal(user) {
-    var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to submit?&quot;)" action="http://localhost:3001/files?token=' + token + ' "method="POST" enctype="multipart/form-data" id="myForm"><label class="w3-text-blue-grey"><b>Select file</b></label><!-- #addeds--><input class="w3-input w3-border w3-light-grey" type="file" name="myFile" />' + '<p><b class="w3-text-blue-grey">Acess: <select id="level" name="privacy" type="num" ><option value="1">Private</option><option value="0">Public</option></select></b></p>' + "<table>" + "<tr>" + "<td>Descrição:</td>" + '<td><textarea rows="3" cols="30" name="descricao"></textarea></td>' + "</tr>" + '<label class="w3-text-gray"><b>Título</b></label>' + '<input class="w3-input w3-border w3-light-grey" type="text" name="title">' + '<label class="w3-text-gray"><b>SubTítulo</b></label>' + '<input class="w3-input w3-border w3-light-grey" type="text" name="subtitle">' + '<label class="w3-text-gray"><b>Data Criação [AAAA-MM-DD]</b></label>' + '<input class="w3-input w3-border w3-light-grey" type="text" name="date">' + '</table><button.w3-btn.w3-teal(type=\'button\' onclick=\'add()\') +--><input type="hidden" name="autor" value="' + user + '" /><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />' + "</form>");
+    var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to submit?&quot;)" action="http://localhost:3001/files?token=' + token + ' "method="POST" enctype="multipart/form-data" id="myForm"><label class="w3-text-blue-grey"><b>Select file</b></label><!-- #addeds--><input class="w3-input w3-border w3-light-grey" type="file" name="myFile" />' + '<p><b class="w3-text-blue-grey">Acess: <select id="level" name="privacy" type="num" ><option value="1">Private</option><option value="0">Public</option></select></b></p>' + "<table>" + "<tr>" + "<td>Descrição:</td>" + '<td><textarea style=\"resize: none;\" rows="3" cols="30" name="descricao"></textarea></td>' + "</tr>" + '<label class="w3-text-gray"><b>Título</b></label>' + '<input class="w3-input w3-border w3-light-grey" type="text" name="title">' + '<label class="w3-text-gray"><b>SubTítulo</b></label>' + '<input class="w3-input w3-border w3-light-grey" type="text" name="subtitle">' + '<label class="w3-text-gray"><b>Data Criação [AAAA-MM-DD]</b></label>' + '<input class="w3-input w3-border w3-light-grey" type="text" name="date">' + '</table><button.w3-btn.w3-teal(type=\'button\' onclick=\'add()\') +--><input type="hidden" name="autor" value="' + user + '" /><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />' + "</form>");
 
     $("#display").empty();
     $("#display").append(file);
@@ -97,7 +138,7 @@ function openUploadModal(user) {
 }
 
 function openWarningModal(user) {
-    var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to submit?&quot;)" action="http://localhost:3001/news?token=' + token + ' "method="POST" enctype="multipart/form-data" id="myForm">' + "<table>" + "<tr>" + "<td>Warning:</td>" + '<td><textarea rows="3" cols="30" name="descricao"></textarea></td>' + "</tr>" + '</table><button.w3-btn.w3-teal(type=\'button\' onclick=\'add()\') +--><input type="hidden" name="autor" value="' + user + '" /><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />' + "</form>");
+    var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to submit?&quot;)" action="http://localhost:3001/news?token=' + token + ' "method="POST" enctype="multipart/form-data" id="myForm">' + "<table>" + "<tr>" + "<td>Warning:</td>" + '<td><textarea style=\"resize: none;\" rows="3" cols="30" name="descricao"></textarea></td>' + "</tr>" + '</table><button.w3-btn.w3-teal(type=\'button\' onclick=\'add()\') +--><input type="hidden" name="autor" value="' + user + '" /><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />' + "</form>");
 
     $("#display").empty();
     $("#display").append(file);

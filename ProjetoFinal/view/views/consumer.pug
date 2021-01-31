@@ -49,14 +49,14 @@ block content
                                             col(width='16.666666%')
 
                                         thead.u-custom-color-1.u-table-header.u-table-header-1
-                                            tr(style='height: 46px;')
+                                            tr(style='height: 30px;')
                                                 th.u-table-cell Date
                                                 th.u-table-cell File Title
                                                 th.u-table-cell Author
                                                 th.u-table-cell
                                         tbody.u-table-body
                                             each a in lista
-                                                tr(id=a._id, style='height: 86px;')
+                                                tr(id=a._id, style='height: 75px;')
                                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.creationDate
                                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell(onclick="showFile(\""+a.size +"\",\""+a._id+"\",\""+a.name+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")= a.title
                                                     each u in users
@@ -69,6 +69,6 @@ block content
                                                         button(class="w3-button w3-red" onclick="removeFavourite(\""+a._id+"\")")
                                                             i(class="fa fa-close" style="font-size:15px")
                                             else 
-                                                td(style='height: 86px;') You don't have files added to your Favourites!
+                                                td(style='height: 75px;') You don't have files added to your Favourites!
                                 if (user_level=='admin')  
                                     button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-3(onclick="openWarningModal(\""+user_id+"\")") WARNING

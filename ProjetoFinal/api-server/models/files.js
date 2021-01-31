@@ -23,10 +23,6 @@ var comentarioSchema = new mongoose.Schema({
     descricao: {
         type: String,
         required: true
-    },
-    estrelas: {
-        type: estrelaSchema,
-        required: true
     }
 });
 

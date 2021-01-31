@@ -79,5 +79,23 @@ router.get("/biblioteca", (req, res) => {
     });
 });
 
+// get profile of file
+router.get("/:id", (req, res) => {
+    var requestUser = axios.get("http://localhost:3001/users?token=" + token);
+    var requestFich = axios.get("http://localhost:3001/files/"+req.params.id+"?token=" + req.query.token);
+    axios.all([requestFich, requestUser]).then(axios.spread((...response) => {
+        var fich = response[0].data;
+        var users = response[1].data; 
+        res.render("file", {
+            fich: fich,
+            idUser: req.user._id,
+            users: users,
+            token: req.query.token
+        });
+    })).catch(function (erro) {
+        console.log("ERROR Página File: " + erro);
+    });
+});
+
 
 module.exports = router;
