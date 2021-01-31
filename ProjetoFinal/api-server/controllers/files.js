@@ -176,13 +176,20 @@ module.exports.decrementarEstrelas = (idR, idU) => {
 
 // Search files
 module.exports.search = (text) => {
-    return Files.find({title :{$regex:text}}).exec();
+    return Files.find({title :{$regex:text, "$options" : "i"}}).exec();
+}
+
+module.exports.searchByType = (type) => {
+    return Files.find({mimetype :{$regex:type, "$options" : "i"}}).exec();
+}
+
+module.exports.searchByDate = (date) => {
+    return Files.find({creationDate :{$regex:date}}).exec();
 }
 
 /****** HOME - TOP 3 ********/
 
 module.exports.topclassificados = () => {
-    console.log("entrei")
     return Files.find().sort({"estrelas.numero":-1}).limit(3).exec();
 }
 

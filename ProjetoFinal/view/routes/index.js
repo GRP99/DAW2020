@@ -24,9 +24,21 @@ router.get('/homepage', function (req, res, next) {
 });
 
 router.post('/search',function(req,res){
-    axios.get('http://localhost:3001/search/'+req.body.type+'/'+req.body.search+'?token='+req.query.token)
-                .then(resposta => {res.send(resposta.data)})
-                .catch(error => {res.send(error)})
-});
+    var rUser = axios.get("http://localhost:3001/users?token=" + token);
+    var rSearch = axios.get('http://localhost:3001/search/'+req.body.type+'/'+req.body.search+'?token='+req.query.token)
+
+    axios.all([rSearch, rUser]).
+    then(axios.spread((...resposta) => {
+                    if(req.body.type=='users') authors=1
+                    else authors=0
+                    res.render("search", {
+                        lista: resposta[0].data,
+                        users: resposta[1].data,
+                        autor:authors,
+                        token:req.query.token
+                    });    
+                })
+    )
+    .catch(error => {res.send(error)})});
 
 module.exports = router;

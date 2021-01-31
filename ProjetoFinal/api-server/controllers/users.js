@@ -33,5 +33,5 @@ module.exports.updatePhoto = (id) => {
 
 // Search users
 module.exports.search = (text) => {
-    return Users.find({name :{$regex:text}}).exec();
+    return Users.find({name :{$regex:text, "$options" : "i"}}).exec();
 }

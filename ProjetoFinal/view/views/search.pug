@@ -1,0 +1,120 @@
+extends layout
+
+block content
+    link(rel='stylesheet' href='/stylesheets/library.css' media='screen')
+    if autor == 1
+        section#sec-a877.u-clearfix.u-section-1
+        .u-clearfix.u-sheet.u-sheet-1
+            .u-expanded-width.u-table.u-table-responsive.u-table-1
+               table.u-table-entity(style="text-align:center")
+                    colgroup
+                        col(width='25%')
+                        col(width='37.5%')
+                        col(width='37.5%')
+                    thead.u-custom-color-1.u-custom-font.u-font-ubuntu.u-table-header.u-table-header-1
+                        tr(style='height: 21px;')
+                            th.u-table-cell
+                            th.u-table-cell Name
+                            th.u-table-cell Git
+                    tbody.u-custom-font.u-font-ubuntu.u-table-body
+                        each a in lista
+                            tr(style='height: 75px;')
+                                td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                    img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src="http://localhost:3001/users/"+a._id+"/profilepic.jpeg?token="+token alt='' width="75" height="75")
+                                td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.name
+                                td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell 
+                                    a(href="https://github.com/chico2911") https://github.com/chico2911
+    else                                
+      section#sec-a877.u-clearfix.u-section-1
+        .u-clearfix.u-sheet.u-sheet-1
+            .u-expanded-width.u-table.u-table-responsive.u-table-1
+                table.u-table-entity(style="text-align:center")
+                    colgroup
+                        col(width='20%')
+                        col(width='20%')
+                        col(width='20%')
+                        col(width='20%')
+                        col(width='20%')
+                    thead.u-custom-color-1.u-custom-font.u-font-ubuntu.u-table-header.u-table-header-1
+                        tr(style='height: 21px;')
+                            th.u-table-cell Date
+                            th.u-table-cell File Title
+                            th.u-table-cell Average Classification 
+                            th.u-table-cell Your Classification
+                            th.u-table-cell Author 
+                            th.u-table-cell
+                            th.u-table-cell  
+                    tbody.u-custom-font.u-font-ubuntu.u-table-body
+                        each a in lista
+                            if a.privacy==0
+                                tr(style='height: 75px;')
+                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.creationDate
+                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell(onclick="showFile(\""+a.size +"\",\""+a._id+"\",\""+a.name+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")= a.title
+                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                        if (a.estrelas.numero >= 4.0)
+                                            b(style="color: green")= a.estrelas.numero
+                                        if (a.estrelas.numero < 4.0 && a.estrelas.numero >= 2.0)
+                                            b(style="color: orange")= a.estrelas.numero
+                                        if (a.estrelas.numero < 2.0 && a.estrelas.numero > 0)
+                                            b(style="color: red")= a.estrelas.numero
+                                        if (a.estrelas.numero == 0)
+                                            b No classification
+                                    - var found = 0
+                                    - var match = idUser + "[?][;][0-9]"
+                                    - var temp = ""
+                                    each autoresClassificados in a.estrelas.autores
+                                        if autoresClassificados.match(match)
+                                            - found = 1
+                                            - temp = autoresClassificados
+                                    if found == 1
+                                        td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                            div(class="rating" onclick="return alert(\"You already rated this file!\")")
+                                                if temp == idUser+"?;5"
+                                                    span ★ 
+                                                else 
+                                                    span ☆
+                                                if (temp == idUser+"?;5" || temp == idUser+"?;4") 
+                                                    span ★ 
+                                                else 
+                                                    span ☆
+                                                if (temp == idUser+"?;5" || temp == idUser+"?;4" || temp == idUser+"?;3") 
+                                                    span ★ 
+                                                else 
+                                                    span ☆
+                                                if (temp == idUser+"?;5" || temp == idUser+"?;4" || temp == idUser+"?;3" || temp == idUser+"?;2") 
+                                                    span ★ 
+                                                else 
+                                                    span ☆
+                                                if (temp == idUser+"?;5" || temp == idUser+"?;4" || temp == idUser+"?;3" || temp == idUser+"?;2" || temp == idUser+"?;1") 
+                                                    span ★ 
+                                                else 
+                                                    span ☆
+                                    else
+                                        td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                            div(class="rating")
+                                                span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(5,\""+a._id+"\"):'';") ☆
+                                                span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(4,\""+a._id+"\"):'';") ☆
+                                                span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(3,\""+a._id+"\"):'';") ☆       
+                                                span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(2,\""+a._id+"\"):'';") ☆
+                                                span(onclick="return confirm('Are you sure? You can only rate this file once!')?classificar(1,\""+a._id+"\"):'';") ☆
+                                        each u in users
+                                         if u._id == a.autor
+                                            td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=u.name
+                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                        button(class="w3-button w3-green" onclick="location.href='http://localhost:3001/files/download/"+a.autor+"/"+a._id+"?token="+token+"';")
+                                            i(class="fa fa-download" style="font-size:15px")
+                                    // if favoritos contains user
+                                    - var foundFavoritos = 0
+                                    each fav in a.favoritos
+                                        // idUser is req.user._id
+                                        if fav == idUser
+                                            - foundFavoritos = 1
+                                    if foundFavoritos == 1    
+                                        td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                            button(class="w3-button w3-green" onclick="return confirm('Do you want to remove this file from your favourites?')?removeFavourite(\""+a._id+"\"):'';")
+                                                i(class="fa fa-check" style="font-size:15px")
+                                    else  
+                                        td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                            button(class="w3-button w3-yellow" onclick="return confirm('Do you want to add this file as your favourite?')?addAsFavourite(\""+a._id+"\"):'';")
+                                                i(class="fa fa-star" style="font-size:15px")
+    div(id='display')                                         
