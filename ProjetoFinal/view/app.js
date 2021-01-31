@@ -35,13 +35,11 @@ app.use(function (req, res, next) {
             default: res.redirect('/users/login');
                 break;
         }
-    } else {
-        // authentication
+    } else { // authentication
         jwt.verify(req.query.token, 'PRI2020', function (e, payload) {
-            if (e){
+            if (e) {
                 res.redirect('/users/login');
-            }
-             else {
+            } else {
                 req.user = {
                     level: payload.level,
                     _id: payload._id

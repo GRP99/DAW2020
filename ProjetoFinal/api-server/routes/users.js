@@ -8,7 +8,6 @@ var jwt = require('jsonwebtoken');
 
 var User = require('../controllers/users');
 
-
 // get all users
 router.get("/", function (req, res) {
     if (req.user.level == 'admin') {
@@ -21,7 +20,6 @@ router.get("/", function (req, res) {
         res.status(401).jsonp({error: 'Não possui permissões para tal operação!'})
     }
 });
-
 
 // get one user by id
 router.get("/:id", function (req, res) {
@@ -36,7 +34,7 @@ router.get("/:id", function (req, res) {
             git: data.git,
             role: data.role,
             course: data.course,
-            department: data.department,
+            department: data.department
         }
         res.status(200).jsonp(user);
     }).catch((err) => {

@@ -66,6 +66,7 @@ router.post("/registar", function (req, res) {
     user.profilepic = 0;
     var d = new Date().toISOString().substr(0, 16);
     user.registrationDate = d;
+    user.lastAccessDate = d;
     User.insereUser(user).then(() => {
         res.status(200).jsonp({msg: "Utilizador criado com sucesso!"});
     }).catch((err) => {
@@ -73,5 +74,14 @@ router.post("/registar", function (req, res) {
     });
 });
 
+router.post("/logout/:id", function (req, res) {
+    var id = req.params.id;
+    console.log(id);
+    User.registLastAcess(id).then(() => {
+        res.status(200).jsonp({msg: "Last Acess registed!"});
+    }).catch((err) => {
+        res.status(500).jsonp({error: err})
+    });
+})
 
 module.exports = router;

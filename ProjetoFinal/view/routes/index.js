@@ -10,35 +10,49 @@ router.get('/homepage', function (req, res, next) {
     var requestTopClassi = axios.get("http://localhost:3001/files/topClass?token=" + req.query.token)
     var requestTopFavs = axios.get("http://localhost:3001/files/topFavs?token=" + req.query.token)
     var requestTopAut = axios.get("http://localhost:3001/files/topAut?token=" + req.query.token)
-    axios.all([requestNews, requestTopClassi, requestTopFavs, requestTopAut, rUser]).then(axios.spread((...response) => {
+    axios.all([
+        requestNews,
+        requestTopClassi,
+        requestTopFavs,
+        requestTopAut,
+        rUser
+    ]).then(axios.spread((...response) => {
         news = response[0].data
         classified = response[1].data
         favourites = response[2].data
         authors = response[3].data
         users = response[4].data
-        res.render('home', {token: req.query.token,noticias: news, classified: classified, favourites: favourites, authors: authors, users: users})
-    }))
-    .catch(function (erro) {
+        res.render('home', {
+            token: req.query.token,
+            noticias: news,
+            classified: classified,
+            favourites: favourites,
+            authors: authors,
+            users: users
+        })
+    })).catch(function (erro) {
         console.log("ERROR HOME PAGE: " + erro);
     });
 });
 
-router.post('/search',function(req,res){
+router.post('/search', function (req, res) {
     var rUser = axios.get("http://localhost:3001/users?token=" + token);
-    var rSearch = axios.get('http://localhost:3001/search/'+req.body.type+'/'+req.body.search+'?token='+req.query.token)
+    var rSearch = axios.get('http://localhost:3001/search/' + req.body.type + '/' + req.body.search + '?token=' + req.query.token)
 
-    axios.all([rSearch, rUser]).
-    then(axios.spread((...resposta) => {
-                    if(req.body.type=='users') authors=1
-                    else authors=0
-                    res.render("search", {
-                        lista: resposta[0].data,
-                        users: resposta[1].data,
-                        autor:authors,
-                        token:req.query.token
-                    });    
-                })
-    )
-    .catch(error => {res.send(error)})});
+    axios.all([rSearch, rUser]).then(axios.spread((...resposta) => {
+        if (req.body.type == 'users') 
+            authors = 1
+         else 
+            authors = 0
+         res.render("search", {
+            lista: resposta[0].data,
+            users: resposta[1].data,
+            autor: authors,
+            token: req.query.token
+        });
+    })).catch(error => {
+        res.send(error)
+    })
+});
 
 module.exports = router;

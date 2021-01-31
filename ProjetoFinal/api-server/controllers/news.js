@@ -12,7 +12,7 @@ module.exports.last10News = () => {
     return News.find().sort({_id: 1}).limit(10).exec()
 }
 
-// return only one new 
+// return only one new
 module.exports.lookup = id => {
     return News.findOne({_id: id}).exec()
 }

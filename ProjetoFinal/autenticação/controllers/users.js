@@ -1,9 +1,7 @@
 // USERS CONTROLLER
-
 var Users = require('../models/users')
 
-
-// retorna all the users
+// return all the users
 module.exports.listUsers = () => {
     return Users.find().exec();
 }
@@ -22,11 +20,22 @@ module.exports.insereUser = p => {
     return newUser.save();
 }
 
-// change the profilepic 
+// change the profilepic
 module.exports.updatePhoto = (id) => {
     Users.findOne({_id: id}).exec().then((result) => {
         result.profilepic = 1
         Users.findByIdAndUpdate(id, result, {new: true})
         return result.save()
     });
+}
+
+module.exports.registLastAcess = (id) => {
+    var d = new Date().toISOString().substr(0, 16);
+    return Users.updateOne({
+        "_id": id
+    }, {
+        $set: {
+            "lastAccessDate": d
+        }
+    }).exec();
 }

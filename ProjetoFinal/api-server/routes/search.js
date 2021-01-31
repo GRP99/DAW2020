@@ -6,8 +6,7 @@ var File = require('../controllers/files');
 
 
 router.get('/users/:user', function (req, res) {
-    User.search(req.params.user)
-    .then((data) => {
+    User.search(req.params.user).then((data) => {
         res.status(200).jsonp(data);
     }).catch((err) => {
         res.status(500).jsonp(err)
@@ -21,7 +20,6 @@ router.get('/files/:file', function (req, res) {
         res.status(500).jsonp(err)
     });
 });
-
 
 router.get('/types/:type', function (req, res) {
     File.searchByType(req.params.type).then((data) => {

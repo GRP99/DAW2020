@@ -20,30 +20,25 @@ function verificaAutoriadade(autor, usr) {
 }
 */
 
-//This route gets all files, but u need to be admin to have access to all files
-//First we see if request is sent by a admin, if not we responde with error 401, if it is proceed.
+// This route gets all files, but u need to be admin to have access to all files
+// First we see if request is sent by a admin, if not we responde with error 401, if it is proceed.
 router.get("/", function (req, res, next) {
     if (req.user.level == "admin") {
-        FControl.list()
-        .then((data) => res.status(200).jsonp(data))
-        .catch((err) => res.status(500).jsonp(err));
-    } 
-    else res.status(401).jsonp({error:'Only Admins are allowed!'});
+        FControl.list().then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
+    } else 
+        res.status(401).jsonp({error: 'Only Admins are allowed!'});
+    
 });
 
 // This route gets all public files. If they are public everyone has access to them xD
 router.get("/public", function (req, res, next) {
-    FControl.publicFiles()
-    .then((data) => res.status(200).jsonp(data))
-    .catch((err) => res.status(500).jsonp(err));
+    FControl.publicFiles().then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
 });
 
-//This route gets all files from a user, only the user or the admin can get them.
+// This route gets all files from a user, only the user or the admin can get them.
 router.get("/fromUser", function (req, res) {
     var userID = req.user.id;
-    FControl.filesbyUser(userID)
-    .then((data) => res.status(200).jsonp(data))
-    .catch((err) => res.status(500).jsonp(err));
+    FControl.filesbyUser(userID).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
 });
 
 /******** HOME - TOP 3  ********/
@@ -75,26 +70,23 @@ router.get("/topAut", function (req, res) {
     });
 });
 
-//This route gets an file by it's ID, it's only available if it is public, or it's the autor or the admin
+// This route gets an file by it's ID, it's only available if it is public, or it's the autor or the admin
 router.get("/:id", function (req, res, next) {
-    FControl.lookup(req.params.id)
-    .then((data) => {
+    FControl.lookup(req.params.id).then((data) => {
         if (data.autor == req.user._id || req.user.level == "admin" || data.privacy == 1) {
             res.status(200).jsonp(data);
-        } 
-        else {
-            res.status(401).jsonp({error:'You are not allowed to view this file!'});
-        }})
-    .catch((err) => res.status(500).jsonp(err));
+        } else {
+            res.status(401).jsonp({error: 'You are not allowed to view this file!'});
+        }
+    }).catch((err) => res.status(500).jsonp(err));
 });
 
 // privacy (works with minor bug)
 router.put("/classificar/:id", function (req, res, next) { // console.log("mudar")
     id_user = req.user._id
     id_file = req.params.id
-    FControl.classifica(id_file, id_user, req.query.class)
-    .then((data) => {
-        res.status(200).jsonp({classificacao:data.numero});
+    FControl.classifica(id_file, id_user, req.query.class).then((data) => {
+        res.status(200).jsonp({classificacao: data.numero});
     }).catch((err) => {
         res.status(200).jsonp(err);
     });
@@ -105,31 +97,23 @@ router.put("/classificar/:id", function (req, res, next) { // console.log("mudar
 router.put("/addAsFavourite/:id", (req, res) => { // console.log("mudar")
     id_user = req.user._id
     id_file = req.params.id;
-    FControl.addFav(id_file, id_user)
-    .then((data) => res.status(200).jsonp(data))
-    .catch((err) => res.status(500).jsonp(err));
+    FControl.addFav(id_file, id_user).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
 });
 
 // remove userid to favourites of a file
 router.put("/removeFavourite/:id", function (req, res, next) { // console.log("mudar")
     id_user = req.user._id
     id_file = req.params.id;
-    FControl.removeFav(id_file, id_user)
-    .then((data) => res.status(200).jsonp(data))
-    .catch((err) => res.status(500).jsonp(err));
+    FControl.removeFav(id_file, id_user).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
 });
 
 // privacy (works with minor bug)
 router.put("/changeprivacy/:id", (req, res) => { // console.log("mudar")
-    FControl.lookup(req.params.id)
-    .then((result) => {
+    FControl.lookup(req.params.id).then((result) => {
         if (req.user.level == "admin" || req.user._id == result.autor) {
-            FControl.changeprivacy(req.params.id)
-            .then((data) => res.status(200).jsonp(data))
-            .catch((err) => res.status(500).jsonp(err));
-        }
-        else {
-            res.status(401).jsonp({error:'You are not allowed to do this!'});
+            FControl.changeprivacy(req.params.id).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
+        } else {
+            res.status(401).jsonp({error: 'You are not allowed to do this!'});
         }
     });
 });
@@ -213,8 +197,8 @@ router.post("/", upload.single("myFile"), (req, res) => {
                     var d = new Date().toISOString().substr(0, 16);
 
                     var fD = {
-                        title:req.body.title,
-                        subtitle:req.body.subtitle,
+                        title: req.body.title,
+                        subtitle: req.body.subtitle,
                         creationDate: req.body.date,
                         registrationDate: d,
                         autor: req.body.autor,
@@ -272,7 +256,9 @@ router.delete("/:id", (req, res) => {
                 FControl.remove(req.params.id).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
             }); */
             // Dá delete à pasta
-            rimraf(fpath, function () { console.log("Filepath deleted."); });
+            rimraf(fpath, function () {
+                console.log("Filepath deleted.");
+            });
             FControl.remove(req.params.id).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
         } else {
             res.status(401)

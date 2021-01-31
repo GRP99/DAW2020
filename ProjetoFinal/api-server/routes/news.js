@@ -14,7 +14,6 @@ router.get('/', function (req, res) {
     });
 })
 
-
 // post warning
 router.post("/", function (req, res, next) {
     if (req.user.level == 'admin') {

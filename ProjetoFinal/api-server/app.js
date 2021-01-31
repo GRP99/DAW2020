@@ -12,7 +12,6 @@ var jwt = require("jsonwebtoken");
 var usersRouter = require("./routes/users");
 var filesRouter = require("./routes/files");
 var newsRouter = require("./routes/news");
-var typesRouter = require("./routes/types");
 var searchRouter = require("./routes/search");
 
 
@@ -46,7 +45,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
-// verificacao da origem do pedido 
+// verificacao da origem do pedido
 app.use(function (req, res, next) {
     if (req.query.token != null) {
         jwt.verify(req.query.token, "PRI2020", function (e, payload) {
@@ -62,6 +61,7 @@ app.use(function (req, res, next) {
         });
     } else 
         res.status(401).jsonp({error: "Client did not send any token"});
+    
 });
 
 
@@ -69,7 +69,6 @@ app.use(function (req, res, next) {
 app.use("/users", usersRouter);
 app.use("/files", filesRouter);
 app.use("/news", newsRouter);
-app.use("/types", typesRouter);
 app.use("/search", searchRouter);
 
 // #################### ERROR HANDLER ####################

@@ -1,21 +1,25 @@
 var express = require('express');
 var router = express.Router();
 var axios = require('axios')
-var autenticaURL  = "http://localhost:3535"
+var autenticaURL = "http://localhost:3535"
 var api_serverURL = "http://localhost:3001"
 var token;
 var token2 = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhZG1pbiIsImxldmVsIjoiYWRtaW4iLCJleHBpcmVzSW4iOiIzbSIsImlhdCI6MTYxMDExODM1OX0.omYqB6hz4vSrRjIBEAi0mg6TNVti0OaqXW6n95JljiM';
 
 
-key = {key:'2cf7a71be6dc9665aba1f32451e887442cb5a9a208b29e1598611236e60b490'}
-axios.post(autenticaURL+'/autenticarApp',key).then(t=>{token=t.data.token}).catch(e=>console.log(e))
+key = {
+    key: '2cf7a71be6dc9665aba1f32451e887442cb5a9a208b29e1598611236e60b490'
+}
+axios.post(autenticaURL + '/autenticarApp', key).then(t => {
+    token = t.data.token
+}).catch(e => console.log(e))
 
 /* get user page */
 router.get(['/account'], function (req, res, next) {
     var _id = req.user._id
 
-    var requestUser = axios.get(api_serverURL+'/users/' + _id + "?token=" + req.query.token);
-    var requestFicheiros = axios.get(api_serverURL+'/files/autor/' + _id + "?token=" + req.query.token);
+    var requestUser = axios.get(api_serverURL + '/users/' + _id + "?token=" + req.query.token);
+    var requestFicheiros = axios.get(api_serverURL + '/files/autor/' + _id + "?token=" + req.query.token);
 
     axios.all([requestUser, requestFicheiros]).then(axios.spread((...response) => {
         var user = response[0].data;
@@ -41,7 +45,7 @@ router.get(['/account'], function (req, res, next) {
                     user_github: github,
                     user_role: role,
                     user_course: course,
-                    user_department: department,
+                    user_department: department
                 });
                 break;
         }
@@ -54,11 +58,11 @@ function renderConsumer(req, res, user) {
     var rUser = axios.get("http://localhost:3001/users?token=" + token2);
     var rFicheiros = axios.get("http://localhost:3001/files/public?token=" + req.query.token);
     var arr = []
-    
+
     axios.all([rFicheiros, rUser]).then(axios.spread((...resposta) => {
         files = resposta[0].data;
         users = resposta[1].data;
-        files.forEach(f=>{
+        files.forEach(f => {
             if (f.favoritos.includes(user._id)) {
                 arr.push(f)
             }
@@ -89,7 +93,7 @@ router.get("/favourites", (req, res) => {
     axios.all([requestUser, requestFicheiros]).then(axios.spread((...response) => {
         var users = response[0].data;
         var files = response[1].data;
-        files.forEach(f=>{
+        files.forEach(f => {
             if (f.favoritos.includes(req.user._id)) {
                 arr.push(f)
             }
@@ -115,7 +119,7 @@ router.get('/signup', function (req, res) {
 });
 
 router.post('/signup', function (req, res) {
-    axios.post(autenticaURL+'/registar?token=' + token, req.body).then(dados => {
+    axios.post(autenticaURL + '/registar?token=' + token, req.body).then(dados => {
         res.redirect('/login');
     }).catch(error => {
         console.log(error);
@@ -123,7 +127,7 @@ router.post('/signup', function (req, res) {
 })
 
 router.post('/login', function (req, res) {
-    axios.post(autenticaURL+'/login?token=' + token, req.body).then(dados => {
+    axios.post(autenticaURL + '/login?token=' + token, req.body).then(dados => {
         res.redirect("/homepage?token=" + dados.data.token);
     }).catch(error => {
         console.log(error);
@@ -132,7 +136,11 @@ router.post('/login', function (req, res) {
 
 
 router.get('/logout', function (req, res) {
-    res.redirect('/login');
+    axios.post(autenticaURL + '/logout/' + req.user._id + '?token=' + token).then(() => {
+        res.redirect('/login');
+    }).catch(error => {
+        console.log(error);
+    })
 })
 
 

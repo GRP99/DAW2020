@@ -1,29 +1,23 @@
 // FILES CONTROLLER
-
 var Files = require('../models/files');
-
 
 // return all files
 module.exports.list = () => {
     return Files.find().exec();
 }
 
-
 // return only public files
 module.exports.publicFiles = () => {
     return Files.find({privacy: 0}).exec();
 }
-
 
 // find that file
 module.exports.lookup = id => {
     return Files.findOne({_id: id}).exec();
 }
 
-
 // insert a new file
-module.exports.insert = (p, path) => {
-    // console.log(JSON.stringify(p));
+module.exports.insert = (p, path) => { // console.log(JSON.stringify(p));
     var newFile = new Files(p)
     newFile.filepath = path
     estrelas = {
@@ -32,16 +26,13 @@ module.exports.insert = (p, path) => {
     }
     newFile.comentarios = []
     newFile.estrelas = estrelas;
-    // console.log(newFile)
     return newFile.save();
 }
-
 
 // all the files that user
 module.exports.filesbyUser = id => {
     return Files.find({autor: id}).exec();
 }
-
 
 // find a file with a given title
 module.exports.findByName = t => {
@@ -55,7 +46,7 @@ module.exports.remove = id => {
 }
 
 
-// add a user to favourites list from file 
+// add a user to favourites list from file
 module.exports.addFav = (id, user) => {
     return Files.findOne({_id: id}).exec().then((result) => {
         result.favoritos.push(user);
@@ -63,12 +54,12 @@ module.exports.addFav = (id, user) => {
     })
 }
 
-// removes a user to favourites list from file 
+// removes a user to favourites list from file
 module.exports.removeFav = (id, user) => {
     return Files.findOne({_id: id}).exec().then((result) => {
         var arrFavs = []
-        result.favoritos.forEach(a =>{
-            if (a != user){
+        result.favoritos.forEach(a => {
+            if (a != user) {
                 arrFavs.push(a)
             }
         })
@@ -94,17 +85,18 @@ module.exports.classifica = (id, user, classi) => {
 /* Changes security */
 module.exports.changeprivacy = (id) => {
     return Files.findOne({_id: id}).exec().then((result) => {
-        if(result.privacy == 0) {
+        if (result.privacy == 0) {
             p = 1;
-        }
-        else {
+        } else {
             p = 0;
         }
-        return Files.findOneAndUpdate(id, {privacy:p}, {
+        return Files.findOneAndUpdate(id, {
+            privacy: p
+        }, {
             new: true,
             upsert: true,
             rawResult: true // Return the raw result from the MongoDB driver
-          });
+        });
     })
 }
 
@@ -176,40 +168,74 @@ module.exports.decrementarEstrelas = (idR, idU) => {
 
 // Search files
 module.exports.search = (text) => {
-    return Files.find({title :{$regex:text, "$options" : "i"}}).exec();
+    return Files.find({
+        title: {
+            $regex: text,
+            "$options": "i"
+        }
+    }).exec();
 }
 
 module.exports.searchByType = (type) => {
-    return Files.find({mimetype :{$regex:type, "$options" : "i"}}).exec();
+    return Files.find({
+        mimetype: {
+            $regex: type,
+            "$options": "i"
+        }
+    }).exec();
 }
 
 module.exports.searchByDate = (date) => {
-    return Files.find({creationDate :{$regex:date}}).exec();
+    return Files.find({
+        creationDate: {
+            $regex: date
+        }
+    }).exec();
 }
 
-/****** HOME - TOP 3 ********/
-
 module.exports.topclassificados = () => {
-    return Files.find().sort({"estrelas.numero":-1}).limit(3).exec();
+    return Files.find().sort({"estrelas.numero": -1}).limit(3).exec();
 }
 
 module.exports.topfavoritos = () => {
     return Files.aggregate([
-       { $addFields: {nmrFavs: {$size: "$favoritos"}}},
-       {
-        $sort: {
-          nmrFavs: -1
+        {
+            $addFields: {
+                nmrFavs: {
+                    $size: "$favoritos"
+                }
+            }
+        }, {
+            $sort: {
+                nmrFavs: -1
+            }
+        }, {
+            $limit: 3
         }
-      },
-      {$limit: 3} 
     ]).exec()
 }
 
 module.exports.topautores = () => {
     return Files.aggregate([
-        {$group: {_id: "$autor", filesbyA: {$push: "$_id"}}},
-        {$addFields: {nmrUploads: {$size: "$filesbyA"}}},
-        {$sort: {nmrUploads: -1}},
-        {$limit: 3}
+        {
+            $group: {
+                _id: "$autor",
+                filesbyA: {
+                    $push: "$_id"
+                }
+            }
+        }, {
+            $addFields: {
+                nmrUploads: {
+                    $size: "$filesbyA"
+                }
+            }
+        }, {
+            $sort: {
+                nmrUploads: -1
+            }
+        }, {
+            $limit: 3
+        }
     ]).exec()
 }
