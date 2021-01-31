@@ -23,6 +23,10 @@ router.get(['/account'], function (req, res, next) {
         var nome = user.name
         var mail = user._id
         var profilepic = user.profilepic
+        var github = user.git
+        var role = user.role
+        var course = user.course
+        var department = user.department
         switch (req.user.level) {
             case 'consumer': renderConsumer(req, res, user)
                 break;
@@ -33,7 +37,11 @@ router.get(['/account'], function (req, res, next) {
                     user_id: _id,
                     user_name: nome,
                     user_mail: mail,
-                    path: profilepic
+                    path: profilepic,
+                    user_github: github,
+                    user_role: role,
+                    user_course: course,
+                    user_department: department,
                 });
                 break;
         }

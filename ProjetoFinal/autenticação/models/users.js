@@ -1,7 +1,5 @@
 var mongoose = require('mongoose');
 
-var UserSchema = new mongoose.Schema({role: String, course: String, department: String});
-
 var UserSchema = new mongoose.Schema({
     _id: String,
     name: String,
@@ -11,9 +9,9 @@ var UserSchema = new mongoose.Schema({
     registrationDate: String,
     lastAccessDate: String,
     git: String,
-    affiliation: {
-        type: affiliationSchema
-    }
+    role: String,
+    course: String,
+    department: String
 });
 
 

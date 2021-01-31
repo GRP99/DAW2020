@@ -34,9 +34,9 @@ router.get("/:id", function (req, res) {
             profilepic: data.profilepic,
             registrationDate: data.registrationDate,
             git: data.git,
-            role: data.affiliation.role,
-            course: data.affiliation.course,
-            department: data.affiliation.department,
+            role: data.role,
+            course: data.course,
+            department: data.department,
         }
         res.status(200).jsonp(user);
     }).catch((err) => {
