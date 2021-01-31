@@ -70,6 +70,10 @@ function renderConsumer(req, res, user) {
         var nome = user.name
         var mail = user._id
         var profilepic = user.profilepic
+        var github = user.git
+        var role = user.role
+        var course = user.course
+        var department = user.department
         res.render('consumer', {
             token: req.query.token,
             lista: arr,
@@ -77,6 +81,10 @@ function renderConsumer(req, res, user) {
             user_name: nome,
             user_mail: mail,
             path: profilepic,
+            user_github: github,
+            user_role: role,
+            user_course: course,
+            user_department: department,
             users: users
         });
     })).catch(function (erro) {
