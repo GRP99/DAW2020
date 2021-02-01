@@ -43,6 +43,7 @@ block content
                         tr(style='height: 21px;')
                             th.u-table-cell Date
                             th.u-table-cell File Title
+                            th.u-table-cell Resource Type
                             th.u-table-cell Average Classification 
                             th.u-table-cell Your Classification
                             th.u-table-cell Author 
@@ -54,6 +55,7 @@ block content
                                 tr(style='height: 75px;')
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.creationDate
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell(onclick="showFile(\""+a.size +"\",\""+a._id+"\",\""+a.name+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")= a.title
+                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.resourceType
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
                                         if (a.estrelas.numero >= 4.0)
                                             b(style="color: green")= a.estrelas.numero

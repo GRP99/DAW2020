@@ -34,5 +34,5 @@ module.exports.search = (text) => {
             $regex: text,
             "$options": "i"
         }
-    }).exec();
+    }).sort({"name": -1, "lastAccessDate": -1, "role": -1}).exec();
 }

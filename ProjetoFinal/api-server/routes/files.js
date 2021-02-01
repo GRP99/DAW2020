@@ -53,6 +53,14 @@ router.get("/fromUser", function (req, res) {
     });
 });
 
+router.get("/resourceTypes", function (req, res) {
+    FControl.getResourceTypes().then((data) => {
+        res.status(200).jsonp(data)
+    }).catch((err) => {
+        res.status(500).jsonp(err)
+    });
+});
+
 /******** HOME - TOP 3  ********/
 
 // Top 3 classified files
@@ -223,6 +231,7 @@ router.post("/", upload.single("myFile"), (req, res) => {
                     var fD = {
                         title: req.body.title,
                         subtitle: req.body.subtitle,
+                        resourceType: req.body.resourceType,
                         creationDate: req.body.date,
                         registrationDate: d,
                         autor: req.body.autor,
@@ -249,7 +258,7 @@ router.post("/", upload.single("myFile"), (req, res) => {
                     FControl.insert(fD, correctedPath).then(() => {
                         res.redirect("http://localhost:3002/users/account?token=" + req.query.token)
                     }).catch(err => {
-                        res.status(500).jsonp({error: "ERRO : Erro na pasta de uploads."});
+                        res.status(500).jsonp({error: "ERROR: Uploads folder error."});
                     });
 
                 } else {

@@ -141,13 +141,42 @@ function validate() {
     return true;
 }
 
-function openUploadModal(user) {
-    var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to submit?&quot;)" action="http://localhost:3001/files?token=' + token + ' "method="POST" enctype="multipart/form-data" id="myForm"><label class="w3-text-blue-grey"><b>Select file</b></label><!-- #addeds--><input class="w3-input w3-border w3-light-grey" type="file" name="myFile" />' + '<p><b class="w3-text-blue-grey">Acess: <select id="level" name="privacy" type="num" ><option value="1">Private</option><option value="0">Public</option></select></b></p>' + "<table>" + "<tr>" + "<td>Description:</td>" + '<td><textarea style=\"resize: none;\" rows="3" cols="30" name="descricao"></textarea></td>' + "</tr>" + '<label class="w3-text-gray"><b>Title</b></label>' + '<input class="w3-input w3-border w3-light-grey" type="text" name="title">' + '<label class="w3-text-gray"><b>SubTitle</b></label>' + '<input class="w3-input w3-border w3-light-grey" type="text" name="subtitle">' + '<label class="w3-text-gray"><b>Creation Date [AAAA-MM-DD]</b></label>' + '<input class="w3-input w3-border w3-light-grey" type="text" name="date">' + '</table><button.w3-btn.w3-teal(type=\'button\' onclick=\'add()\') +--><input type="hidden" name="autor" value="' + user + '" /><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />' + "</form>");
+function openUploadModal(user, token, resourceTypes) {
+    console.log(resourceTypes);
+    var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to submit?&quot;)" action="http://localhost:3001/files?token=' + token 
+    + ' "method="POST" enctype="multipart/form-data" id="myForm"><label class="w3-text-blue-grey"><b>Select file</b></label><!-- #addeds--><input class="w3-input w3-border w3-light-grey" type="file" name="myFile" required="required" />' 
+    + '<p><b class="w3-text-blue-grey">Acess: <select id="level" name="privacy" type="num" ><option value="0">Public</option><option value="1">Private</option></select></b></p>'
+    + "<table>" 
+    + "<tr>" 
+    + "<td>Description:</td>" 
+    + '<td><textarea style=\"resize: none;\" rows="3" cols="30" name="descricao"></textarea></td>' 
+    + "</tr>" 
+    + '<label class="w3-text-gray"><b>Title</b></label>' 
+    + '<input class="w3-input w3-border w3-light-grey" type="text" name="title" required="required" >' 
+    + '<label class="w3-text-gray"><b>SubTitle</b></label>' 
+    + '<input class="w3-input w3-border w3-light-grey" type="text" name="subtitle">' 
+    + '<label class="w3-text-gray"><b>Creation Date</b></label>' 
+    + '<input class="w3-input w3-border w3-light-grey" type="date" name="date" required="required">' 
+    + '<label class="w3-text-gray"> <b>New Resource type</b> </label> <input class="w3-input w3-border w3-light-grey" type="text" id="newType">'
+    + '<p> <button type="button" onclick="addNewType()"> Insert a new resource type </button> </p>'
+    + '<p> <b class="w3-text-blue-grey">Resource Type: <select id="resourceType" name="resourceType" required="required"> <option>Book</option><option>Article</option><option>Application</option><option>Student Work</option><option>Monograph</option><option>Report</option> </select></b></p>'
+    + '</table><button.w3-btn.w3-teal(type=\'button\' onclick=\'add()\') +--><input type="hidden" name="autor" value="' + user 
+    + '" /><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />' + "</form>");
 
     $("#display").empty();
     $("#display").append(file);
     $("#display").modal();
 }
+
+function addNewType() {
+    if (document.getElementById("newType").value != "") {
+        var x = document.getElementById("resourceType");
+        var option = document.createElement("option");
+        option.text = document.getElementById("newType").value;
+        x.add(option);
+    }
+}
+
 
 function openWarningModal(user) {
     var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to submit?&quot;)" action="http://localhost:3001/news?token=' + token + ' "method="POST" enctype="multipart/form-data" id="myForm">' + "<table>" + "<tr>" + "<td>Warning:</td>" + '<td><textarea style=\"resize: none;\" rows="3" cols="30" name="descricao"></textarea></td>' + "</tr>" + '</table><button.w3-btn.w3-teal(type=\'button\' onclick=\'add()\') +--><input type="hidden" name="autor" value="' + user + '" /><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />' + "</form>");
@@ -207,3 +236,4 @@ function deleteFile(id) {
         false;
     }
 }
+

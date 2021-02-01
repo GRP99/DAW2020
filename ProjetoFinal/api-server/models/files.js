@@ -35,6 +35,7 @@ var FileSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    resourceType:String,
     creationDate: String,
     registrationDate: String,
     autor: String,

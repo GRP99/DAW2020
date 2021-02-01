@@ -25,10 +25,12 @@ router.get(['/account'], function (req, res, next) {
 
     var requestUser = axios.get(api_serverURL + '/users/' + _id + "?token=" + req.query.token);
     var requestFicheiros = axios.get(api_serverURL + '/files/autor/' + _id + "?token=" + req.query.token);
+    var requestResourceTypes = axios.get(api_serverURL + '/files/resourceTypes/?token=' + req.query.token);
 
-    axios.all([requestUser, requestFicheiros]).then(axios.spread((...response) => {
+    axios.all([requestUser, requestFicheiros,requestResourceTypes]).then(axios.spread((...response) => {
         var user = response[0].data;
         var ficheiros = response[1].data;
+        var resourceTypes = response[2].data;
         var nome = user.name
         var mail = user._id
         var profilepic = user.profilepic
@@ -50,7 +52,8 @@ router.get(['/account'], function (req, res, next) {
                     user_github: github,
                     user_role: role,
                     user_course: course,
-                    user_department: department
+                    user_department: department,
+                    resourceTypes: resourceTypes
                 });
                 break;
         }

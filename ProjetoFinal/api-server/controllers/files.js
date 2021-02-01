@@ -3,7 +3,7 @@ var Files = require('../models/files');
 
 // return all files
 module.exports.list = () => {
-    return Files.find().exec();
+    return Files.find().sort({"registrationDate": -1}).exec();
 }
 
 // return only public files
@@ -173,16 +173,16 @@ module.exports.search = (text) => {
             $regex: text,
             "$options": "i"
         }
-    }).exec();
+    }).sort({"title": -1, "resourceType": -1, "creationDate": -1}).exec();
 }
 
 module.exports.searchByType = (type) => {
     return Files.find({
-        mimetype: {
+        resourceType: {
             $regex: type,
             "$options": "i"
         }
-    }).exec();
+    }).sort({"resourceType": -1, "title": -1, "creationDate": -1}).exec();
 }
 
 module.exports.searchByDate = (date) => {
@@ -190,7 +190,7 @@ module.exports.searchByDate = (date) => {
         creationDate: {
             $regex: date
         }
-    }).exec();
+    }).sort({"creationDate": -1, "title": -1, "resourceType": -1}).exec();
 }
 
 module.exports.topclassificados = () => {
@@ -261,8 +261,13 @@ module.exports.numberofUploads = (id) => {
             }
         }, {
             $match: {
-                _id : id
+                _id: id
             }
         }
     ]).exec()
+}
+
+// get resource types
+module.exports.getResourceTypes = () => {
+    return Files.distinct("resourceType").exec();
 }

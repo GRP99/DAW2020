@@ -4,7 +4,7 @@ var News = require('../models/news');
 
 // retorna all the news
 module.exports.list = () => {
-    return News.find().exec()
+    return News.find().sort({"date":-1}).exec()
 }
 
 // return the last 10 news
