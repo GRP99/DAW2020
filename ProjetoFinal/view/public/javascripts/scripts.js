@@ -38,21 +38,21 @@ function showComments(idF, idU) {
     });
 } */
 
+
+function showProfile(email, level, registrationDate, lastAccessDate, role, course, department) {
+    var profile = $("<pre><b>Email:</b>" + email + "</pre><pre><b>Level:</b>" + level + "</pre><pre><b>Registration Date:</b>" + registrationDate + "</pre><pre><b>Last Access Date:</b>" + lastAccessDate + "</pre><pre><b>Role:</b>" + role + "</pre><pre><b>Course:</b>" + course + "</pre><pre><b>Department:</b>" + department + "</pre>");
+
+    $("#displayProfile").empty();
+    $("#displayProfile").append(profile);
+    $("#displayProfile").modal();
+}
+
+
 function showComments(idF, idU) {
-            var d= new Date().toISOString().substr(0,16);
-            $("#displayComments").empty();
-            $("#displayComments").append("<form class=\"w3-container\" method=\"POST\" onSubmit=\"return confirm(&quot;Do you want to add this Comment?&quot;)\" action=\"http://localhost:3001/files/"+idF+"/adicionarComentario?token="+token+"\">"+
-            "<fieldset class=\"w3-container w3-margin\">" + 
-                "<legend>New Comment</legend>"
-                + "<input type=\"hidden\" name=\"autor\" value=\""+idU+"\"/>"
-                + "<input type=\"hidden\" name=\"data\" value=\""+d+"\"/>"
-                + "<table>" +
-                    "<tr>"
-                        + "<td> <textarea style=\"resize: none;\" rows=\"3\" cols=\"35\" name=\"descricao\"> </textarea> </td> </tr> </table>" +
-                "<input class=\"w3-btn w3-blue-grey w3-margin\" type=\"submit\" value=\"Add Comment\"/>"
-            + "</fieldset>" +
-        "</form>");
-            $("#displayComments").modal();
+    var d = new Date().toISOString().substr(0, 16);
+    $("#displayComments").empty();
+    $("#displayComments").append("<form class=\"w3-container\" method=\"POST\" onSubmit=\"return confirm(&quot;Do you want to add this Comment?&quot;)\" action=\"http://localhost:3001/files/" + idF + "/adicionarComentario?token=" + token + "\">" + "<fieldset class=\"w3-container w3-margin\">" + "<legend>New Comment</legend>" + "<input type=\"hidden\" name=\"autor\" value=\"" + idU + "\"/>" + "<input type=\"hidden\" name=\"data\" value=\"" + d + "\"/>" + "<table>" + "<tr>" + "<td> <textarea style=\"resize: none;\" rows=\"3\" cols=\"35\" name=\"descricao\"> </textarea> </td> </tr> </table>" + "<input class=\"w3-btn w3-blue-grey w3-margin\" type=\"submit\" value=\"Add Comment\"/>" + "</fieldset>" + "</form>");
+    $("#displayComments").modal();
 }
 
 
@@ -67,6 +67,10 @@ function classificar(nmr, idF) {
         type: "PUT",
         success: function () {
             location.reload();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I) for more information!');
+            $('#result').html('<p>status code: ' + jqXHR.status + '</p><p>textStatus: ' + textStatus + '</p><p>errorThrown: ' + errorThrown + '</p><p>jqXHR.responseText:</p><div>' + jqXHR.responseText + '</div>');
         }
     });
 }
@@ -77,6 +81,10 @@ function addAsFavourite(idF) {
         type: "PUT",
         success: function () {
             location.reload();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I) for more information!');
+            $('#result').html('<p>status code: ' + jqXHR.status + '</p><p>textStatus: ' + textStatus + '</p><p>errorThrown: ' + errorThrown + '</p><p>jqXHR.responseText:</p><div>' + jqXHR.responseText + '</div>');
         }
     });
 }
@@ -87,6 +95,10 @@ function removeFavourite(idF) {
         type: "PUT",
         success: function () {
             location.reload();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I) for more information!');
+            $('#result').html('<p>status code: ' + jqXHR.status + '</p><p>textStatus: ' + textStatus + '</p><p>errorThrown: ' + errorThrown + '</p><p>jqXHR.responseText:</p><div>' + jqXHR.responseText + '</div>');
         }
     });
 }
@@ -130,7 +142,7 @@ function validate() {
 }
 
 function openUploadModal(user) {
-    var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to submit?&quot;)" action="http://localhost:3001/files?token=' + token + ' "method="POST" enctype="multipart/form-data" id="myForm"><label class="w3-text-blue-grey"><b>Select file</b></label><!-- #addeds--><input class="w3-input w3-border w3-light-grey" type="file" name="myFile" />' + '<p><b class="w3-text-blue-grey">Acess: <select id="level" name="privacy" type="num" ><option value="1">Private</option><option value="0">Public</option></select></b></p>' + "<table>" + "<tr>" + "<td>Descrição:</td>" + '<td><textarea style=\"resize: none;\" rows="3" cols="30" name="descricao"></textarea></td>' + "</tr>" + '<label class="w3-text-gray"><b>Título</b></label>' + '<input class="w3-input w3-border w3-light-grey" type="text" name="title">' + '<label class="w3-text-gray"><b>SubTítulo</b></label>' + '<input class="w3-input w3-border w3-light-grey" type="text" name="subtitle">' + '<label class="w3-text-gray"><b>Data Criação [AAAA-MM-DD]</b></label>' + '<input class="w3-input w3-border w3-light-grey" type="text" name="date">' + '</table><button.w3-btn.w3-teal(type=\'button\' onclick=\'add()\') +--><input type="hidden" name="autor" value="' + user + '" /><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />' + "</form>");
+    var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to submit?&quot;)" action="http://localhost:3001/files?token=' + token + ' "method="POST" enctype="multipart/form-data" id="myForm"><label class="w3-text-blue-grey"><b>Select file</b></label><!-- #addeds--><input class="w3-input w3-border w3-light-grey" type="file" name="myFile" />' + '<p><b class="w3-text-blue-grey">Acess: <select id="level" name="privacy" type="num" ><option value="1">Private</option><option value="0">Public</option></select></b></p>' + "<table>" + "<tr>" + "<td>Description:</td>" + '<td><textarea style=\"resize: none;\" rows="3" cols="30" name="descricao"></textarea></td>' + "</tr>" + '<label class="w3-text-gray"><b>Title</b></label>' + '<input class="w3-input w3-border w3-light-grey" type="text" name="title">' + '<label class="w3-text-gray"><b>SubTitle</b></label>' + '<input class="w3-input w3-border w3-light-grey" type="text" name="subtitle">' + '<label class="w3-text-gray"><b>Creation Date [AAAA-MM-DD]</b></label>' + '<input class="w3-input w3-border w3-light-grey" type="text" name="date">' + '</table><button.w3-btn.w3-teal(type=\'button\' onclick=\'add()\') +--><input type="hidden" name="autor" value="' + user + '" /><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />' + "</form>");
 
     $("#display").empty();
     $("#display").append(file);
@@ -169,6 +181,10 @@ function changePrivacy(id) {
                 document.getElementById("privacy " + id).innerHTML = "Privado ";
                 document.getElementById("button " + id).className = "fa fa-lock";
             }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I) for more information!');
+            $('#result').html('<p>status code: ' + jqXHR.status + '</p><p>textStatus: ' + textStatus + '</p><p>errorThrown: ' + errorThrown + '</p><p>jqXHR.responseText:</p><div>' + jqXHR.responseText + '</div>');
         }
     });
 }
@@ -181,9 +197,13 @@ function deleteFile(id) {
             type: "DELETE",
             sucess: function () {
                 document.getElementById(id).remove()
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I) for more information!');
+                $('#result').html('<p>status code: ' + jqXHR.status + '</p><p>textStatus: ' + textStatus + '</p><p>errorThrown: ' + errorThrown + '</p><p>jqXHR.responseText:</p><div>' + jqXHR.responseText + '</div>');
             }
         });
-    } else{
+    } else {
         false;
     }
 }

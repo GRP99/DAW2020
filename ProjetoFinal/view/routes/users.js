@@ -1,18 +1,23 @@
 var express = require('express');
 var router = express.Router();
 var axios = require('axios')
-var autenticaURL = "http://localhost:3535"
+var autenticaURL = "http://localhost:3000"
 var api_serverURL = "http://localhost:3001"
 var token;
 var token2 = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhZG1pbiIsImxldmVsIjoiYWRtaW4iLCJleHBpcmVzSW4iOiIzbSIsImlhdCI6MTYxMDExODM1OX0.omYqB6hz4vSrRjIBEAi0mg6TNVti0OaqXW6n95JljiM';
 
-
 key = {
     key: '2cf7a71be6dc9665aba1f32451e887442cb5a9a208b29e1598611236e60b490'
 }
+
 axios.post(autenticaURL + '/autenticarApp', key).then(t => {
     token = t.data.token
-}).catch(e => console.log(e))
+}).catch(e => {
+    res.render('error', {
+        error: e,
+        token: token
+    })
+})
 
 /* get user page */
 router.get(['/account'], function (req, res, next) {
@@ -49,8 +54,11 @@ router.get(['/account'], function (req, res, next) {
                 });
                 break;
         }
-    })).catch(function (erro) {
-        console.log("ERROR Página User: " + erro)
+    })).catch(e => {
+        res.render('error', {
+            error: e,
+            token: token
+        })
     })
 });
 
@@ -87,9 +95,12 @@ function renderConsumer(req, res, user) {
             user_department: department,
             users: users
         });
-    })).catch(function (erro) {
-        console.log("ERROR Página Consumer: " + erro);
-    });
+    })).catch(e => {
+        res.render('error', {
+            error: e,
+            token: token
+        })
+    })
 }
 
 // favourites
@@ -112,42 +123,70 @@ router.get("/favourites", (req, res) => {
             token: req.query.token,
             idUser: req.user._id
         });
-    })).catch(function (erro) {
-        console.log("ERROR Página Favoritos: " + erro);
-    });
+    })).catch(e => {
+        res.render('error', {
+            error: e,
+            token: token
+        })
+    })
 });
 
+router.get("/all", (req, res) => {
+    var requestUser = axios.get("http://localhost:3001/users?token=" + token2);
+
+    axios.all([requestUser]).then(axios.spread((...response) => {
+        var users = response[0].data;
+        res.render("users", {
+            users: users,
+            token: req.query.token
+        });
+    })).catch(e => {
+        res.render('error', {
+            error: e,
+            token: token
+        })
+    })
+});
 
 router.get('/login', function (req, res) {
     res.render('login', {title: 'Login'});
 });
 
 router.get('/signup', function (req, res) {
-    res.render('signup', {title: 'Registar'});
+    res.render('signup', {title: 'SignUp'});
 });
 
 router.post('/signup', function (req, res) {
     axios.post(autenticaURL + '/registar?token=' + token, req.body).then(dados => {
         res.redirect('/login');
-    }).catch(error => {
-        console.log(error);
-    })
-})
+    }).catch(e => {
+        res.render('error', {
+            error: e,
+            token: token
+        })
+    });
+});
 
 router.post('/login', function (req, res) {
     axios.post(autenticaURL + '/login?token=' + token, req.body).then(dados => {
         res.redirect("/homepage?token=" + dados.data.token);
-    }).catch(error => {
-        console.log(error);
-    })
-})
+    }).catch(e => {
+        res.render('error', {
+            error: e,
+            token: token
+        });
+    });
+});
 
 
 router.get('/logout', function (req, res) {
     axios.post(autenticaURL + '/logout/' + req.user._id + '?token=' + token).then(() => {
         res.redirect('/login');
-    }).catch(error => {
-        console.log(error);
+    }).catch(e => {
+        res.render('error', {
+            error: e,
+            token: token
+        })
     })
 })
 

@@ -29,7 +29,7 @@ router.post("/", function (req, res, next) {
             res.redirect("http://localhost:3002/users/account?token=" + req.query.token);
         });
     } else {
-        res.status(401).jsonp({error: 'Não possui permissões para tal operação'});
+        res.status(401).jsonp({error: 'You do not have permissions for such an operation'});
     }
 });
 

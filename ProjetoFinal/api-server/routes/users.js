@@ -17,7 +17,7 @@ router.get("/", function (req, res) {
             res.status(500).jsonp(err);
         });
     } else {
-        res.status(401).jsonp({error: 'Não possui permissões para tal operação!'})
+        res.status(401).jsonp({error: 'You do not have permissions for such an operation!'})
     }
 });
 
@@ -48,7 +48,7 @@ router.post("/login", function (req, res) {
     User.lookUp(req.body._id).then((dados) => {
         const user = dados;
         if (! user) {
-            res.status(404).jsonp({error: "Utilizador não encontrado!"});
+            res.status(404).jsonp({error: "User not found!"});
         } else {
             if (req.body.password == user.password) {
                 jwt.sign({
@@ -57,13 +57,13 @@ router.post("/login", function (req, res) {
                     expiresIn: "1d"
                 }, "PRI2020", function (err, token) {
                     if (err) {
-                        res.status(400).jsonp({error: "Não foi possível efectuar o login !"});
+                        res.status(400).jsonp({error: "Could not log in!"});
                     } else {
                         res.status(200).jsonp({token: token});
                     }
                 });
             } else {
-                res.status(401).jsonp({error: "Password Errada!"});
+                res.status(401).jsonp({error: "Wrong Password!"});
             }
         }
     });
@@ -75,7 +75,7 @@ router.post("/registar", function (req, res) {
     var user = req.body;
     user.profilepic = 0;
     User.insereUser(user).then(() => {
-        res.status(200).jsonp({msg: "Utilizador criado com sucesso!"});
+        res.status(200).jsonp({msg: "User created successfully!"});
     }).catch((err) => {
         res.status(500).jsonp({error: err})
     });

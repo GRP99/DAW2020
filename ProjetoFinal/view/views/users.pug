@@ -1,19 +1,31 @@
 extends layout
 
 block content
-    .w3-card-4
-        header.w3-container.w3-blue-grey
-            h4 Full Users
-    ul#ulist
-    div(style='margin:45px; padding:8px; border: 1px solid black;')
-        form.w3-container(action='http://localhost:3001/users' method='POST')
-            label.w3-text-blue-grey
-                b Nome
-                    input.w3-input.w3-border.w3-light-grey(type='text' name='name')
-            label.w3-text-blue-grey
-                b Email
-                    input.w3-input.w3-border.w3-light-grey(type='text' name='email')
-            input.w3-btn.w3-blue-grey-blue-greyw3-btn.w3-border.w3-margin-bottom.w3-left.w3-blue-grey(type='submit' value='Registar')
-            input.w3-btn.w3-border.w3-margin-bottom.w3-right.w3-blue-grey(type='reset' value='Limpar valores')
-    footer.w3-container.w3-blue-grey
-        pre a85954 
+    link(rel='stylesheet' href='/stylesheets/library.css' media='screen')
+    section#sec-a877.u-clearfix.u-section-1
+        .u-clearfix.u-sheet.u-sheet-1
+            .u-expanded-width.u-table.u-table-responsive.u-table-1
+                table.u-table-entity(style="text-align:center")
+                    colgroup
+                        col(width='20%')
+                        col(width='20%')
+                        col(width='20%')
+                        col(width='20%')
+                        col(width='20%')
+                    thead.u-custom-color-1.u-custom-font.u-font-ubuntu.u-table-header.u-table-header-1
+                        tr(style='height: 30px;')
+                            th.u-table-cell Profile Pic
+                            th.u-table-cell Name
+                            th.u-table-cell Git 
+                    tbody.u-custom-font.u-font-ubuntu.u-table-body
+                        each u in users
+                            tr(style='height: 75px;')
+                                if u.profilepic == 0
+                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                        img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src='https://www.inmosenna.com/wp-content/uploads/2018/07/avatar-user-business-man-399587fe24739d5a-512x512-300x300.png' alt='' width="75" height="75") 
+                                else
+                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                        img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src="http://localhost:3001/users/"+u._id+"/profilepic.jpeg?token="+token alt='' width="75" height="75")                                 
+                                td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell(onclick="showProfile(\""+u._id+"\",\""+ u.level +"\",\""+u.registrationDate+"\",\""+u.lastAccessDate+"\",\""+u.role+"\",\""+u.course+"\",\""+u.department+"\");")= u.name
+                                td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell= u.git
+        div(id="displayProfile")

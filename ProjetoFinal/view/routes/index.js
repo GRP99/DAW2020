@@ -5,11 +5,11 @@ var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhZG1pbiIsImxldmVsIj
 
 
 router.get('/homepage', function (req, res, next) {
-    var requestNews = axios.get("http://localhost:3001/news?token=" + req.query.token)
+    var requestNews = axios.get("http://localhost:3001/news?token=" + req.query.token);
     var rUser = axios.get("http://localhost:3001/users?token=" + token);
-    var requestTopClassi = axios.get("http://localhost:3001/files/topClass?token=" + req.query.token)
-    var requestTopFavs = axios.get("http://localhost:3001/files/topFavs?token=" + req.query.token)
-    var requestTopAut = axios.get("http://localhost:3001/files/topAut?token=" + req.query.token)
+    var requestTopClassi = axios.get("http://localhost:3001/files/topClass?token=" + req.query.token);
+    var requestTopFavs = axios.get("http://localhost:3001/files/topFavs?token=" + req.query.token);
+    var requestTopAut = axios.get("http://localhost:3001/files/topAut?token=" + req.query.token);
     axios.all([
         requestNews,
         requestTopClassi,
@@ -29,15 +29,18 @@ router.get('/homepage', function (req, res, next) {
             favourites: favourites,
             authors: authors,
             users: users
-        })
-    })).catch(function (erro) {
-        console.log("ERROR HOME PAGE: " + erro);
+        });
+    })).catch(e => {
+        res.render('error', {
+            error: e,
+            toke: token
+        });
     });
 });
 
 router.post('/search', function (req, res) {
     var rUser = axios.get("http://localhost:3001/users?token=" + token);
-    var rSearch = axios.get('http://localhost:3001/search/' + req.body.type + '/' + req.body.search + '?token=' + req.query.token)
+    var rSearch = axios.get('http://localhost:3001/search/' + req.body.type + '/' + req.body.search + '?token=' + req.query.token);
 
     axios.all([rSearch, rUser]).then(axios.spread((...resposta) => {
         if (req.body.type == 'users') 
@@ -50,9 +53,12 @@ router.post('/search', function (req, res) {
             autor: authors,
             token: req.query.token
         });
-    })).catch(error => {
-        res.send(error)
-    })
+    })).catch(e => {
+        res.render('error', {
+            error: e,
+            toke: token
+        });
+    });
 });
 
 module.exports = router;

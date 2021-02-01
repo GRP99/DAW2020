@@ -1,4 +1,3 @@
-// USERS CONTROLLER
 var Users = require('../models/users')
 
 // return all the users
@@ -6,12 +5,10 @@ module.exports.listUsers = () => {
     return Users.find().exec();
 }
 
-
 // find that user
 module.exports.lookUp = id => {
     return Users.findOne({_id: id}).exec();
 }
-
 
 // insert a new user
 module.exports.insereUser = p => {
@@ -20,7 +17,7 @@ module.exports.insereUser = p => {
     return newUser.save();
 }
 
-// change the profilepic
+// change the profile pic
 module.exports.updatePhoto = (id) => {
     Users.findOne({_id: id}).exec().then((result) => {
         result.profilepic = 1
@@ -29,6 +26,7 @@ module.exports.updatePhoto = (id) => {
     });
 }
 
+// register last access
 module.exports.registLastAcess = (id) => {
     var d = new Date().toISOString().substr(0, 16);
     return Users.updateOne({

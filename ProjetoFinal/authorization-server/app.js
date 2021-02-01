@@ -1,18 +1,13 @@
-// Servidor que retorna apenas respostas em JSON, nao existe views ou paginas estaticas...
-
-var createError = require("http-errors");
-var express = require("express");
-var logger = require("morgan");
-var mongoose = require("mongoose");
-var cors = require("cors");
-var jwt = require("jsonwebtoken");
+var createError = require('http-errors');
+var express = require('express');
+var logger = require('morgan');
+var mongoose = require('mongoose');
+var jwt = require('jsonwebtoken');
+var fs = require('fs');
 
 
 // #################### ROUTES ####################
-var usersRouter = require("./routes/users");
-var filesRouter = require("./routes/files");
-var newsRouter = require("./routes/news");
-var searchRouter = require("./routes/search");
+var indexRouter = require('./routes/authorization');
 
 
 // #################### MONGO CONNECTION ####################
@@ -37,40 +32,31 @@ db.once("open", () => {
 // #################### MIDDLEWARE ####################
 var app = express();
 
-/* Tratar dos ficheiros estáticos que estão na pasta public */
-app.use(express.static("public/images"));
-
-app.use(cors());
-app.use(logger("dev"));
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
-// verificacao da origem do pedido
 app.use(function (req, res, next) {
     if (req.query.token != null) {
-        jwt.verify(req.query.token, "PRI2020", function (e, payload) {
+        var publicKey = fs.readFileSync("./keys/pubkey.pem");
+        jwt.verify(req.query.token, publicKey, {
+            algorithms: ["RS256"]
+        }, function (e, payload) {
             if (e) 
-                res.status(401).jsonp({error: "Token sent is invalid"});
+                res.status(401).jsonp({error: e});
              else {
-                req.user = {
-                    _id: payload._id,
-                    level: payload.level
-                }
                 next();
             }
         });
-    } else 
-        res.status(401).jsonp({error: "Client did not send any token"});
-    
-
+    } else {
+        if (req.url == "/autenticarApp") {
+            next();
+        }
+    }
 });
 
-
 // #################### ROUTES ####################
-app.use("/users", usersRouter);
-app.use("/files", filesRouter);
-app.use("/news", newsRouter);
-app.use("/search", searchRouter);
+app.use('/', indexRouter);
 
 
 // #################### ERROR HANDLER ####################
@@ -82,7 +68,7 @@ app.use(function (req, res, next) {
 // error handler
 app.use(function (err, req, res, next) { // set locals, only providing error in development
     res.locals.message = err.message;
-    res.locals.error = req.app.get("env") === "development" ? err : {};
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
     // render the error
     res.status(err.status || 500).jsonp(err);

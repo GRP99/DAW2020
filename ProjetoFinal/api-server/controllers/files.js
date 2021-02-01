@@ -239,3 +239,30 @@ module.exports.topautores = () => {
         }
     ]).exec()
 }
+
+module.exports.numberofUploads = (id) => {
+    return Files.aggregate([
+        {
+            $group: {
+                _id: "$autor",
+                filesbyA: {
+                    $push: "$_id"
+                }
+            }
+        }, {
+            $addFields: {
+                nmrUploads: {
+                    $size: "$filesbyA"
+                }
+            }
+        }, {
+            $sort: {
+                nmrUploads: -1
+            }
+        }, {
+            $match: {
+                _id : id
+            }
+        }
+    ]).exec()
+}

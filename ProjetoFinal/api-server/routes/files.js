@@ -24,21 +24,33 @@ function verificaAutoriadade(autor, usr) {
 // First we see if request is sent by a admin, if not we responde with error 401, if it is proceed.
 router.get("/", function (req, res, next) {
     if (req.user.level == "admin") {
-        FControl.list().then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
-    } else 
+        FControl.list().then((data) => {
+            res.status(200).jsonp(data);
+        }).catch((err) => {
+            res.status(500).jsonp(err);
+        });
+    } else {
         res.status(401).jsonp({error: 'Only Admins are allowed!'});
-    
+    }
 });
 
 // This route gets all public files. If they are public everyone has access to them xD
 router.get("/public", function (req, res, next) {
-    FControl.publicFiles().then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
+    FControl.publicFiles().then((data) => {
+        res.status(200).jsonp(data);
+    }).catch((err) => {
+        res.status(500).jsonp(err)
+    });
 });
 
 // This route gets all files from a user, only the user or the admin can get them.
 router.get("/fromUser", function (req, res) {
     var userID = req.user.id;
-    FControl.filesbyUser(userID).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
+    FControl.filesbyUser(userID).then((data) => {
+        res.status(200).jsonp(data)
+    }).catch((err) => {
+        res.status(500).jsonp(err)
+    });
 });
 
 /******** HOME - TOP 3  ********/
@@ -97,21 +109,33 @@ router.put("/classificar/:id", function (req, res, next) { // console.log("mudar
 router.put("/addAsFavourite/:id", (req, res) => { // console.log("mudar")
     id_user = req.user._id
     id_file = req.params.id;
-    FControl.addFav(id_file, id_user).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
+    FControl.addFav(id_file, id_user).then((data) => {
+        res.status(200).jsonp(data)
+    }).catch((err) => {
+        res.status(500).jsonp(err)
+    });
 });
 
 // remove userid to favourites of a file
 router.put("/removeFavourite/:id", function (req, res, next) { // console.log("mudar")
     id_user = req.user._id
     id_file = req.params.id;
-    FControl.removeFav(id_file, id_user).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
+    FControl.removeFav(id_file, id_user).then((data) => {
+        res.status(200).jsonp(data)
+    }).catch((err) => {
+        res.status(500).jsonp(err)
+    });
 });
 
 // privacy (works with minor bug)
 router.put("/changeprivacy/:id", (req, res) => { // console.log("mudar")
     FControl.lookup(req.params.id).then((result) => {
         if (req.user.level == "admin" || req.user._id == result.autor) {
-            FControl.changeprivacy(req.params.id).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
+            FControl.changeprivacy(req.params.id).then((data) => {
+                res.status(200).jsonp(data);
+            }).catch((err) => {
+                res.status(500).jsonp(err);
+            });
         } else {
             res.status(401).jsonp({error: 'You are not allowed to do this!'});
         }
@@ -130,7 +154,7 @@ router.get("/download/:id_autor/:id", function (req, res) {
             let newPath = dirpath + "/" + file.name
             fs.rename(quarantinePath, newPath, function (error) {
                 if (error) {
-                    res.status(500).jsonp({error: "ERRO : Erro na pasta de downloads."});
+                    res.status(500).jsonp({error: "Error in the downloads folder"});
                 }
             })
             res.download(newPath);
@@ -215,7 +239,7 @@ router.post("/", upload.single("myFile"), (req, res) => {
                                 date: d,
                                 autorID: req.body.autor,
                                 autor: dados.name,
-                                descricao: 'O ' + dados.name + ' adicionou o ficheiro ' + req.file.originalname
+                                descricao: 'New submission: Producer ' + dados.name + ' has just released an entitled ' + req.body.title
                             }
                             NControl.insert(news)
                         })
@@ -259,7 +283,11 @@ router.delete("/:id", (req, res) => {
             rimraf(fpath, function () {
                 console.log("Filepath deleted.");
             });
-            FControl.remove(req.params.id).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
+            FControl.remove(req.params.id).then((data) => {
+                res.status(200).jsonp(data)
+            }).catch((err) => {
+                res.status(500).jsonp(err)
+            });
         } else {
             res.status(401)
         }
@@ -281,9 +309,9 @@ router.get("/autor/:id", function (req, res, next) {
 // add comment
 router.post('/:id/adicionarComentario', function (req, res) {
     FControl.adicionarComentario(req.params.id, req.body).then(dados => {
-        res.redirect("http://localhost:3002/files/"+req.params.id+"?token=" + req.query.token)
+        res.redirect("http://localhost:3002/files/" + req.params.id + "?token=" + req.query.token)
     }).catch(erro => {
-        res.redirect("http://localhost:3002/files/"+req.params.id+"?token=" + req.query.token)
+        res.redirect("http://localhost:3002/files/" + req.params.id + "?token=" + req.query.token)
     })
 });
 

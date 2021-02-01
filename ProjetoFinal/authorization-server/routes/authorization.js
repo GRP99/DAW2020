@@ -16,22 +16,18 @@ router.post('/autenticarApp', function (req, res, next) {
                     algorithm: 'RS256'
                 }, function (err, token) {
                     if (err) {
-                        res.status(400).jsonp({error: "Impossível Login"});
+                        res.status(400).jsonp({error: "Could not log in"});
                     } else {
                         res.status(200).jsonp({token: token});
                     }
                 });
                 break;
-            default: res.status(400).jsonp({error: 'Chave errada'});
+            default: res.status(400).jsonp({error: 'Wrong key!'});
                 break;
         }
-    } else 
-        res.status(401).jsonp({error: 'Chave não enviada'})
-
-
-    
-
-
+    } else {
+        res.status(401).jsonp({error: 'Key not sent!'})
+    }
 });
 
 // login
@@ -39,7 +35,7 @@ router.post("/login", function (req, res) {
     User.lookUp(req.body._id).then((dados) => {
         const user = dados;
         if (! user) {
-            res.status(404).jsonp({error: "Utilizador não encontrado!"});
+            res.status(404).jsonp({error: "User not found!"});
         } else {
             if (req.body.password == user.password) {
                 jwt.sign({
@@ -48,13 +44,13 @@ router.post("/login", function (req, res) {
                     expiresIn: "1d"
                 }, "PRI2020", function (err, token) {
                     if (err) {
-                        res.status(400).jsonp({error: "Não foi possível efectuar o login !"});
+                        res.status(400).jsonp({error: "Não foi possível efectuar o login!"});
                     } else {
                         res.status(200).jsonp({token: token});
                     }
                 });
             } else {
-                res.status(401).jsonp({error: "Password Errada!"});
+                res.status(401).jsonp({error: "Wrong password!"});
             }
         }
     });
@@ -68,15 +64,15 @@ router.post("/registar", function (req, res) {
     user.registrationDate = d;
     user.lastAccessDate = d;
     User.insereUser(user).then(() => {
-        res.status(200).jsonp({msg: "Utilizador criado com sucesso!"});
+        res.status(200).jsonp({msg: "User created successfully!"});
     }).catch((err) => {
         res.status(500).jsonp({error: err})
     });
 });
 
+// logout
 router.post("/logout/:id", function (req, res) {
     var id = req.params.id;
-    console.log(id);
     User.registLastAcess(id).then(() => {
         res.status(200).jsonp({msg: "Last Acess registed!"});
     }).catch((err) => {

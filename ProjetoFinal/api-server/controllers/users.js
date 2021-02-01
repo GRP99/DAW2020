@@ -3,7 +3,7 @@ var Users = require('../models/users')
 
 // retorna all the users
 module.exports.listUsers = () => {
-    return Users.find().exec();
+    return Users.find().sort({"lastAccessDate": -1}).exec();
 }
 
 // find that user
