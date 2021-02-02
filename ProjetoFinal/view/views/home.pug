@@ -89,10 +89,12 @@ block content
                                     div
                                         div
                                             each not in noticias
-                                                    div(style="font-size:12px")
+                                                    div(style="font-size:11px")
                                                         p
                                                             i(class="fa fa-newspaper-o")
                                                             b       
                                                             t= not.descricao
+                                                                b
+                                                                    a(href="http://localhost:3002/files/"+not.file+"?token="+token)         Check this!
                                                         p=not.date
 

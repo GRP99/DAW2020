@@ -242,20 +242,19 @@ router.post("/", upload.single("myFile"), (req, res) => {
                         descricao: req.body.descricao
                     }
 
-                    if (req.body.privacy == 0) {
-                        User.lookUp(req.body.autor).then(dados => {
-                            var news = {
-                                date: d,
-                                autorID: req.body.autor,
-                                autor: dados.name,
-                                descricao: 'New submission: Producer' + dados.name + ' has just released an ' + req.body.resourceType + ' entitled \"' + req.body.title + '\"!'
-                            }
-                            NControl.insert(news)
-                        })
-
-                    }
-
-                    FControl.insert(fD, correctedPath).then(() => {
+                    FControl.insert(fD, correctedPath).then((result) => {
+                        if (req.body.privacy == 0) {
+                            User.lookUp(req.body.autor).then(dados => {
+                                var news = {
+                                    file: result._id,
+                                    date: d,
+                                    autorID: req.body.autor,
+                                    autor: dados.name,
+                                    descricao: 'New submission: Producer' + dados.name + ' has just released an ' + req.body.resourceType + ' entitled \"' + req.body.title + '\".'
+                                }
+                                NControl.insert(news)
+                            })
+                        }
                         res.redirect("http://localhost:3002/users/account?token=" + req.query.token)
                     }).catch(err => {
                         res.status(500).jsonp({error: "ERROR: Uploads folder error."});
