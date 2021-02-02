@@ -1,3 +1,4 @@
+var createError = require('http-errors');
 var express = require("express");
 var router = express.Router();
 var axios = require("axios");
@@ -75,9 +76,9 @@ router.get("/biblioteca", (req, res) => {
             idUser: req.user._id
         });
     })).catch(e => {
-        res.render('error', {
+        res.render('errorLibrary', {
             error: e,
-            token: token
+            token: req.query.token
         });
     });
 });
@@ -97,9 +98,9 @@ router.get("/:id", (req, res) => {
             token: req.query.token
         });
     })).catch(e => {
-        res.render('error', {
+        res.render('errorFile', {
             error: e,
-            token: token
+            token: req.query.token
         });
     });
 });

@@ -207,7 +207,7 @@ module.exports.searchByDate = (date) => {
 }
 
 module.exports.topclassificados = () => {
-    return Files.find().sort({"estrelas.numero": -1}).limit(3).exec();
+    return Files.find({privacy:0},{}).sort({"estrelas.numero": -1}).limit(3).exec();
 }
 
 module.exports.topfavoritos = () => {
@@ -224,12 +224,22 @@ module.exports.topfavoritos = () => {
             }
         }, {
             $limit: 3
+        },
+        {
+            $match: {
+                privacy : 0
+            }
         }
     ]).exec()
 }
 
 module.exports.topautores = () => {
     return Files.aggregate([
+        {
+            $match: {
+                privacy : 0
+            }
+        },
         {
             $group: {
                 _id: "$autor",

@@ -1,3 +1,4 @@
+var createError = require('http-errors');
 var express = require('express');
 var router = express.Router();
 var axios = require('axios');
@@ -31,9 +32,9 @@ router.get('/homepage', function (req, res, next) {
             users: users
         });
     })).catch(e => {
-        res.render('error', {
+        res.render('errorHome', {
             error: e,
-            toke: token
+            token: req.query.token
         });
     });
 });
@@ -54,9 +55,9 @@ router.post('/search', function (req, res) {
             token: req.query.token
         });
     })).catch(e => {
-        res.render('error', {
+        res.render('errorSearch', {
             error: e,
-            toke: token
+            token: req.query.token
         });
     });
 });

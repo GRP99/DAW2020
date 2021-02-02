@@ -159,7 +159,7 @@ function openUploadModal(user, token, resourceTypes) {
     + '<input class="w3-input w3-border w3-light-grey" type="date" name="date" required="required">' 
     + '<label class="w3-text-gray"> <b>New Resource type</b> </label> <input class="w3-input w3-border w3-light-grey" type="text" id="newType">'
     + '<p> <button type="button" onclick="addNewType()"> Insert a new resource type </button> </p>'
-    + '<p> <b class="w3-text-blue-grey">Resource Type: <select id="resourceType" name="resourceType" required="required"> <option>Book</option><option>Article</option><option>Application</option><option>Student Work</option><option>Monograph</option><option>Report</option> </select></b></p>'
+    + '<p> <b class="w3-text-blue-grey">Resource Type: <select id="resourceType" name="resourceType" required="required"> <option>Book</option><option>Article</option><option>Application</option><option>Student Work</option><option>Monograph</option><option>Report</option><option>Thesis</option><option>Slides</option><option>Test/Exam</option><option>Problem Solved</option> </select></b></p>'
     + '</table><button.w3-btn.w3-teal(type=\'button\' onclick=\'add()\') +--><input type="hidden" name="autor" value="' + user 
     + '" /><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />' + "</form>");
 
@@ -203,8 +203,8 @@ function changePrivacy(id) {
         type: "PUT",
         success: function (response) {
             console.log(document.getElementById("privacy " + id).innerHTML);
-            if (document.getElementById("privacy " + id).innerHTML == "Privado ") {
-                document.getElementById("privacy " + id).innerHTML = "Público ";
+            if (document.getElementById("privacy " + id).innerHTML == "Private ") {
+                document.getElementById("privacy " + id).innerHTML = "Public ";
                 document.getElementById("button " + id).className = "fa fa-unlock";
             } else {
                 document.getElementById("privacy " + id).innerHTML = "Privado ";

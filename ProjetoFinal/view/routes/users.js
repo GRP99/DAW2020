@@ -13,10 +13,7 @@ key = {
 axios.post(autenticaURL + '/autenticarApp', key).then(t => {
     token = t.data.token
 }).catch(e => {
-    res.render('error', {
-        error: e,
-        token: token
-    })
+    console.log('Look like you\'re lost ... Application authentication went wrong !')
 })
 
 /* get user page */
@@ -58,9 +55,9 @@ router.get(['/account'], function (req, res, next) {
                 break;
         }
     })).catch(e => {
-        res.render('error', {
+        res.render('errorAccount', {
             error: e,
-            token: token
+            token: req.query.token
         })
     })
 });
@@ -101,7 +98,7 @@ function renderConsumer(req, res, user) {
     })).catch(e => {
         res.render('error', {
             error: e,
-            token: token
+            token: req.query.token
         })
     })
 }
@@ -127,9 +124,9 @@ router.get("/favourites", (req, res) => {
             idUser: req.user._id
         });
     })).catch(e => {
-        res.render('error', {
+        res.render('errorFavourites', {
             error: e,
-            token: token
+            token: req.query.token
         })
     })
 });
@@ -144,9 +141,9 @@ router.get("/all", (req, res) => {
             token: req.query.token
         });
     })).catch(e => {
-        res.render('error', {
+        res.render('errorAll', {
             error: e,
-            token: token
+            token: req.query.token
         })
     })
 });
@@ -163,7 +160,7 @@ router.post('/signup', function (req, res) {
     axios.post(autenticaURL + '/registar?token=' + token, req.body).then(dados => {
         res.redirect('/login');
     }).catch(e => {
-        res.render('error', {
+        res.render('errorSignUp', {
             error: e,
             token: token
         })
@@ -174,21 +171,20 @@ router.post('/login', function (req, res) {
     axios.post(autenticaURL + '/login?token=' + token, req.body).then(dados => {
         res.redirect("/homepage?token=" + dados.data.token);
     }).catch(e => {
-        res.render('error', {
+        res.render('errorLogin', {
             error: e,
             token: token
         });
     });
 });
 
-
 router.get('/logout', function (req, res) {
     axios.post(autenticaURL + '/logout/' + req.user._id + '?token=' + token).then(() => {
         res.redirect('/login');
     }).catch(e => {
-        res.render('error', {
+        res.render('errorLogout', {
             error: e,
-            token: token
+            token: req.query.token
         })
     })
 })

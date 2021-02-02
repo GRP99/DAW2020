@@ -248,7 +248,7 @@ router.post("/", upload.single("myFile"), (req, res) => {
                                 date: d,
                                 autorID: req.body.autor,
                                 autor: dados.name,
-                                descricao: 'New submission: Producer ' + dados.name + ' has just released an entitled ' + req.body.title
+                                descricao: 'New submission: Producer ' + dados.name + ' has just released an ' + req.body.resourceType + ' entitled ' + req.body.title + ' !'
                             }
                             NControl.insert(news)
                         })
