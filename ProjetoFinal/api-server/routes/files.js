@@ -316,7 +316,7 @@ router.get("/autor/:id", function (req, res, next) {
 
 
 // add comment
-router.post('/:id/adicionarComentario', function (req, res) {
+router.post('/:id/comentarios', function (req, res) {
     FControl.adicionarComentario(req.params.id, req.body).then(dados => {
         res.redirect("http://localhost:3002/files/" + req.params.id + "?token=" + req.query.token)
     }).catch(erro => {
@@ -326,12 +326,19 @@ router.post('/:id/adicionarComentario', function (req, res) {
 
 
 // remove comment
-router.post('/:id/removerComentario', function (req, res) {
-    var idC = req.query.comentario
-    FControl.removerComentario(req.params.id, idC).then(dados => {
-        res.jsonp(dados)
-    }).catch(e => {
-        res.status(500).jsonp(e)
+router.delete('/:id/comentarios', function (req, res) {
+    FControl.lookup(req.params.id).then((result) => {
+        FControl.verComentario(req.params.id, req.query.comentario).then((result2) => {
+            if (req.user.level == "admin" || req.user._id == result.autor || req.user._id == result2.autor) {
+                FControl.removerComentario(req.params.id, req.query.comentario).then(dados => {
+                    res.jsonp(dados)
+                }).catch(e => {
+                    res.status(500).jsonp(e)
+                })
+            } else {
+                    res.status(401).jsonp({error: 'You are not allowed to do this!'});
+            }
+        })
     })
 });
 

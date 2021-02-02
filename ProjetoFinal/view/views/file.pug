@@ -53,9 +53,10 @@ block content
                                                 th.u-table-cell User 
                                                 th.u-table-cell Comment 
                                                 th.u-table-cell Date 
+                                                th.u-table-cell 
                                         tbody.u-align-center.u-table-body
                                             each c in fich.comentarios 
-                                                tr(style='height: 75px;')
+                                                tr(id=c._id style='height: 75px;')
                                                     - var nome = ""
                                                     each u in users
                                                         if u._id == c.autor
@@ -71,6 +72,10 @@ block content
                                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
                                                         textarea(style="resize: none;" rows="3" cols="37" readonly)= c.descricao
                                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell= c.data
+                                                    if (c.autor == idUser || idUser == fich.autor)
+                                                        td
+                                                            button(class="w3-button w3-red" onclick="deleteComment(\""+c._id+"\",\""+ fich._id +"\")")
+                                                                i(class="fa fa-trash" style="font-size:15px") 
                         .u-container-style.u-layout-cell.u-size-42.u-layout-cell-2
                             .u-container-layout.u-container-layout-2
     div(id="displayComments")
