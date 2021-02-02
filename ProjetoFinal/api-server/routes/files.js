@@ -248,7 +248,7 @@ router.post("/", upload.single("myFile"), (req, res) => {
                                 date: d,
                                 autorID: req.body.autor,
                                 autor: dados.name,
-                                descricao: 'New submission: Producer ' + dados.name + ' has just released an ' + req.body.resourceType + ' entitled ' + req.body.title + ' !'
+                                descricao: 'New submission: Producer' + dados.name + ' has just released an ' + req.body.resourceType + ' entitled \"' + req.body.title + '\"!'
                             }
                             NControl.insert(news)
                         })
@@ -327,18 +327,22 @@ router.post('/:id/comentarios', function (req, res) {
 
 // remove comment
 router.delete('/:id/comentarios', function (req, res) {
+    var temp = ""
     FControl.lookup(req.params.id).then((result) => {
-        FControl.verComentario(req.params.id, req.query.comentario).then((result2) => {
-            if (req.user.level == "admin" || req.user._id == result.autor || req.user._id == result2.autor) {
-                FControl.removerComentario(req.params.id, req.query.comentario).then(dados => {
-                    res.jsonp(dados)
-                }).catch(e => {
-                    res.status(500).jsonp(e)
-                })
-            } else {
-                    res.status(401).jsonp({error: 'You are not allowed to do this!'});
+        result.comentarios.forEach(element => {
+            if(element._id == req.query.comentario) {
+                temp = element.autor
             }
-        })
+        });
+        if (req.user.level == "admin" || req.user._id == result.autor || req.user._id == temp) {
+            FControl.removerComentario(req.params.id, req.query.comentario).then(dados => {
+                res.jsonp(dados)
+            }).catch(e => {
+                res.status(500).jsonp(e)
+            })
+        } else {
+                    res.status(401).jsonp({error: 'You are not allowed to do this!'});
+        }
     })
 });
 

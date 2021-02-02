@@ -87,11 +87,12 @@ block content
                                 h3.u-align-center.u-custom-font.u-font-ubuntu.u-text.u-text-1 News
                                 .u-align-center.u-clearfix.u-custom-html.u-custom-html-1
                                     div
-                                        ul
-                                            div
-                                                each not in noticias
-                                                    li
-                                                        div
-                                                            p=not.descricao
-                                                            p=not.date
+                                        div
+                                            each not in noticias
+                                                    div(style="font-size:12px")
+                                                        p
+                                                            i(class="fa fa-newspaper-o")
+                                                            b       
+                                                            t= not.descricao
+                                                        p=not.date
 

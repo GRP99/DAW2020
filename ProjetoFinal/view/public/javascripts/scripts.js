@@ -255,3 +255,11 @@ function deleteComment(idC, idF) {
         false;
     }
 }
+
+$(document).ready( function () {
+    var table = $('#example').DataTable( {
+      pageLength : 6,
+      "lengthChange": false,
+      info: false
+    } )
+  } );

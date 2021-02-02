@@ -125,19 +125,6 @@ module.exports.removerComentario = (idR, idC) => {
     }).exec();
 }
 
-// ver comentario para depois remover
-module.exports.verComentario = (idR, idC) => {
-    return Files.update({
-        _id: idR
-    }, {
-        $pull: {
-            "comentarios": {
-                _id: idC
-            }
-        }
-    }).exec();
-}
-
 
 // get stars
 module.exports.getEstrelas = (id) => {
