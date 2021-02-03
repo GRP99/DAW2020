@@ -7,7 +7,7 @@ var User = require('../controllers/users');
 
 
 router.get('/', function (req, res) {
-    NControl.list().then((data) => {
+    NControl.last10News().then((data) => {
         res.status(200).jsonp(data);
     }).catch((err) => {
         res.status(500).jsonp(err)

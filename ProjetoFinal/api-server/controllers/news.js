@@ -9,7 +9,7 @@ module.exports.list = () => {
 
 // return the last 10 news
 module.exports.last10News = () => {
-    return News.find().sort({_id: 1}).limit(10).exec()
+    return News.find().sort({"date":-1}).limit(10).exec()
 }
 
 // return only one new
