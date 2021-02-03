@@ -2,59 +2,14 @@ extends layout
 
 block content
     link(rel='stylesheet' href='/stylesheets/file.css' media='screen')
-    section#sec-fac6.u-clearfix.u-section-1
-        .u-clearfix.u-sheet.u-sheet-1
-            .u-clearfix.u-expanded-width.u-layout-wrap.u-layout-wrap-1
+    section#sec-63c0.u-clearfix.u-section-1
+        .u-clearfix.u-sheet.u-valign-middle.u-sheet-1
+            .u-clearfix.u-expanded-width.u-gutter-0.u-layout-wrap.u-layout-wrap-1
                 .u-layout
                     .u-layout-row
-                        .u-container-style.u-custom-color-1.u-layout-cell.u-size-18.u-layout-cell-1
-                            .u-container-layout.u-container-layout-1
-                                h3.u-align-center.u-custom-font.u-font-ubuntu.u-text.u-text-default.u-text-1= fich.title
-                                .u-clearfix.u-custom-html.u-custom-html-1
-                                    dl
-                                        dt
-                                            b Subtitle:
-                                        dd= fich.subtitle
-                                        dt
-                                            b Resource Type:
-                                        dd= fich.resourceType
-                                        dt
-                                            b Type:
-                                        dd= fich.mimetype
-                                        dt
-                                            b Author:
-                                        dd= fich.autor
-                                        dt
-                                            b Description:
-                                        dd= fich.descricao
-                                        dt
-                                            b Size:
-                                        dd= fich.size
-                                        dt
-                                            b Date:
-                                        dd= fich.creationDate
-                                        dt
-                                            b Classification:
-                                        dd= fich.estrelas.numero
-                                        dt
-                                            b Comments No:
-                                        dd= fich.comentarios.length
-                                btn.u-align-center.u-btn.u-btn-round.u-button-style.u-dialog-link.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-1(onclick="showComments(\""+fich._id+"\",\""+idUser+"\")") Add Comment
-                                div(style="margin:10px; text-align:center")
-                                    button(class="w3-button w3-green" onclick="location.href='http://localhost:3001/files/download/"+fich.autor+"/"+fich._id+"?token="+token+"';")
-                                            i(class="fa fa-download" style="font-size:15px")
-                                    - var foundFavoritos = 0
-                                    each fav in fich.favoritos
-                                        // idUser is req.user._id
-                                        if fav == idUser
-                                            - foundFavoritos = 1
-                                    if foundFavoritos == 1    
-                                        button(class="w3-button" onclick="return confirm('Do you want to remove this file from your favourites?')?removeFavourite(\""+fich._id+"\"):'';")
-                                            i(class="fa fa-heart" style="font-size:20px;color:red")
-                                    else  
-                                        button(class="w3-button" onclick="return confirm('Do you want to add this file as your favourite?')?addAsFavourite(\""+fich._id+"\"):'';")
-                                            i(class="fa fa-heart-o" style="font-size:20px;color:red")
-                                .u-table.u-table-responsive.u-table-1
+                        .u-container-style.u-layout-cell.u-size-46.u-layout-cell-1
+                            .u-border-2.u-border-custom-color-1.u-container-layout.u-container-layout-1
+                                .u-expanded-width.u-table.u-table-responsive.u-table-1
                                     table.u-table-entity(id="example", style="font-size:12px;text-align:center;")
                                         colgroup
                                             col(width='15%')
@@ -90,4 +45,52 @@ block content
                                                         if (c.autor == idUser || idUser == fich.autor)
                                                             button(class="w3-button" onclick="deleteComment(\""+c._id+"\",\""+ fich._id +"\")")
                                                                 i(class="fa fa-trash" style="font-size:20px;color:red") 
-    div(id="displayComments")
+                        .u-container-style.u-custom-color-1.u-layout-cell.u-size-14.u-layout-cell-2
+                            .u-border-2.u-border-custom-color-1.u-container-layout.u-valign-middle.u-container-layout-2
+                                h4(style="text-align:center;margin:auto;font-family: Copperplate, Papyrus, fantasy;")= fich.title
+                                .u-clearfix.u-custom-html.u-custom-html-1
+                                    dl(style="font-size:12px")
+                                        dt
+                                            b Subtitle:
+                                        dd= fich.subtitle
+                                        dt
+                                            b Resource Type:
+                                        dd= fich.resourceType
+                                        dt
+                                            b Type:
+                                        dd= fich.mimetype
+                                        dt
+                                            b Author:
+                                        dd= fich.autor
+                                        dt
+                                            b Description:
+                                        textarea(style="resize: none;" rows="3" cols="27" readonly)= fich.descricao
+                                        dt
+                                            b Size:
+                                        dd= fich.size
+                                        dt
+                                            b Date:
+                                        dd= fich.creationDate
+                                        dt
+                                            b Classification:
+                                        dd= fich.estrelas.numero
+                                        dt
+                                            b Comments No:
+                                        dd= fich.comentarios.length
+                                    btn.u-align-center.u-btn.u-btn-round.u-button-style.u-dialog-link.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-1(onclick="showComments(\""+fich._id+"\",\""+idUser+"\")") Add Comment
+                                    div(style="margin:10px; text-align:center")
+                                        button(class="w3-button w3-green" onclick="location.href='http://localhost:3001/files/download/"+fich.autor+"/"+fich._id+"?token="+token+"';")
+                                                i(class="fa fa-download" style="font-size:15px")
+                                        - var foundFavoritos = 0
+                                        each fav in fich.favoritos
+                                            // idUser is req.user._id
+                                            if fav == idUser
+                                                - foundFavoritos = 1
+                                        if foundFavoritos == 1    
+                                            button(class="w3-button" onclick="return confirm('Do you want to remove this file from your favourites?')?removeFavourite(\""+fich._id+"\"):'';")
+                                                i(class="fa fa-heart" style="font-size:20px;color:red")
+                                        else  
+                                            button(class="w3-button" onclick="return confirm('Do you want to add this file as your favourite?')?addAsFavourite(\""+fich._id+"\"):'';")
+                                                i(class="fa fa-heart-o" style="font-size:20px;color:red")
+        div(id="displayComments")
+

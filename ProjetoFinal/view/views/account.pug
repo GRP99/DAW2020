@@ -4,40 +4,13 @@ block content
     link(rel='stylesheet' href='/stylesheets/account.css' media='screen')
     #df.w3-card-4.modal
     #display.w3-card-4.modal
-    section#sec-fac6.u-clearfix.u-section-1
+    section#sec-63c0.u-clearfix.u-section-1
         .u-clearfix.u-sheet.u-valign-middle.u-sheet-1
-            .u-clearfix.u-expanded-width.u-layout-wrap.u-layout-wrap-1
+            .u-clearfix.u-expanded-width.u-gutter-0.u-layout-wrap.u-layout-wrap-1
                 .u-layout
                     .u-layout-row
-                        .u-container-style.u-custom-color-1.u-layout-cell.u-size-18.u-layout-cell-1
-                            .u-container-layout.u-container-layout-1
-                                h3.u-align-center.u-custom-font.u-font-ubuntu.u-text.u-text-default.u-text-1 About Me
-                                if path == 0
-                                    img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src='https://www.inmosenna.com/wp-content/uploads/2018/07/avatar-user-business-man-399587fe24739d5a-512x512-300x300.png' alt='' data-image-width='300' data-image-height='300')
-                                else 
-                                    img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src="http://localhost:3001/users/"+user_id+"/profilepic.jpeg?token="+token alt='' data-image-width='300' data-image-height='300')
-                                button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-1(type='button' onclick="mudafoto(\"" + user_id + "\",\"" + token +"\");") Change Profile Photo
-                                .u-clearfix.u-custom-html.u-custom-html-1
-                                    dl
-                                        dt
-                                            b Your name:
-                                            dd=user_name
-                                        dt
-                                            b Your email:
-                                            dd= user_mail
-                                        dt
-                                            b Your Github:
-                                            dd= user_github
-                                        dt
-                                            b Your Role:
-                                            dd= user_role
-                                        dt
-                                            b Your Course:
-                                            dd= user_course
-                                        dt
-                                            b Your Department:
-                                            dd= user_department
-                                button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-2(onclick="openUploadModal(\"" + user_id + "\",\"" + token +"\")") UPLOAD
+                        .u-container-style.u-layout-cell.u-size-46.u-layout-cell-1
+                            .u-border-2.u-border-custom-color-1.u-container-layout.u-container-layout-1
                                 .u-table.u-table-responsive.u-table-1
                                     table.u-table-entity(id="example", style="margin: 22px; font-size:12px;text-align:center;")
                                         colgroup
@@ -78,5 +51,35 @@ block content
                                                     td
                                                         button(class="w3-button w3-grey" onclick="location.href='http://localhost:3002/files/"+a._id+"?token="+token+"'")
                                                             i(class="fa fa-file" style="font-size:15px")
+                        .u-container-style.u-custom-color-1.u-layout-cell.u-size-14.u-layout-cell-2
+                            .u-border-2.u-border-custom-color-1.u-container-layout.u-valign-middle.u-container-layout-2
+                                h6(style="margin:auto;font-family: Copperplate, Papyrus, fantasy;") ABOUT ME
+                                if path == 0
+                                    img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src='https://www.inmosenna.com/wp-content/uploads/2018/07/avatar-user-business-man-399587fe24739d5a-512x512-300x300.png' alt='' data-image-width='150' data-image-height='15s0')
+                                else 
+                                    img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src="http://localhost:3001/users/"+user_id+"/profilepic.jpeg?token="+token alt='' data-image-width='150' data-image-height='150')
+                                button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-1(type='button' onclick="mudafoto(\"" + user_id + "\",\"" + token +"\");") Profile Photo
+                                button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-1(type="button", onclick="openUploadModal(\"" + user_id + "\",\"" + token +"\")") Upload File
                                 if (user_level=='admin')  
-                                    button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-3(onclick="openWarningModal(\""+user_id+"\")") Warning
+                                    button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-3(onclick="openWarningModal(\""+user_id+"\")") Warning 
+                                .u-clearfix.u-custom-html.u-custom-html-1
+                                    dl(style="font-size:12px")
+                                        dt
+                                            b Your name:
+                                            dd=user_name
+                                        dt
+                                            b Your email:
+                                            dd= user_mail
+                                        dt
+                                            b Your Github:
+                                            dd= user_github
+                                        dt
+                                            b Your Role:
+                                            dd= user_role
+                                        dt
+                                            b Your Course:
+                                            dd= user_course
+                                        dt
+                                            b Your Department:
+                                            dd= user_department
+
