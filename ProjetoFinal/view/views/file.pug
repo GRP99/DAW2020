@@ -64,7 +64,10 @@ block content
                                         dd= fich.autor
                                         dt
                                             b Description:
-                                        textarea(style="resize: none;" rows="3" cols="27" readonly)= fich.descricao
+                                        if fich.descricao == ""
+                                            dd No description on this file.
+                                        else
+                                            textarea(style="resize: none;" rows="3" cols="27" readonly)= fich.descricao
                                         dt
                                             b Size:
                                         dd= fich.size
@@ -77,10 +80,50 @@ block content
                                         dt
                                             b Comments No:
                                         dd= fich.comentarios.length
+                                        dt
+                                            b Your Classification:
+                                        - var found = 0
+                                        - var match = idUser + "[?][;][0-9]"
+                                        - var temp = ""
+                                        each autoresClassificados in fich.estrelas.autores
+                                            if autoresClassificados.match(match)
+                                                - found = 1
+                                                - temp = autoresClassificados
+                                        if found == 1
+                                            dd
+                                                div(class="rating")
+                                                    if temp == idUser+"?;5"
+                                                        span(onclick="classificar(5,\""+temp+"\",\""+fich._id+"\")") ★ 
+                                                    else 
+                                                        span(onclick="classificar(5,\""+temp+"\",\""+fich._id+"\")") ☆
+                                                    if (temp == idUser+"?;5" || temp == idUser+"?;4") 
+                                                        span(onclick="classificar(4,\""+temp+"\",\""+fich._id+"\")") ★ 
+                                                    else 
+                                                        span(onclick="classificar(4,\""+temp+"\",\""+fich._id+"\")") ☆
+                                                    if (temp == idUser+"?;5" || temp == idUser+"?;4" || temp == idUser+"?;3") 
+                                                        span(onclick="classificar(3,\""+temp+"\",\""+fich._id+"\")") ★ 
+                                                    else 
+                                                        span(onclick="classificar(3,\""+temp+"\",\""+fich._id+"\")") ☆
+                                                    if (temp == idUser+"?;5" || temp == idUser+"?;4" || temp == idUser+"?;3" || temp == idUser+"?;2") 
+                                                        span(onclick="classificar(2,\""+temp+"\",\""+fich._id+"\")") ★ 
+                                                    else 
+                                                        span(onclick="classificar(2,\""+temp+"\",\""+fich._id+"\")") ☆
+                                                    if (temp == idUser+"?;5" || temp == idUser+"?;4" || temp == idUser+"?;3" || temp == idUser+"?;2" || temp == idUser+"?;1") 
+                                                        span(onclick="classificar(1,\""+temp+"\",\""+fich._id+"\")") ★ 
+                                                    else 
+                                                        span(onclick="classificar(1,\""+temp+"\",\""+fich._id+"\")") ☆
+                                        else
+                                            dd
+                                                div(class="rating")
+                                                    span(onclick="classificar(5,\"?;0\",\""+fich._id+"\")") ☆
+                                                    span(onclick="classificar(4,\"?;0\",\""+fich._id+"\")") ☆
+                                                    span(onclick="classificar(3,\"?;0\",\""+fich._id+"\")") ☆       
+                                                    span(onclick="classificar(2,\"?;0\",\""+fich._id+"\")") ☆
+                                                    span(onclick="classificar(1,\"?;0\",\""+fich._id+"\")") ☆
                                     btn.u-align-center.u-btn.u-btn-round.u-button-style.u-dialog-link.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-1(onclick="showComments(\""+fich._id+"\",\""+idUser+"\")") Add Comment
                                     div(style="margin:10px; text-align:center")
-                                        button(class="w3-button w3-green" onclick="location.href='http://localhost:3001/files/download/"+fich.autor+"/"+fich._id+"?token="+token+"';")
-                                                i(class="fa fa-download" style="font-size:15px")
+                                        button(class="w3-button" onclick="location.href='http://localhost:3001/files/download/"+fich.autor+"/"+fich._id+"?token="+token+"';")
+                                                i(class="fa fa-download" style="font-size:20px;color:green")
                                         - var foundFavoritos = 0
                                         each fav in fich.favoritos
                                             // idUser is req.user._id

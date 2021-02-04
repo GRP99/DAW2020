@@ -61,18 +61,46 @@ function add() {
     $("#addeds").append(file);
 }
 
-function classificar(nmr, idF) {
-    $.ajax({
-        url: "http://localhost:3001/files/classificar/" + idF + "?token=" + token + "&class=" + nmr,
-        type: "PUT",
-        success: function () {
-            location.reload();
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I) for more information!');
-            $('#result').html('<p>status code: ' + jqXHR.status + '</p><p>textStatus: ' + textStatus + '</p><p>errorThrown: ' + errorThrown + '</p><p>jqXHR.responseText:</p><div>' + jqXHR.responseText + '</div>');
+function classificar(nmr, temp, idF) {
+    var atual = temp.split("?;")[1]
+    if(parseInt(atual) == nmr) {
+        var choice = window.confirm("Do you want remove your classification on this file?");
+        if(choice){
+            $.ajax({
+                url: "http://localhost:3001/files/classificar/" + idF + "?token=" + token + "&class=remove&atual=" + atual,
+                type: "PUT",
+                success: function () {
+                    location.reload();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I) for more information!');
+                    $('#result').html('<p>status code: ' + jqXHR.status + '</p><p>textStatus: ' + textStatus + '</p><p>errorThrown: ' + errorThrown + '</p><p>jqXHR.responseText:</p><div>' + jqXHR.responseText + '</div>');
+                }
+            });
         }
-    });
+        else {
+            false;
+        }
+    }
+    else {
+        var choice = window.confirm("Do you want to classify this file with rating " + nmr + "* ?");
+        if(choice){
+            $.ajax({
+                url: "http://localhost:3001/files/classificar/" + idF + "?token=" + token + "&class=" + nmr + "&atual=" + atual,
+                type: "PUT",
+                success: function () {
+                    location.reload();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I) for more information!');
+                    $('#result').html('<p>status code: ' + jqXHR.status + '</p><p>textStatus: ' + textStatus + '</p><p>errorThrown: ' + errorThrown + '</p><p>jqXHR.responseText:</p><div>' + jqXHR.responseText + '</div>');
+                }
+            });
+        }
+        else {
+            false;
+        }
+    }
 }
 
 function addAsFavourite(idF) {
@@ -225,7 +253,8 @@ function deleteFile(id) {
             url: "http://localhost:3001/files/" + id + "?token=" + token,
             type: "DELETE",
             sucess: function () {
-                document.getElementById(id).remove()
+                //document.getElementById(id).remove()
+                location.reload();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I) for more information!');

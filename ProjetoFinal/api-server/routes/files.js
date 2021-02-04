@@ -93,7 +93,7 @@ router.get("/topAut", function (req, res) {
 // This route gets an file by it's ID, it's only available if it is public, or it's the autor or the admin
 router.get("/:id", function (req, res, next) {
     FControl.lookup(req.params.id).then((data) => {
-        if (data.autor == req.user._id || req.user.level == "admin" || data.privacy == 1) {
+        if (data.autor == req.user._id || req.user.level == "admin" || data.privacy == 0) {
             res.status(200).jsonp(data);
         } else {
             res.status(401).jsonp({error: 'You are not allowed to view this file!'});
@@ -101,15 +101,70 @@ router.get("/:id", function (req, res, next) {
     }).catch((err) => res.status(500).jsonp(err));
 });
 
-// privacy (works with minor bug)
-router.put("/classificar/:id", function (req, res, next) { // console.log("mudar")
+// classify a file
+router.put("/classificar/:id", function (req, res, next) { 
+    /** variables **/
     id_user = req.user._id
     id_file = req.params.id
-    FControl.classifica(id_file, id_user, req.query.class).then((data) => {
-        res.status(200).jsonp({classificacao: data.numero});
-    }).catch((err) => {
-        res.status(200).jsonp(err);
-    });
+    var new_autores = []
+    /******  ******/
+    console.log(req.query.atual)
+    console.log(req.query.class)
+    // If user wants to remove
+    if(req.query.class == "remove") {
+        FControl.lookup(id_file).then((result) => {
+            temp = id_user+"?;"+req.query.atual
+            result.estrelas.autores.forEach(element => {
+                if (element == temp){
+                    /** Remove and calculates new media **/
+                    var size = result.estrelas.autores.length
+                    var oldmedia = result.estrelas.numero
+                    var sub = ((oldmedia * size) - parseInt(req.query.atual))
+                    var newsize = size - 1
+                    if (newsize == 0)
+                        var media = 0
+                    else 
+                        var media = sub / (size - 1)
+                    FControl.removeClassificacao(id_file, temp, media).then((data1) => {
+                        res.status(200).jsonp({classificacao: data1.numero});
+                    }).catch((err) => {
+                        res.status(200).jsonp(err);
+                    });
+                }
+            })
+        });
+    }
+    // If user wants to classify with another rating
+    else {
+        FControl.lookup(id_file).then((result) => {
+            temp = id_user+"?;"+req.query.atual
+            result.estrelas.autores.forEach(element => {
+                if (element == temp){
+                    /** Remove and calculates new media **/
+                    var size = result.estrelas.autores.length
+                    var oldmedia = result.estrelas.numero
+                    var sub = ((oldmedia * size) - parseInt(req.query.atual))
+                    var newsize = size - 1
+                    if (newsize == 0)
+                        var media = 0
+                    else 
+                        var media = sub / (size - 1)
+                    console.log(oldmedia)
+                    console.log(media)
+                    FControl.removeClassificacao(id_file, temp, media).then((data2) => {
+                        res.status(200).jsonp({classificacao: data2.numero});
+                    }).catch((err) => {
+                        res.status(200).jsonp(err);
+                    });
+                }
+            })
+            FControl.classifica(id_file, id_user, req.query.class).then((data) => {
+                res.status(200).jsonp({classificacao: data.numero});
+            }).catch((err) => {
+                res.status(200).jsonp(err);
+            });
+        });
+    }
 });
 
 

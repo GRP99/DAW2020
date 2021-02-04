@@ -82,6 +82,20 @@ module.exports.classifica = (id, user, classi) => {
     })
 }
 
+// remove classification
+module.exports.removeClassificacao = (idF, strk, nmr) => {
+    return Files.update({
+        _id: idF
+    }, {
+        $pull: {
+            "estrelas.autores": strk
+        },
+        $set: {
+            "estrelas.numero": nmr
+        }
+    }).exec();
+}
+
 /* Changes security */
 module.exports.changeprivacy = (id) => {
     return Files.findOne({_id: id}).exec().then((result) => {

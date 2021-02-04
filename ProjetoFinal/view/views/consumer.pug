@@ -25,6 +25,7 @@ block content
                                                 th.u-table-cell Date
                                                 th.u-table-cell File Title
                                                 th.u-table-cell Author
+                                                th.u-table-cell Your Classification
                                                 th.u-table-cell
                                         tbody.u-table-body
                                             each a in lista
@@ -34,12 +35,54 @@ block content
                                                     each u in users
                                                         if u._id == a.autor
                                                             td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=u.name
+                                                    - var found = 0
+                                                    - var match = idUser + "[?][;][0-9]"
+                                                    - var temp = ""
+                                                    each autoresClassificados in a.estrelas.autores
+                                                        if autoresClassificados.match(match)
+                                                            - found = 1
+                                                            - temp = autoresClassificados
+                                                    if found == 1
+                                                        td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                                            div(class="rating")
+                                                                if temp == idUser+"?;5"
+                                                                    span(onclick="classificar(5,\""+temp+"\",\""+a._id+"\")") ★ 
+                                                                else 
+                                                                    span(onclick="classificar(5,\""+temp+"\",\""+a._id+"\")") ☆
+                                                                if (temp == idUser+"?;5" || temp == idUser+"?;4") 
+                                                                    span(onclick="classificar(4,\""+temp+"\",\""+a._id+"\")") ★ 
+                                                                else 
+                                                                    span(onclick="classificar(4,\""+temp+"\",\""+a._id+"\")") ☆
+                                                                if (temp == idUser+"?;5" || temp == idUser+"?;4" || temp == idUser+"?;3") 
+                                                                    span(onclick="classificar(3,\""+temp+"\",\""+a._id+"\")") ★ 
+                                                                else 
+                                                                    span(onclick="classificar(3,\""+temp+"\",\""+a._id+"\")") ☆
+                                                                if (temp == idUser+"?;5" || temp == idUser+"?;4" || temp == idUser+"?;3" || temp == idUser+"?;2") 
+                                                                    span(onclick="classificar(2,\""+temp+"\",\""+a._id+"\")") ★ 
+                                                                else 
+                                                                    span(onclick="classificar(2,\""+temp+"\",\""+a._id+"\")") ☆
+                                                                if (temp == idUser+"?;5" || temp == idUser+"?;4" || temp == idUser+"?;3" || temp == idUser+"?;2" || temp == idUser+"?;1") 
+                                                                    span(onclick="classificar(1,\""+temp+"\",\""+a._id+"\")") ★ 
+                                                                else 
+                                                                    span(onclick="classificar(1,\""+temp+"\",\""+a._id+"\")") ☆
+                                                    else
+                                                        td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                                            div(class="rating")
+                                                                span(onclick="classificar(5,\"?;0\",\""+a._id+"\")") ☆
+                                                                span(onclick="classificar(4,\"?;0\",\""+a._id+"\")") ☆
+                                                                span(onclick="classificar(3,\"?;0\",\""+a._id+"\")") ☆       
+                                                                span(onclick="classificar(2,\"?;0\",\""+a._id+"\")") ☆
+                                                                span(onclick="classificar(1,\"?;0\",\""+a._id+"\")") ☆
                                                     td
-                                                        button(class="w3-button w3-green" onclick="location.href='http://localhost:3001/files/download/"+a.autor+"/"+a._id+"?token="+token+"';")
-                                                            i(class="fa fa-download" style="font-size:15px")
-                                                        b               
-                                                        button(class="w3-button w3-red" onclick="removeFavourite(\""+a._id+"\")")
-                                                            i(class="fa fa-close" style="font-size:15px")
+                                                        button(class="w3-button" onclick="location.href='http://localhost:3001/files/download/"+a.autor+"/"+a._id+"?token="+token+"';")
+                                                            i(class="fa fa-download" style="font-size:14px; color:green;")
+                                                        b           
+                                                        button(class="w3-button" onclick="removeFavourite(\""+a._id+"\")")
+                                                            i(class="fa fa-close" style="font-size:14px; color:red;")
+                                                        b           
+                                                        button(class="w3-button" onclick="location.href='http://localhost:3002/files/"+a._id+"?token="+token+"'")
+                                                            i(class="fa fa-file" style="font-size:14px; color:grey;")
+                                                        
                                             else 
                                                 td(style='height: 75px;') You don't have files added to your Favourites!
                         .u-container-style.u-custom-color-1.u-layout-cell.u-size-14.u-layout-cell-2

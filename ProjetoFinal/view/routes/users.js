@@ -93,6 +93,7 @@ function renderConsumer(req, res, user) {
             user_role: role,
             user_course: course,
             user_department: department,
+            idUser: req.user._id,
             users: users
         });
     })).catch(e => {
