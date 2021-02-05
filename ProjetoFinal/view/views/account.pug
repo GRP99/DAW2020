@@ -53,15 +53,17 @@ block content
                                                             i(class="fa fa-file" style="font-size:15px")
                         .u-container-style.u-custom-color-1.u-layout-cell.u-size-14.u-layout-cell-2
                             .u-border-2.u-border-custom-color-1.u-container-layout.u-valign-middle.u-container-layout-2
-                                h6(style="margin:auto;font-family: Copperplate, Papyrus, fantasy;") ABOUT ME
+                                h6(style="margin:auto;font-family: Copperplate, Papyrus, fantasy;") ABOUT ME    
+                                    button(class="w3-button")
+                                        i(class="fa fa-cogs" style="font-size:20px;color:black")
                                 if path == 0
-                                    img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src='https://www.inmosenna.com/wp-content/uploads/2018/07/avatar-user-business-man-399587fe24739d5a-512x512-300x300.png' alt='' data-image-width='150' data-image-height='15s0')
+                                    img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src='https://www.inmosenna.com/wp-content/uploads/2018/07/avatar-user-business-man-399587fe24739d5a-512x512-300x300.png' alt='' data-image-width='150' data-image-height='150')
                                 else 
                                     img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src="http://localhost:3001/users/"+user_id+"/profilepic.jpeg?token="+token alt='' data-image-width='150' data-image-height='150')
                                 button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-1(type='button' onclick="mudafoto(\"" + user_id + "\",\"" + token +"\");") Profile Photo
                                 button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-1(type="button", onclick="openUploadModal(\"" + user_id + "\",\"" + token +"\")") Upload File
                                 if (user_level=='admin')  
-                                    button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-3(onclick="openWarningModal(\""+user_id+"\")") Warning 
+                                    button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-3.u-radius-50.u-btn-1(onclick="openWarningModal(\""+user_id+"\")") Warning 
                                 .u-clearfix.u-custom-html.u-custom-html-1
                                     dl(style="font-size:12px")
                                         dt

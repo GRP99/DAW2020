@@ -25,6 +25,7 @@ router.get('/homepage', function (req, res, next) {
         users = response[4].data
         res.render('home', {
             token: req.query.token,
+            level: req.user.level,
             noticias: news,
             classified: classified,
             favourites: favourites,
@@ -52,7 +53,8 @@ router.post('/search', function (req, res) {
             lista: resposta[0].data,
             users: resposta[1].data,
             autor: authors,
-            token: req.query.token
+            token: req.query.token,
+            level: req.user.level
         });
     })).catch(e => {
         res.render('errorSearch', {

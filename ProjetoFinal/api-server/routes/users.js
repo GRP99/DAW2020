@@ -21,6 +21,19 @@ router.get("/", function (req, res) {
     }
 });
 
+// delete file (works)
+router.delete("/:id", (req, res) => {
+    if (req.user.level == 'admin') {
+        User.deleteUser(id).then((data) => {
+            res.status(200).jsonp(data);
+        }).catch((err) => {
+            res.status(500).jsonp(err);
+        });
+    } else {
+        res.status(401).jsonp({error: 'You do not have permissions for such an operation!'})
+    }
+});
+
 // get one user by id
 router.get("/:id", function (req, res) {
     id_autor = req.params.id;

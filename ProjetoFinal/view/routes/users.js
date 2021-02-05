@@ -50,14 +50,16 @@ router.get(['/account'], function (req, res, next) {
                     user_role: role,
                     user_course: course,
                     user_department: department,
-                    resourceTypes: resourceTypes
+                    resourceTypes: resourceTypes,
+                    level: req.user.level
                 });
                 break;
         }
     })).catch(e => {
         res.render('errorAccount', {
             error: e,
-            token: req.query.token
+            token: req.query.token,
+            level: req.user.level
         })
     })
 });
@@ -94,12 +96,14 @@ function renderConsumer(req, res, user) {
             user_course: course,
             user_department: department,
             idUser: req.user._id,
-            users: users
+            users: users,
+            level: req.user.level
         });
     })).catch(e => {
         res.render('error', {
             error: e,
-            token: req.query.token
+            token: req.query.token,
+            level: req.user.level
         })
     })
 }
@@ -122,15 +126,43 @@ router.get("/favourites", (req, res) => {
             lista: arr,
             users: users,
             token: req.query.token,
-            idUser: req.user._id
+            idUser: req.user._id,
+            level: req.user.level
         });
     })).catch(e => {
         res.render('errorFavourites', {
             error: e,
-            token: req.query.token
+            token: req.query.token,
+            level: req.user.level
         })
     })
 });
+
+
+// Admin Page :)
+router.get("/admin", (req, res) => {
+    var requestUser = axios.get("http://localhost:3001/users?token=" + req.query.token);
+    var requestFiles = axios.get("http://localhost:3001/files?token=" + req.query.token);
+
+    axios.all([requestUser, requestFiles]).then(axios.spread((...response) => {
+        var users = response[0].data;
+        var files = response[1].data;
+        console.log("Entrei")
+        res.render("admin", {
+            users: users,
+            files: files,
+            token: req.query.token,
+            level: req.user.level
+        });
+    })).catch(e => {
+        res.render('error', {
+            error: e,
+            token: req.query.token,
+            level: req.user.level
+        })
+    })
+});
+
 
 router.get("/all", (req, res) => {
     var requestUser = axios.get("http://localhost:3001/users?token=" + token2);
@@ -139,12 +171,14 @@ router.get("/all", (req, res) => {
         var users = response[0].data;
         res.render("users", {
             users: users,
-            token: req.query.token
+            token: req.query.token,
+            level: req.user.level
         });
     })).catch(e => {
         res.render('errorAll', {
             error: e,
-            token: req.query.token
+            token: req.query.token,
+            level: req.user.level
         })
     })
 });

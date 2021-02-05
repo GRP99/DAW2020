@@ -38,6 +38,10 @@ function showComments(idF, idU) {
     });
 } */
 
+function verificaAdmin () {
+    return true
+}
+
 
 function showProfile(email, level, registrationDate, lastAccessDate, role, course, department) {
     var profile = $("<pre><b>Email: </b>" + email + "</pre><pre><b>Level: </b>" + level + "</pre><pre><b>Registration Date: </b>" + registrationDate + "</pre><pre><b>Last Access Date: </b>" + lastAccessDate + "</pre><pre><b>Role: </b>" + role + "</pre><pre><b>Course: </b>" + course + "</pre><pre><b>Department: </b>" + department + "</pre>");
@@ -141,7 +145,7 @@ function showFile(size, id, name, type, autor, desc) {
 }
 
 function mudafoto(id, token) {
-    var file = $('<form class="w3-container" style="margin:50px" action="http://localhost:3001/users/changeprofile?token=' + token + '" method="POST" enctype="multipart/form-data">' + "<pre> <b> Change your profile pic </b> </pre>" + '<input class="w3-input w3-border w3-light-grey" type="file" name="myProfilePic" />' + '<input type="hidden" name="autor" value="' + id + '"/>' + '<input class="w3-btn w3-white w3-border w3-border-green w3-round-large fa" style="margin-top:10px;" type="submit" value="Confirm &#xf00c;"/>' + "</form>");
+    var file = $('<form class="w3-container" style="margin:50px; text-align:center" action="http://localhost:3001/users/changeprofile?token=' + token + '" method="POST" enctype="multipart/form-data">' + "<h5 class=\"w3-text-blue-grey\" style=\"margin:0 auto 20px auto; text-align:center\"> Change your profile pic </h5>" + '<input class="w3-input w3-border w3-light-grey" type="file" name="myProfilePic" />' + '<input type="hidden" name="autor" value="' + id + '"/>' + '<input class="w3-btn w3-blue-grey fa" style="margin: 10px auto;" type="submit" value="Confirm &#xf00c;"/>' + "</form>");
 
     $("#df").empty();
     $("#df").append(file);
@@ -266,6 +270,26 @@ function deleteFile(id) {
     }
 }
 
+function deleteUser(id) {
+    var choice = window.confirm("Do you want to delete this user?");
+    if (choice) {
+        $.ajax({
+            url: "http://localhost:3001/users/" + id + "?token=" + token,
+            type: "DELETE",
+            sucess: function () {
+                //document.getElementById(id).remove()
+                location.reload();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I) for more information!');
+                $('#result').html('<p>status code: ' + jqXHR.status + '</p><p>textStatus: ' + textStatus + '</p><p>errorThrown: ' + errorThrown + '</p><p>jqXHR.responseText:</p><div>' + jqXHR.responseText + '</div>');
+            }
+        });
+    } else {
+        false;
+    }
+}
+
 function deleteComment(idC, idF) {
     var choice = window.confirm("Do you want to delete this comment?");
     if (choice) {
@@ -291,4 +315,10 @@ $(document).ready( function () {
       "lengthChange": false,
       info: false
     } )
-  } );
+
+    var table2 = $('#example2').DataTable( {
+        pageLength : 6,
+        "lengthChange": false,
+        info: false
+      } )
+} );

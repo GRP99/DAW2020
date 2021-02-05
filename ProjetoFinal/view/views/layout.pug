@@ -50,7 +50,7 @@ html
                     .u-align-center.u-black.u-container-style.u-inner-container-layout.u-opacity.u-opacity-95.u-sidenav
                         .u-sidenav-overflow
                             .u-menu-close
-                            ul.u-align-center.u-nav.u-popupmenu-items.u-unstyled.u-nav-2
+                            ul.u-align-center.u-nav.u-popupmenu-items.u-unstyled.u-nav-2(id="nav")
                                 li.u-nav-item
                                     a.u-button-style.u-nav-link(href='/homepage?token='+token) Home
                                 li.u-nav-item
@@ -61,6 +61,9 @@ html
                                     a.u-button-style.u-nav-link(href='/users/all?token='+token) Other Users
                                 li.u-nav-item
                                     a.u-button-style.u-nav-link(href='/users/account?token='+token) My Account
+                                if level == "admin"
+                                    li.u-nav-item
+                                        a.u-button-style.u-nav-link(href='/users/admin?token='+token) Admin Room
                                 li.u-nav-item
                                     a.u-button-style.u-nav-link(href='/users/logout?token='+token) Logout
                     .u-black.u-menu-overlay.u-opacity.u-opacity-70

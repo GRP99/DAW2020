@@ -73,12 +73,14 @@ router.get("/biblioteca", (req, res) => {
             lista: ficheiros,
             users: user,
             token: req.query.token,
-            idUser: req.user._id
+            idUser: req.user._id,
+            level: req.user.level
         });
     })).catch(e => {
         res.render('errorLibrary', {
             error: e,
-            token: req.query.token
+            token: req.query.token,
+            level: req.user.level
         });
     });
 });
@@ -95,12 +97,14 @@ router.get("/:id", (req, res) => {
             fich: fich,
             idUser: req.user._id,
             users: users,
-            token: req.query.token
+            token: req.query.token,
+            level: req.user.level
         });
     })).catch(e => {
         res.render('errorFile', {
             error: e,
-            token: req.query.token
+            token: req.query.token,
+            level: req.user.level
         });
     });
 });

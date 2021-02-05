@@ -11,6 +11,11 @@ module.exports.lookUp = id => {
     return Users.findOne({_id: id}).exec();
 }
 
+// delete user
+module.exports.deleteUser = id => {
+    return Users.deleteOne({_id: id})
+}
+
 // insert a new user
 module.exports.insereUser = p => {
     var newUser = new Users(p);
