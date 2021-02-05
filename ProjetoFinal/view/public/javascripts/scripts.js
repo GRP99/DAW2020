@@ -145,7 +145,7 @@ function showFile(size, id, name, type, autor, desc) {
 }
 
 function mudafoto(id, token) {
-    var file = $('<form class="w3-container" style="margin:50px; text-align:center" action="http://localhost:3001/users/changeprofile?token=' + token + '" method="POST" enctype="multipart/form-data">' + "<h5 class=\"w3-text-blue-grey\" style=\"margin:0 auto 20px auto; text-align:center\"> Change your profile pic </h5>" + '<input class="w3-input w3-border w3-light-grey" type="file" name="myProfilePic" />' + '<input type="hidden" name="autor" value="' + id + '"/>' + '<input class="w3-btn w3-blue-grey fa" style="margin: 10px auto;" type="submit" value="Confirm &#xf00c;"/>' + "</form>");
+    var file = $('<form class="w3-container" style="margin:50px; text-align:center" action="http://localhost:3001/users/changeprofile?token=' + token + '" method="POST" enctype="multipart/form-data">' + "<h5 class=\"w3-text-blue-grey\" style=\"margin:0 auto 20px auto; text-align:center\"> Change your profile pic </h5>" + '<input class="w3-input w3-border w3-light-grey" type="file" name="myProfilePic" accept="image/png, image/jpeg, image/jpg"/>' + '<input type="hidden" name="autor" value="' + id + '"/>' + '<input class="w3-btn w3-blue-grey fa" style="margin: 10px auto;" type="submit" value="Confirm &#xf00c;"/>' + "</form>");
 
     $("#df").empty();
     $("#df").append(file);
@@ -176,7 +176,7 @@ function validate() {
 function openUploadModal(user, token, resourceTypes) {
     console.log(resourceTypes);
     var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to submit?&quot;)" action="http://localhost:3001/files?token=' + token 
-    + ' "method="POST" enctype="multipart/form-data" id="myForm"><label class="w3-text-blue-grey"><b>Select file</b></label><!-- #addeds--><input class="w3-input w3-border w3-light-grey" type="file" name="myFile" required="required" />' 
+    + ' "method="POST" enctype="multipart/form-data" id="myForm"><label class="w3-text-blue-grey"><b>Select file</b></label><!-- #addeds--><input class="w3-input w3-border w3-light-grey" type="file" name="myFile" required="required" accept=".zip"/>' 
     + '<p><b class="w3-text-blue-grey">Acess: <select id="level" name="privacy" type="num" ><option value="0">Public</option><option value="1">Private</option></select></b></p>'
     + "<table>" 
     + "<tr>" 
@@ -193,7 +193,49 @@ function openUploadModal(user, token, resourceTypes) {
     + '<p> <button type="button" onclick="addNewType()"> Insert a new resource type </button> </p>'
     + '<p> <b class="w3-text-blue-grey">Resource Type: <select id="resourceType" name="resourceType" required="required"> <option>Book</option><option>Article</option><option>Application</option><option>Student Work</option><option>Monograph</option><option>Report</option><option>Thesis</option><option>Slides</option><option>Test/Exam</option><option>Problem Solved</option> </select></b></p>'
     + '</table><button.w3-btn.w3-teal(type=\'button\' onclick=\'add()\') +--><input type="hidden" name="autor" value="' + user 
-    + '" /><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />' + "</form>");
+    + '" />'
+    + '<span><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />'
+    + '<a href="https://github.com/GRP99/PRI2020/blob/main/ProjetoFinal/_exemplos_/README.md" target="_blank" ><i class="fa fa-question-circle" style="font-size:30px; position: absolute; right: 20px;"></img></a>'
+    + "</span></form>");
+
+    $("#display").empty();
+    $("#display").append(file);
+    $("#display").modal();
+}
+
+function editProfile(name, git, course, department){
+    var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to change your profile properties?&quot;)" action="http://localhost:3001/users/edit?token=' + token 
+    + ' "method="POST" id="myFormProfile">'
+    + '<label class="w3-text-gray"><b>Your Name</b></label>' 
+    + '<input class="w3-input w3-border w3-light-grey" type="text" name="name" value="'+name+'" required="required" >' 
+    + '<label class="w3-text-gray"><b>Github</b></label>' 
+    + '<input class="w3-input w3-border w3-light-grey" type="text" name="git" value="'+git+'" required="required">' 
+    + '<label class="w3-text-gray"><b>Course</b></label>' 
+    + '<input class="w3-input w3-border w3-light-grey" type="text" name="course" value="'+course+'" required="required">' 
+    + '<label class="w3-text-gray"><b>Department</b></label>' 
+    + '<input class="w3-input w3-border w3-light-grey" type="text" name="department" value="'+department+'" required="required">' 
+    + '<input style="margin: 10px auto" class="w3-btn w3-blue-grey" type="submit" value="Edit Profile" id="editProfile" />' + "</form>");
+
+    $("#display").empty();
+    $("#display").append(file);
+    $("#display").modal();
+}
+
+function editFile(id, title, subtitle, descricao){
+    var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to change your file fields?&quot;)" action="http://localhost:3001/files/edit/' +id+'?token=' + token 
+    + ' "method="POST" id="myFormFile">'
+    + '<label class="w3-text-gray"><b>Title</b></label>' 
+    + '<input class="w3-input w3-border w3-light-grey" type="text" name="title" value="'+title+'" required="required" >' 
+    + '<label class="w3-text-gray"><b>Subtitle</b></label>' 
+    + '<input class="w3-input w3-border w3-light-grey" type="text" name="subtitle" value="'+subtitle+'" required="required">'
+    + "<table>"  
+    + "<tr>" 
+    + "<td>Description:</td>" 
+    + '<td><textarea style=\"resize: none;\" rows="3" cols="30" name="descricao">' + descricao 
+    + '</textarea></td>' 
+    + "</tr>"
+    + "</table>"
+    + '<input style="margin: 10px auto" class="w3-btn w3-blue-grey" type="submit" value="Edit File" id="editFile" />' + "</form>");
 
     $("#display").empty();
     $("#display").append(file);
@@ -257,13 +299,14 @@ function deleteFile(id) {
             url: "http://localhost:3001/files/" + id + "?token=" + token,
             type: "DELETE",
             sucess: function () {
-                //document.getElementById(id).remove()
-                location.reload();
+                document.getElementById(id).remove();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I) for more information!');
                 $('#result').html('<p>status code: ' + jqXHR.status + '</p><p>textStatus: ' + textStatus + '</p><p>errorThrown: ' + errorThrown + '</p><p>jqXHR.responseText:</p><div>' + jqXHR.responseText + '</div>');
             }
+        }).done(function() {
+            document.getElementById(id).remove();
         });
     } else {
         false;
@@ -277,13 +320,14 @@ function deleteUser(id) {
             url: "http://localhost:3001/users/" + id + "?token=" + token,
             type: "DELETE",
             sucess: function () {
-                //document.getElementById(id).remove()
-                location.reload();
+                document.getElementById(id).remove()
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I) for more information!');
                 $('#result').html('<p>status code: ' + jqXHR.status + '</p><p>textStatus: ' + textStatus + '</p><p>errorThrown: ' + errorThrown + '</p><p>jqXHR.responseText:</p><div>' + jqXHR.responseText + '</div>');
             }
+        }).done(function() {
+            document.getElementById(id).remove();
         });
     } else {
         false;
@@ -297,12 +341,14 @@ function deleteComment(idC, idF) {
             url: "http://localhost:3001/files/" + idF + "/comentarios?token=" + token + "&comentario=" + idC,
             type: "DELETE",
             sucess: function () {
-                document.getElementById(id).remove()
+                document.getElementById(idC).remove()
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I) for more information!');
                 $('#result').html('<p>status code: ' + jqXHR.status + '</p><p>textStatus: ' + textStatus + '</p><p>errorThrown: ' + errorThrown + '</p><p>jqXHR.responseText:</p><div>' + jqXHR.responseText + '</div>');
             }
+        }).done(function() {
+            document.getElementById(idC).remove();
         });
     } else {
         false;

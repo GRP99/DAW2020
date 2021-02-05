@@ -106,7 +106,6 @@ router.put("/classificar/:id", function (req, res, next) {
     /** variables **/
     id_user = req.user._id
     id_file = req.params.id
-    var new_autores = []
     /******  ******/
     console.log(req.query.atual)
     console.log(req.query.class)
@@ -193,7 +192,7 @@ router.put("/removeFavourite/:id", function (req, res, next) { // console.log("m
 // privacy (works with minor bug)
 router.put("/changeprivacy/:id", (req, res) => { // console.log("mudar")
     FControl.lookup(req.params.id).then((result) => {
-        if (req.user.level == "admin" || req.user._id == result.autor) {
+        if (req.user._id == result.autor) {
             FControl.changeprivacy(req.params.id).then((data) => {
                 res.status(200).jsonp(data);
             }).catch((err) => {
@@ -316,8 +315,8 @@ router.post("/", upload.single("myFile"), (req, res) => {
                     });
 
                 } else {
-                    Limpa.eliminaPasta(__dirname + '/../' + req.file.path + 'sip');
-                    res.redirect("http://localhost:3002/users/account?token=" + req.query.token)
+                    Limpa.eliminaPasta(__dirname + '/../' + req.file.path + '_sip');
+                    res.redirect("http://localhost:3002/users/account?token=" + req.query.token + "&alert=1")
                 }
             } else {
                 Limpa.eliminaPasta(__dirname + '/../' + req.file.path);
@@ -327,6 +326,30 @@ router.post("/", upload.single("myFile"), (req, res) => {
             res.status(500).jsonp(err);
         }
     }
+});
+
+// Edit File Fields
+router.post("/edit/:id", (req, res) => {
+
+    
+    var id = req.params.id
+    var title = req.body.title
+    var subtitle = req.body.subtitle
+    var descricao = req.body.descricao
+
+    FControl.lookup(req.params.id).then((result) => {
+        if (req.user._id == result.autor) {
+
+            FControl.updateFile(id,title,subtitle,descricao).then(() => {
+                res.redirect("http://localhost:3002/files/" + id + "?token=" + req.query.token);
+            }).catch((err) => {
+                res.redirect("http://localhost:3002/files/" + id + "?token=" + req.query.token);
+            });
+        }
+        else {
+            res.status(401).jsonp({error: 'You are not allowed to do this!'});
+        }
+    })
 });
 
 

@@ -4,6 +4,17 @@ block content
     link(rel='stylesheet' href='/stylesheets/account.css' media='screen')
     #df.w3-card-4.modal
     #display.w3-card-4.modal
+    if alertValue == 1
+        script.
+            if (window.confirm('Your file wasnt uploaded because of its format! Please verify your file format again!'))
+            {
+                window.location.href = "http://localhost:3002/users/account?token=" + token
+            }
+            else
+            {
+                window.location.href = "http://localhost:3002/users/account?token=" + token
+            }
+            //alert("Your file wanst uploaded because of its format! Please verify your file format again!")
     section#sec-63c0.u-clearfix.u-section-1
         .u-clearfix.u-sheet.u-valign-middle.u-sheet-1
             .u-clearfix.u-expanded-width.u-gutter-0.u-layout-wrap.u-layout-wrap-1
@@ -32,7 +43,7 @@ block content
                                             each a in lista
                                                 tr(id=a._id, style='height: 75px;')
                                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.creationDate
-                                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell(onclick="showFile(\""+a.size +"\",\""+a._id+"\",\""+a.name+"\",\""+a.mimetype+"\",\""+a.autor+"\",\""+a.descricao+"\");")= a.title
+                                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell= a.title
                                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.resourceType
                                                     if a.privacy == 1
                                                         td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
@@ -42,19 +53,19 @@ block content
                                                         td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
                                                             b(id="privacy "+a._id) Public 
                                                             button(id="button "+a._id,onClick="changePrivacy(\""+a._id+"\")" class="fa fa-unlock")
-                                                    td
+                                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
                                                         button(class="w3-button w3-green" onclick="location.href='http://localhost:3001/files/download/"+a.autor+"/"+a._id+"?token="+token+"';")
                                                             i(class="fa fa-download" style="font-size:15px")
                                                         b           
                                                         button(class="w3-button w3-red" onclick="deleteFile(\""+a._id+"\")")
                                                             i(class="fa fa-trash" style="font-size:15px")        
-                                                    td
+                                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
                                                         button(class="w3-button w3-grey" onclick="location.href='http://localhost:3002/files/"+a._id+"?token="+token+"'")
                                                             i(class="fa fa-file" style="font-size:15px")
                         .u-container-style.u-custom-color-1.u-layout-cell.u-size-14.u-layout-cell-2
                             .u-border-2.u-border-custom-color-1.u-container-layout.u-valign-middle.u-container-layout-2
                                 h6(style="margin:auto;font-family: Copperplate, Papyrus, fantasy;") ABOUT ME    
-                                    button(class="w3-button")
+                                    button(class="w3-button" onclick="editProfile(\""+user_name+"\",\""+user_github+"\",\"" + user_course + "\",\"" + user_department + "\")")
                                         i(class="fa fa-cogs" style="font-size:20px;color:black")
                                 if path == 0
                                     img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src='https://www.inmosenna.com/wp-content/uploads/2018/07/avatar-user-business-man-399587fe24739d5a-512x512-300x300.png' alt='' data-image-width='150' data-image-height='150')
@@ -75,8 +86,9 @@ block content
                                         dt
                                             b Your Github:
                                             dd= user_github
-                                        dt
-                                            b Your Role:
+                                        if(user_level!="admin")
+                                            dt
+                                                b Your Role:
                                             dd= user_role
                                         dt
                                             b Your Course:

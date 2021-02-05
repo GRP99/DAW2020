@@ -94,6 +94,22 @@ router.post("/registar", function (req, res) {
     });
 });
 
+// Edit Profile
+router.post("/edit", (req, res) => {
+    
+    var id = req.user._id
+    var name = req.body.name
+    var git = req.body.git
+    var course = req.body.course
+    var department = req.body.department
+
+    User.updateUser(id,name,git,course,department).then(() => {
+        res.redirect("http://localhost:3002/users/account?token=" + req.query.token);
+    }).catch((err) => {
+        res.redirect("http://localhost:3002/users/account?token=" + req.query.token);
+    });
+});
+
 
 // profile pic of user
 router.post("/changeprofile", upload.single("myProfilePic"), (req, res) => {

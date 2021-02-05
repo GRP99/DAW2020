@@ -24,6 +24,11 @@ router.get(['/account'], function (req, res, next) {
     var requestFicheiros = axios.get(api_serverURL + '/files/autor/' + _id + "?token=" + req.query.token);
     var requestResourceTypes = axios.get(api_serverURL + '/files/resourceTypes/?token=' + req.query.token);
 
+    var alert = 0
+    if(req.query.alert == "1"){
+        alert = 1
+    }
+    console.log(alert)
     axios.all([requestUser, requestFicheiros,requestResourceTypes]).then(axios.spread((...response) => {
         var user = response[0].data;
         var ficheiros = response[1].data;
@@ -51,7 +56,8 @@ router.get(['/account'], function (req, res, next) {
                     user_course: course,
                     user_department: department,
                     resourceTypes: resourceTypes,
-                    level: req.user.level
+                    level: req.user.level,
+                    alertValue: alert
                 });
                 break;
         }
@@ -149,6 +155,7 @@ router.get("/admin", (req, res) => {
         var files = response[1].data;
         console.log("Entrei")
         res.render("admin", {
+            idUser: req.user._id,
             users: users,
             files: files,
             token: req.query.token,

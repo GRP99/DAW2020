@@ -16,6 +16,19 @@ module.exports.lookup = id => {
     return Files.findOne({_id: id}).exec();
 }
 
+// update file fields
+module.exports.updateFile = (id,t,s,d) => {
+    return Files.update({
+        _id: id
+    }, {
+        $set: {
+            "title": t,
+            "subtitle": s,
+            "descricao": d
+        }
+    }).exec();
+}
+
 // insert a new file
 module.exports.insert = (p, path) => { // console.log(JSON.stringify(p));
     var newFile = new Files(p)
@@ -44,7 +57,6 @@ module.exports.findByName = t => {
 module.exports.remove = id => {
     return Files.deleteOne({_id: id})
 }
-
 
 // add a user to favourites list from file
 module.exports.addFav = (id, user) => {

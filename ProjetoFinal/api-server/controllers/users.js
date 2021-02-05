@@ -23,6 +23,20 @@ module.exports.insereUser = p => {
     return newUser.save();
 }
 
+// update user profile
+module.exports.updateUser = (id,n,g,c,d) => {
+    return Users.update({
+        _id: id
+    }, {
+        $set: {
+            "name": n,
+            "git": g,
+            "course": c,
+            "department": d
+        }
+    }).exec();
+}
+
 // change the profilepic
 module.exports.updatePhoto = (id) => {
     Users.findOne({_id: id}).exec().then((result) => {

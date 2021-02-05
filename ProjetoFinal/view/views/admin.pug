@@ -7,11 +7,11 @@ block content
             .u-expanded-width.u-table.u-table-responsive.u-table-1
                 table.u-table-entity(id="example", style="text-align:center")
                     colgroup
-                        col(width='20%')
-                        col(width='20%')
-                        col(width='20%')
-                        col(width='20%')
-                        col(width='20%')
+                        col(width='16%')
+                        col(width='16%')
+                        col(width='16%')
+                        col(width='16%')
+                        col(width='16%')
                     h5 ALL FILES
                     thead.u-custom-color-1.u-custom-font.u-font-ubuntu.u-table-header.u-table-header-1
                         tr(style='height: 30px;')
@@ -19,7 +19,8 @@ block content
                             th.u-table-cell File Title
                             th.u-table-cell Resource Type
                             th.u-table-cell Author
-                            th.u-table-cell Author Name 
+                            th.u-table-cell Author Name
+                            th.u-table-cell Privacy 
                             th.u-table-cell
                     tbody.u-custom-font.u-font-ubuntu.u-table-body
                         each a in files
@@ -31,7 +32,11 @@ block content
                                     each u in users
                                         if u._id == a.autor
                                             td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=u.name
-                                    td
+                                    if a.privacy == 0
+                                        td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell Public
+                                    else
+                                        td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell Private
+                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
                                         button(class="w3-button" onclick="deleteFile(\""+a._id+"\")")
                                             i(class="fa fa-trash" style="font-size:20px;color:red")
             .u-expanded-width.u-table.u-table-responsive.u-table-1
@@ -57,7 +62,7 @@ block content
                             th.u-table-cell
                     tbody.u-custom-font.u-font-ubuntu.u-table-body
                         each ul in users
-                            if ul.level != "admin"
+                            if ul._id != idUser
                                 tr(style='height: 75px;')
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=ul._id
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=ul.name
@@ -69,6 +74,11 @@ block content
                                         t  - 
                                         t=ul.course
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=ul.department
-                                    td
-                                        button(class="w3-button" onclick="deleteUser(\""+ul._id+"\")")
-                                            i(class="fa fa-trash" style="font-size:20px;color:red")
+                                    if ul.level != "admin"
+                                        td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                            button(class="w3-button" onclick="deleteUser(\""+ul._id+"\")")
+                                                i(class="fa fa-trash" style="font-size:20px;color:red")
+                                    else
+                                        td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                            button(class="w3-button" onclick="alert(\"This is user is an Admin! You can't delete him!\")")
+                                                i(class="fa fa-ban" style="font-size:20px;color:red")
