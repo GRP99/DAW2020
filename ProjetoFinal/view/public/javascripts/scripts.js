@@ -391,9 +391,10 @@ function deleteComment(idC, idF) {
     }
 }
 
-/* TABELES */
+/* TABELAS */
+
 $(document).ready( function () {
-    var table = $('#example').DataTable( {
+    var table1 = $('#example').DataTable( {
       pageLength : 6,
       "lengthChange": false,
       info: false
@@ -403,5 +404,18 @@ $(document).ready( function () {
         pageLength : 6,
         "lengthChange": false,
         info: false
-      } )
+    } )
+
+    var table3 = $('#example_user').DataTable( {
+        pageLength : 2,
+        "lengthChange": false,
+        info: false
+    } )
+
+    var table4= $('#example2_user').DataTable( {
+        pageLength : 2,
+        "lengthChange": false,
+        info: false
+    } )
 } );
+

@@ -115,10 +115,15 @@ function renderConsumer(req, res, user) {
 
 router.get(['/account/:id'], function (req, res, next) {
     var requestUser = axios.get(api_serverURL + '/users/' + req.params.id + "?token=" + req.query.token);
-    var requestFicheiros = axios.get(api_serverURL + '/files/autor/' + req.params.id + "?token=" + req.query.token);
-    axios.all([requestUser, requestFicheiros]).then(axios.spread((...response) => {
+    var requestFicheirosbyAutor = axios.get(api_serverURL + '/files/autorP/' + req.params.id + "?token=" + req.query.token);
+    var requestallFichs = axios.get("http://localhost:3001/files/public?token=" + req.query.token);
+    var arr = []
+
+    axios.all([requestUser, requestFicheirosbyAutor, requestallFichs]).then(axios.spread((...response) => {
         var user = response[0].data;
         var ficheiros = response[1].data;
+        var ficheiros_all = response[2].data;
+
         var profilepic = user.profilepic
         var nome = user.name
         var mail = user._id
@@ -129,21 +134,51 @@ router.get(['/account/:id'], function (req, res, next) {
         var registrationDate = user.registrationDate
         var lastAccessDate = user.lastAccessDate
         var level = user.level
-        res.render('user', {
-            lista: ficheiros,
-            path: profilepic,
-            user_name: nome,
-            user_mail: mail,
-            user_github: github,
-            user_role: role,
-            user_course: course,
-            user_department: department,
-            user_level: level,
-            user_registrationDate: registrationDate,
-            user_lastAccessDate: lastAccessDate,
-            token: req.query.token,
-            mylevel: req.user.level
-        });
+
+        ficheiros_all.forEach(f => {
+            if (f.favoritos.includes(mail)) {
+                arr.push(f)
+            }
+        })
+
+        if (level != "consumer") {
+            res.render('user', {
+                lista: ficheiros,
+                lista2: arr,
+                path: profilepic,
+                user_name: nome,
+                user_mail: mail,
+                user_github: github,
+                user_role: role,
+                user_course: course,
+                user_department: department,
+                user_level: level,
+                user_registrationDate: registrationDate,
+                user_lastAccessDate: lastAccessDate,
+                idUser: req.user._id,
+                token: req.query.token,
+                mylevel: req.user.level
+            });
+        }
+        else{
+            res.render('user', {
+                lista: "no",
+                lista2: arr,
+                path: profilepic,
+                user_name: nome,
+                user_mail: mail,
+                user_github: github,
+                user_role: role,
+                user_course: course,
+                user_department: department,
+                user_level: level,
+                user_registrationDate: registrationDate,
+                user_lastAccessDate: lastAccessDate,
+                idUser: req.user._id,
+                token: req.query.token,
+                mylevel: req.user.level
+            });
+        }
     })).catch(e => {
         res.render('errorUser', {
             error: e,

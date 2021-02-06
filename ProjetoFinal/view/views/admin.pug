@@ -5,7 +5,7 @@ block content
     section#sec-a877.u-clearfix.u-section-1
         .u-clearfix.u-sheet.u-sheet-1
             .u-expanded-width.u-table.u-table-responsive.u-table-1
-                table.u-table-entity(id="example", style="text-align:center")
+                table.u-table-entity(id="example" style="text-align:center")
                     colgroup
                         col(width='16%')
                         col(width='16%')
@@ -21,10 +21,10 @@ block content
                             th.u-table-cell Author
                             th.u-table-cell Author Name
                             th.u-table-cell Privacy 
-                            th.u-table-cell
+                            th.u-table-cell 
                     tbody.u-custom-font.u-font-ubuntu.u-table-body
-                        each a in files
-                                tr(style='height: 75px;')
+                            each a in files
+                                tr(id=a._id, style='height: 75px;')
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.creationDate
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.title
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.resourceType
@@ -40,7 +40,7 @@ block content
                                         button(class="button-transparent" onclick="deleteFile(\""+a._id+"\")")
                                             i(class="fa fa-trash" style="font-size:20px;")
             .u-expanded-width.u-table.u-table-responsive.u-table-1
-                table.u-table-entity(id="example2", style="text-align:center")
+                table.u-table-entity(id="example2" style="text-align:center")
                     colgroup
                         col(width='14%')
                         col(width='14%')
@@ -63,7 +63,7 @@ block content
                     tbody.u-custom-font.u-font-ubuntu.u-table-body
                         each ul in users
                             if ul._id != idUser
-                                tr(style='height: 75px;')
+                                tr(id=ul._id, style='height: 75px;')
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=ul._id
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=ul.name
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=ul.level

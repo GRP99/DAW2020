@@ -11,8 +11,100 @@ block content
                     .u-layout-row
                         .u-container-style.u-layout-cell.u-size-46.u-layout-cell-1
                             .u-border-2.u-border-custom-color-1.u-container-layout.u-container-layout-1
+                                if(lista != "no")
+                                    .u-table.u-table-responsive.u-table-1
+                                        h6(style="font-weight:bold;text-align:center;") #{user_name}'s Uploaded Files
+                                        table.u-table-entity(id="example_user" style="margin: 22px; font-size:12px;text-align:center;")
+                                            colgroup
+                                                col(width='16.666666%')
+                                                col(width='16.666666%')
+                                                col(width='16.666666%')
+                                                col(width='16.666666%')
+                                                col(width='16.666666%')
+                                                col(width='16.666666%')
+                                            thead.u-custom-color-1.u-table-header.u-table-header-1
+                                                tr(style='height: 30px;')
+                                                    th.u-table-cell Date
+                                                    th.u-table-cell File Title
+                                                    th.u-table-cell Resource Type
+                                                    th.u-table-cell Average Classification 
+                                                    th.u-table-cell Your Classification
+                                                    th.u-table-cell
+                                            tbody.u-table-body
+                                                each a in lista
+                                                    tr(id=a._id, style='height: 75px;')
+                                                            td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.creationDate
+                                                            td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.title
+                                                            td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.resourceType
+                                                            td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                                                    if (a.estrelas.numero >= 4.0)
+                                                                        b(style="color: green")= a.estrelas.numero
+                                                                    if (a.estrelas.numero < 4.0 && a.estrelas.numero >= 2.0)
+                                                                        b(style="color: orange")= a.estrelas.numero
+                                                                    if (a.estrelas.numero < 2.0 && a.estrelas.numero > 0)
+                                                                        b(style="color: red")= a.estrelas.numero
+                                                                    if (a.estrelas.numero == 0)
+                                                                        b No classification
+                                                                    - var found = 0
+                                                                    - var match = idUser + "[?][;][0-9]"
+                                                                    - var temp = ""
+                                                                    each autoresClassificados in a.estrelas.autores
+                                                                        if autoresClassificados.match(match)    
+                                                                            - found = 1
+                                                                            - temp = autoresClassificados
+                                                                    if found == 1
+                                                                        td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                                                            div(class="rating")
+                                                                                if temp == idUser+"?;5"
+                                                                                    span(class="fa fa-star checked" onclick="classificar(5,\""+temp+"\",\""+a._id+"\")") 
+                                                                                else 
+                                                                                    span(class="fa fa-star" onclick="classificar(5,\""+temp+"\",\""+a._id+"\")")
+                                                                                if (temp == idUser+"?;5" || temp == idUser+"?;4") 
+                                                                                    span(class="fa fa-star checked" onclick="classificar(4,\""+temp+"\",\""+a._id+"\")")
+                                                                                else 
+                                                                                    span(class="fa fa-star" onclick="classificar(4,\""+temp+"\",\""+a._id+"\")")
+                                                                                if (temp == idUser+"?;5" || temp == idUser+"?;4" || temp == idUser+"?;3") 
+                                                                                    span(class="fa fa-star checked" onclick="classificar(3,\""+temp+"\",\""+a._id+"\")")
+                                                                                else 
+                                                                                    span(class="fa fa-star" onclick="classificar(3,\""+temp+"\",\""+a._id+"\")")
+                                                                                if (temp == idUser+"?;5" || temp == idUser+"?;4" || temp == idUser+"?;3" || temp == idUser+"?;2") 
+                                                                                    span(class="fa fa-star checked" onclick="classificar(2,\""+temp+"\",\""+a._id+"\")")
+                                                                                else 
+                                                                                    span(class="fa fa-star" onclick="classificar(2,\""+temp+"\",\""+a._id+"\")")
+                                                                                if (temp == idUser+"?;5" || temp == idUser+"?;4" || temp == idUser+"?;3" || temp == idUser+"?;2" || temp == idUser+"?;1") 
+                                                                                    span(class="fa fa-star checked" onclick="classificar(1,\""+temp+"\",\""+a._id+"\")")
+                                                                                else 
+                                                                                    span(class="fa fa-star" onclick="classificar(1,\""+temp+"\",\""+a._id+"\")")
+                                                                    else
+                                                                        td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                                                            div(class="rating")
+                                                                                span(class="fa fa-star" onclick="classificar(5,\"?;0\",\""+a._id+"\")")
+                                                                                span(class="fa fa-star" onclick="classificar(4,\"?;0\",\""+a._id+"\")")
+                                                                                span(class="fa fa-star" onclick="classificar(3,\"?;0\",\""+a._id+"\")")     
+                                                                                span(class="fa fa-star" onclick="classificar(2,\"?;0\",\""+a._id+"\")")
+                                                                                span(class="fa fa-star" onclick="classificar(1,\"?;0\",\""+a._id+"\")")
+                                                            td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                                                button(class="button-transparent" onclick="location.href='http://localhost:3001/files/download/"+a.autor+"/"+a._id+"?token="+token+"';")
+                                                                    i(class="fa fa-download" style="font-size:20px")
+                                                                b           
+                                                                button(class="button-transparent" onclick="location.href='http://localhost:3002/files/"+a._id+"?token="+token+"'")
+                                                                    i(class="fa fa-file" style="font-size:20px")
+                                                                b           
+                                                                // if favoritos contains user
+                                                                - var foundFavoritos = 0
+                                                                each fav in a.favoritos
+                                                                    // idUser is req.user._id
+                                                                    if fav == idUser
+                                                                        - foundFavoritos = 1
+                                                                if foundFavoritos == 1    
+                                                                    button(class="button-transparent" onclick="return confirm('Do you want to remove this file from your favourites?')?removeFavourite(\""+a._id+"\"):'';")
+                                                                        i(class="fa fa-heart fill" style="font-size:20px;")
+                                                                else
+                                                                    button(class="button-transparent" onclick="return confirm('Do you want to add this file as your favourite?')?addAsFavourite(\""+a._id+"\"):'';")
+                                                                        i(class="fa fa-heart" style="font-size:20px;")
                                 .u-table.u-table-responsive.u-table-1
-                                    table.u-table-entity(id="example" style="margin: 22px; font-size:12px;text-align:center;")
+                                    h6(style="font-weight:bold;text-align:center;") #{user_name}'s Favourites Files
+                                    table.u-table-entity(id="example2_user" style="margin: 22px; font-size:12px;text-align:center;")
                                         colgroup
                                             col(width='16.666666%')
                                             col(width='16.666666%')
@@ -29,9 +121,8 @@ block content
                                                 th.u-table-cell Your Classification
                                                 th.u-table-cell
                                         tbody.u-table-body
-                                            each a in lista
+                                            each a in lista2
                                                 tr(id=a._id, style='height: 75px;')
-                                                    if a.privacy==0
                                                         td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.creationDate
                                                         td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.title
                                                         td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.resourceType
@@ -88,13 +179,26 @@ block content
                                                             b           
                                                             button(class="button-transparent" onclick="location.href='http://localhost:3002/files/"+a._id+"?token="+token+"'")
                                                                 i(class="fa fa-file" style="font-size:20px")
+                                                            b           
+                                                            // if favoritos contains user
+                                                            - var foundFavoritos = 0
+                                                            each fav in a.favoritos
+                                                                // idUser is req.user._id
+                                                                if fav == idUser
+                                                                    - foundFavoritos = 1
+                                                            if foundFavoritos == 1    
+                                                                button(class="button-transparent" onclick="return confirm('Do you want to remove this file from your favourites?')?removeFavourite(\""+a._id+"\"):'';")
+                                                                    i(class="fa fa-heart fill" style="font-size:20px;")
+                                                            else
+                                                                button(class="button-transparent" onclick="return confirm('Do you want to add this file as your favourite?')?addAsFavourite(\""+a._id+"\"):'';")
+                                                                    i(class="fa fa-heart" style="font-size:20px;")
                         .u-container-style.u-custom-color-1.u-layout-cell.u-size-14.u-layout-cell-2
                             .u-border-2.u-border-custom-color-1.u-container-layout.u-valign-middle.u-container-layout-2
-                                h6(style="margin:auto;font-family: Copperplate, Papyrus, fantasy;") ABOUT    
+                                h5(style="margin:auto;font-family: Copperplate, Papyrus, fantasy;") #{user_name}'s Profile
                                 if path == 0
                                     img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src='https://www.inmosenna.com/wp-content/uploads/2018/07/avatar-user-business-man-399587fe24739d5a-512x512-300x300.png' alt='' data-image-width='150' data-image-height='150')
                                 else 
-                                    img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src="http://localhost:3001/users/"+user_id+"/profilepic.jpeg?token="+token alt='' data-image-width='150' data-image-height='150')
+                                    img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src="http://localhost:3001/users/"+user_mail+"/profilepic.jpeg?token="+token alt='' data-image-width='150' data-image-height='150')
                                 .u-clearfix.u-custom-html.u-custom-html-1
                                     dl(style="font-size:12px")
                                         dt

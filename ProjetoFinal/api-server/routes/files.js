@@ -121,7 +121,8 @@ router.put("/classificar/:id", function (req, res, next) {
                         var media = 0
                     else 
                         var media = sub / (size - 1)
-                    FControl.removeClassificacao(id_file, temp, media).then((data1) => {
+                    media_n = media.toFixed(2)
+                    FControl.removeClassificacao(id_file, temp, media_n).then((data1) => {
                         res.status(200).jsonp({classificacao: data1.numero});
                     }).catch((err) => {
                         res.status(200).jsonp(err);
@@ -145,7 +146,12 @@ router.put("/classificar/:id", function (req, res, next) {
                         var media = 0
                     else 
                         var media = sub / (size - 1)
+<<<<<<< Updated upstream
                     FControl.removeClassificacao(id_file, temp, media).then((data2) => {
+=======
+                    media_n = media.toFixed(2)
+                    FControl.removeClassificacao(id_file, temp, media_n).then((data2) => {
+>>>>>>> Stashed changes
                         res.status(200).jsonp({classificacao: data2.numero});
                     }).catch((err) => {
                         res.status(200).jsonp(err);
@@ -299,7 +305,7 @@ router.post("/", upload.single("myFile"), (req, res) => {
                                     date: d,
                                     autorID: req.body.autor,
                                     autor: dados.name,
-                                    descricao: 'New submission: Producer' + dados.name + ' has just released an ' + req.body.resourceType + ' entitled \"' + req.body.title + '\".'
+                                    descricao: 'New submission: Producer ' + dados.name + ' has just released an ' + req.body.resourceType + ' entitled \"' + req.body.title + '\".'
                                 }
                                 NControl.insert(news)
                             })
@@ -380,6 +386,16 @@ router.delete("/:id", (req, res) => {
 router.get("/autor/:id", function (req, res, next) {
     id_autor = req.params.id;
     FControl.filesbyUser(id_autor).then((data) => {
+        res.status(200).jsonp(data);
+    }).catch((err) => {
+        res.status(500).jsonp(err);
+    });
+});
+
+// all the files public from user
+router.get("/autorP/:id", function (req, res, next) {
+    id_autor = req.params.id;
+    FControl.filesbyUserP(id_autor).then((data) => {
         res.status(200).jsonp(data);
     }).catch((err) => {
         res.status(500).jsonp(err);

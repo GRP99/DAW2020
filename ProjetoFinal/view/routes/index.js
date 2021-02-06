@@ -55,7 +55,8 @@ router.post('/search', function (req, res) {
             users: resposta[1].data,
             autor: authors,
             token: req.query.token,
-            level: req.user.level
+            level: req.user.level,
+            idUser: req.user._id
         });
     })).catch(e => {
         res.render('errorSearch', {

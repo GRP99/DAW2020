@@ -51,6 +51,22 @@ block content
                                     if(fich.autor == idUser)
                                         button(class="button-transparent" onclick="editFile(\""+fich._id+"\",\""+fich.title+"\",\""+fich.subtitle+"\",\"" + fich.descricao + "\")")
                                             i(class="fa fa-cogs" style="font-size:20px;")
+                                    div(style="margin:10px; text-align:center")
+                                        button(class="button-transparent" onclick="showComments(\""+fich._id+"\",\""+idUser+"\")")
+                                            i(class="fa fa-comment" style="font-size:20px;")
+                                        button(class="button-transparent" onclick="location.href='http://localhost:3001/files/download/"+fich.autor+"/"+fich._id+"?token="+token+"';")
+                                            i(class="fa fa-download" style="font-size:20px;")
+                                        - var foundFavoritos = 0
+                                        each fav in fich.favoritos
+                                            // idUser is req.user._id
+                                            if fav == idUser
+                                                - foundFavoritos = 1
+                                        if foundFavoritos == 1    
+                                            button(class="button-transparent" onclick="return confirm('Do you want to remove this file from your favourites?')?removeFavourite(\""+fich._id+"\"):'';")
+                                                i(class="fa fa-heart fill" style="font-size:20px;")
+                                        else  
+                                            button(class="button-transparent" onclick="return confirm('Do you want to add this file as your favourite?')?addAsFavourite(\""+fich._id+"\"):'';")
+                                                i(class="fa fa-heart" style="font-size:20px;")
                                 .u-clearfix.u-custom-html.u-custom-html-1
                                     dl(style="font-size:12px")
                                         dt
@@ -73,7 +89,7 @@ block content
                                             textarea(style="resize: none;" rows="3" cols="27" readonly)= fich.descricao
                                         dt
                                             b Size:
-                                        dd= fich.size
+                                        dd #{fich.size} bytes
                                         dt
                                             b Date:
                                         dd= fich.creationDate
@@ -123,21 +139,6 @@ block content
                                                     span(class="fa fa-star" onclick="classificar(3,\"?;0\",\""+fich._id+"\")")     
                                                     span(class="fa fa-star" onclick="classificar(2,\"?;0\",\""+fich._id+"\")")
                                                     span(class="fa fa-star" onclick="classificar(1,\"?;0\",\""+fich._id+"\")")
-                                    btn.u-align-center.u-btn.u-btn-round.u-button-style.u-dialog-link.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-1(onclick="showComments(\""+fich._id+"\",\""+idUser+"\")") Add Comment
-                                    div(style="margin:10px; text-align:center")
-                                        button(class="button-transparent" onclick="location.href='http://localhost:3001/files/download/"+fich.autor+"/"+fich._id+"?token="+token+"';")
-                                                i(class="fa fa-download" style="font-size:20px;")
-                                        - var foundFavoritos = 0
-                                        each fav in fich.favoritos
-                                            // idUser is req.user._id
-                                            if fav == idUser
-                                                - foundFavoritos = 1
-                                        if foundFavoritos == 1    
-                                            button(class="button-transparent" onclick="return confirm('Do you want to remove this file from your favourites?')?removeFavourite(\""+fich._id+"\"):'';")
-                                                i(class="fa fa-heart fill" style="font-size:20px;")
-                                        else  
-                                            button(class="button-transparent" onclick="return confirm('Do you want to add this file as your favourite?')?addAsFavourite(\""+fich._id+"\"):'';")
-                                                i(class="fa fa-heart" style="font-size:20px;")
         div(id="displayComments")
         div(id="display")
 

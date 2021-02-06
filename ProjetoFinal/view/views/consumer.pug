@@ -91,10 +91,16 @@ block content
                                     button(class="button-transparent" onclick="editProfile(\""+user_name+"\",\""+user_github+"\",\"" + user_course + "\",\"" + user_department + "\")")
                                         i(class="fa fa-cogs" style="font-size:20px;")
                                 if path == 0
-                                    img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src='https://www.inmosenna.com/wp-content/uploads/2018/07/avatar-user-business-man-399587fe24739d5a-512x512-300x300.png' alt='' data-image-width='300' data-image-height='300')
-                                else 
-                                    img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src="http://localhost:3001/users/"+user_id+"/profilepic.jpeg?token="+token alt='' data-image-width='300' data-image-height='300')
-                                button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-1(type='button' onclick="mudafoto(\"" + user_id + "\",\"" + token +"\");") Profile Photo
+                                    .container
+                                        img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src='https://www.inmosenna.com/wp-content/uploads/2018/07/avatar-user-business-man-399587fe24739d5a-512x512-300x300.png' alt='' data-image-width='300' data-image-height='300')
+                                        .overlay
+                                            i(class="icon-photo fa fa-image" onclick="mudafoto(\"" + user_id + "\",\"" + token +"\");")
+                                else
+                                    .container
+                                        img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src="http://localhost:3001/users/"+user_id+"/profilepic.jpeg?token="+token alt='' data-image-width='300' data-image-height='300')
+                                        .overlay
+                                            i(class="icon-photo fa fa-image" onclick="mudafoto(\"" + user_id + "\",\"" + token +"\");")
+
                                 .u-clearfix.u-custom-html.u-custom-html-1
                                     dl(style="font-size:12px")
                                         dt
@@ -105,7 +111,7 @@ block content
                                             dd= user_mail
                                         dt
                                             b Your Github:
-                                            dd= user_github
+                                            a(href="https://github.com/"+user_github target="_blank")= user_github
                                         dt
                                             b Your Role:
                                             dd= user_role

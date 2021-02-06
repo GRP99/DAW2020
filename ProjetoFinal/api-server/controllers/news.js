@@ -8,8 +8,8 @@ module.exports.list = () => {
 }
 
 // return the last 10 news
-module.exports.last10News = () => {
-    return News.find().sort({"date": -1}).limit(10).exec()
+module.exports.last5News = () => {
+    return News.find().sort({"date": -1}).limit(5).exec()
 }
 
 // return only one new

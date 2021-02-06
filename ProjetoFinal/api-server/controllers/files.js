@@ -47,6 +47,11 @@ module.exports.filesbyUser = id => {
     return Files.find({autor: id}).exec();
 }
 
+// all the files that user
+module.exports.filesbyUserP = id => {
+    return Files.find({autor: id, privacy:0}).exec();
+}
+
 // find a file with a given title
 module.exports.findByName = t => {
     return Files.findOne({title: t}).exec()
@@ -87,7 +92,7 @@ module.exports.classifica = (id, user, classi) => {
         var oldmedia = result.estrelas.numero
         var added = ((oldmedia * size) + parseInt(classi))
         var media = added / (size + 1)
-        result.estrelas.numero = media;
+        result.estrelas.numero = media.toFixed(2);
         var pair = user + "?;" + classi
         result.estrelas.autores.push(pair);
         return Files.findByIdAndUpdate(id, result, {new: true});
