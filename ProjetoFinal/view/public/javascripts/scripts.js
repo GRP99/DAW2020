@@ -208,7 +208,7 @@ function openUploadModal(user, token, resourceTypes) {
         + '<p><b class="w3-text-blue-grey">Acess: <select id="level" name="privacy" type="num" ><option value="0">Public</option><option value="1">Private</option></select></b></p>'
         + "<table>" 
         + "<tr>" 
-        + "td>Description:</td>" 
+        + "<td>Description:</td>" 
         + '<td><textarea style=\"resize: none;\" rows="3" cols="30" name="descricao"></textarea></td>' 
         + "</tr>" 
         + '<label class="w3-text-gray"><b>Title</b></label>' 
