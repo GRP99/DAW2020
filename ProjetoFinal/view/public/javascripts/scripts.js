@@ -391,6 +391,15 @@ function deleteComment(idC, idF) {
     }
 }
 
+/* VALIDADE SEARCH FORM */
+function validateSearchForm() {
+    var a = document.forms["SearchForm"]["search"].value;
+    if (a == null || a == "") {
+      alert("Please fill Search Field!");
+      return false;
+    }
+  }
+
 /* TABELAS */
 
 $(document).ready( function () {

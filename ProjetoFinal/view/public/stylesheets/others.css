@@ -124,3 +124,10 @@
   .fa-user:hover {
     color: #eee;
   }
+
+  /* LINKS */
+  /* 
+  table a:link, a:visited {
+    color:black;
+    text-decoration: underline;
+  } */

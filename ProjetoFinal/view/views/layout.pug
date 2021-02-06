@@ -49,7 +49,7 @@ html
                                 li.u-nav-item
                                     a.u-button-style.u-nav-link(href='/users/logout?token='+token) Logout
                     .u-black.u-menu-overlay.u-opacity.u-opacity-70
-            form.u-align-right.u-border-1.u-border-grey-30.u-search.u-search-right.u-search-1(action='http://localhost:3002/search?token='+token, method='POST')
+            form.u-align-right.u-border-1.u-border-grey-30.u-search.u-search-right.u-search-1(onsubmit="return validateSearchForm()" name="SearchForm" action='http://localhost:3002/search?token='+token, method='POST')
                 button.u-search-button(type='submit')
                     span.u-search-icon.u-spacing-10
                         svg.u-svg-link(preserveaspectratio='xMidYMin slice' viewbox='0 0 56.966 56.966' style='')

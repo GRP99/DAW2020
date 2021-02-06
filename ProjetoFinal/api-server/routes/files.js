@@ -144,7 +144,7 @@ router.put("/classificar/:id", function (req, res, next) {
                     var newsize = size - 1
                     if (newsize == 0)
                         var media = 0
-                    else 
+                    else
                         var media = sub / (size - 1)
                     media_n = media.toFixed(2)
                     FControl.removeClassificacao(id_file, temp, media_n).then((data2) => {
