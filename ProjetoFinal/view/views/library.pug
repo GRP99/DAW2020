@@ -79,7 +79,8 @@ block content
                                                 span(class="fa fa-star" onclick="classificar(1,\"?;0\",\""+a._id+"\")")
                                     each u in users
                                         if u._id == a.autor
-                                            td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=u.name
+                                            td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
+                                                a(href="http://localhost:3002/users/account/"+u._id+"?token="+token)=u.name
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
                                         button(class="button-transparent" onclick="location.href='http://localhost:3001/files/download/"+a.autor+"/"+a._id+"?token="+token+"';")
                                             i(class="fa fa-download" style="font-size:20px;") 

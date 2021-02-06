@@ -47,11 +47,8 @@ block content
                                                                 i(class="fa fa-trash" style="font-size:20px;color:red") 
                         .u-container-style.u-custom-color-1.u-layout-cell.u-size-14.u-layout-cell-2
                             .u-border-2.u-border-custom-color-1.u-container-layout.u-valign-middle.u-container-layout-2
-                                h4(style="text-align:center;margin:auto;font-family: Copperplate, Papyrus, fantasy;")= fich.title
-                                    if(fich.autor == idUser)
-                                        button(class="button-transparent" onclick="editFile(\""+fich._id+"\",\""+fich.title+"\",\""+fich.subtitle+"\",\"" + fich.descricao + "\")")
-                                            i(class="fa fa-cogs" style="font-size:20px;")
-                                    div(style="margin:10px; text-align:center")
+                                h4(style="text-align:center;margin:-60px auto 0 auto; font-family: Copperplate, Papyrus, fantasy;")= fich.title
+                                    div(style="margin:auto; text-align:center")
                                         button(class="button-transparent" onclick="showComments(\""+fich._id+"\",\""+idUser+"\")")
                                             i(class="fa fa-comment" style="font-size:20px;")
                                         button(class="button-transparent" onclick="location.href='http://localhost:3001/files/download/"+fich.autor+"/"+fich._id+"?token="+token+"';")
@@ -67,11 +64,14 @@ block content
                                         else  
                                             button(class="button-transparent" onclick="return confirm('Do you want to add this file as your favourite?')?addAsFavourite(\""+fich._id+"\"):'';")
                                                 i(class="fa fa-heart" style="font-size:20px;")
-                                .u-clearfix.u-custom-html.u-custom-html-1
-                                    dl(style="font-size:12px")
+                                
+                                dl(style="font-size:12px")
                                         dt
                                             b Subtitle:
-                                        dd= fich.subtitle
+                                        if fich.subtitle == ""
+                                            dd No subtitle defined.
+                                        else
+                                            dd=fich.subtitle
                                         dt
                                             b Resource Type:
                                         dd= fich.resourceType
@@ -80,7 +80,10 @@ block content
                                         dd= fich.mimetype
                                         dt
                                             b Author:
-                                        dd= fich.autor
+                                        dd
+                                            each ul in users
+                                                if ul._id == fich.autor
+                                                    a(href="http://localhost:3002/users/account/"+fich.autor+"?token="+token)=ul.name
                                         dt
                                             b Description:
                                         if fich.descricao == ""
@@ -139,6 +142,10 @@ block content
                                                     span(class="fa fa-star" onclick="classificar(3,\"?;0\",\""+fich._id+"\")")     
                                                     span(class="fa fa-star" onclick="classificar(2,\"?;0\",\""+fich._id+"\")")
                                                     span(class="fa fa-star" onclick="classificar(1,\"?;0\",\""+fich._id+"\")")
+                                if(fich.autor == idUser)
+                                        button(class="button" style="font-size:12px" onclick="editFile(\""+fich._id+"\",\""+fich.title+"\",\""+fich.subtitle+"\",\"" + fich.descricao + "\")") Change file properties
+                                            br
+                                            i(class="fa fa-cogs" style="font-size:15px;")
         div(id="displayComments")
         div(id="display")
 

@@ -23,6 +23,7 @@ block content
                         .u-container-style.u-layout-cell.u-size-46.u-layout-cell-1
                             .u-border-2.u-border-custom-color-1.u-container-layout.u-container-layout-1
                                 .u-table.u-table-responsive.u-table-1
+                                    h6(style="font-family:Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif;font-weight:bold;text-align:center;") Your Uploaded Files
                                     table.u-table-entity(id="example" style="margin: 22px; font-size:12px;text-align:center;")
                                         colgroup
                                             col(width='16.666666%')
@@ -63,9 +64,7 @@ block content
                                                             i(class="fa fa-file" style="font-size:20px")
                         .u-container-style.u-custom-color-1.u-layout-cell.u-size-14.u-layout-cell-2
                             .u-border-2.u-border-custom-color-1.u-container-layout.u-valign-middle.u-container-layout-2
-                                h6(style="margin:auto;font-family: Copperplate, Papyrus, fantasy;") ABOUT ME    
-                                    button(class="button-transparent" onclick="editProfile(\""+user_name+"\",\""+user_github+"\",\"" + user_course + "\",\"" + user_department + "\")")
-                                        i(class="fa fa-cogs" style="font-size:20px;")
+                                h3(style="margin:-60px auto 0 auto;text-align:center;font-family:Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif;") ABOUT ME    
                                 if path == 0
                                     .container
                                         img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src='https://www.inmosenna.com/wp-content/uploads/2018/07/avatar-user-business-man-399587fe24739d5a-512x512-300x300.png' alt='' data-image-width='300' data-image-height='300')
@@ -76,24 +75,25 @@ block content
                                         img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src="http://localhost:3001/users/"+user_id+"/profilepic.jpeg?token="+token alt='' data-image-width='300' data-image-height='300')
                                         .overlay
                                             i(class="icon-photo fa fa-image" onclick="mudafoto(\"" + user_id + "\",\"" + token +"\");")
-                                #div1.fa(align="center" style="font-size:40px" onclick="openUploadModal(\"" + user_id + "\",\"" + token +"\")")
-                                script.
-                                    function openfolder() {
-                                        var a;
-                                        a = document.getElementById("div1");
-                                        a.innerHTML = "&#xf114;";
-                                        setTimeout(function () {
-                                            a.innerHTML = "&#xf115;";
-                                            }, 1000);
-                                        }
-                                    openfolder();
-                                    setInterval(openfolder, 2000);
+                                div(align="center") 
+                                    #div1.fa( style="font-size:40px" onclick="openUploadModal(\"" + user_id + "\",\"" + token +"\")")
+                                    script.
+                                        function openfolder() {
+                                            var a;
+                                            a = document.getElementById("div1");
+                                            a.innerHTML = "&#xf114;";
+                                            setTimeout(function () {
+                                                a.innerHTML = "&#xf115;";
+                                                }, 1000);
+                                            }
+                                        openfolder();
+                                        setInterval(openfolder, 2000);
                                 
                                 if (user_level=='admin')
                                     div(align="center")  
                                         img(align="center" onclick="openWarningModal(\""+user_id+"\")" src="https://media1.giphy.com/media/Ve5vfhwsox2G3bJ44O/giphy.gif?cid=ecf05e477387de0aa0b8bb8fca3f2aa83bc751e13c7750a8&rid=giphy.gif" alt='' width='100' height='100')
-                                .u-clearfix.u-custom-html.u-custom-html-1
-                                    dl(style="font-size:12px")
+                                
+                                dl(style="font-size:12px")
                                         dt
                                             b Your name:
                                             dd=user_name
@@ -114,3 +114,6 @@ block content
                                         dt
                                             b Your Department:
                                             dd= user_department
+                                button(class="button" style="font-size:12px" onclick="editProfile(\""+user_name+"\",\""+user_github+"\",\"" + user_course + "\",\"" + user_department + "\")") Change your properties
+                                        br
+                                        i(class="fa fa-cogs" style="font-size:15px;")

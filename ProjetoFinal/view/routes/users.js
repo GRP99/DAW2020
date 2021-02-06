@@ -157,7 +157,7 @@ router.get(['/account/:id'], function (req, res, next) {
                 user_lastAccessDate: lastAccessDate,
                 idUser: req.user._id,
                 token: req.query.token,
-                mylevel: req.user.level
+                level: req.user.level
             });
         }
         else{
@@ -176,7 +176,7 @@ router.get(['/account/:id'], function (req, res, next) {
                 user_lastAccessDate: lastAccessDate,
                 idUser: req.user._id,
                 token: req.query.token,
-                mylevel: req.user.level
+                level: req.user.level
             });
         }
     })).catch(e => {
