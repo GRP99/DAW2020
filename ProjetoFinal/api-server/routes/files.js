@@ -106,9 +106,6 @@ router.put("/classificar/:id", function (req, res, next) {
     /** variables **/
     id_user = req.user._id
     id_file = req.params.id
-    /******  ******/
-    console.log(req.query.atual)
-    console.log(req.query.class)
     // If user wants to remove
     if(req.query.class == "remove") {
         FControl.lookup(id_file).then((result) => {
@@ -148,8 +145,6 @@ router.put("/classificar/:id", function (req, res, next) {
                         var media = 0
                     else 
                         var media = sub / (size - 1)
-                    console.log(oldmedia)
-                    console.log(media)
                     FControl.removeClassificacao(id_file, temp, media).then((data2) => {
                         res.status(200).jsonp({classificacao: data2.numero});
                     }).catch((err) => {
@@ -276,7 +271,7 @@ router.post("/", upload.single("myFile"), (req, res) => {
 
                     fs.rename(quarantinePath, newPath, function (error) {
                         if (error) {
-                            console.log("ERROR" + error)
+                            res.status(500).jsonp({error: "Rename the quarantinePath to newPath !"});
                         }
                     })
 
@@ -367,7 +362,7 @@ router.delete("/:id", (req, res) => {
             }); */
             // Dá delete à pasta
             rimraf(fpath, function () {
-                console.log("Filepath deleted.");
+                // console.log("Filepath deleted.");
             });
             FControl.remove(req.params.id).then((data) => {
                 res.status(200).jsonp(data)

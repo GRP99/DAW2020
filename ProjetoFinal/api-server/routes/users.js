@@ -128,7 +128,7 @@ router.post("/changeprofile", upload.single("myProfilePic"), (req, res) => {
 
         fs.rename(quarantinePath, newPath, function (error) {
             if (error) {
-                console.log("ERROR" + error);
+                res.status(500).jsonp({error: "Rename the quarantinePath to newPath !"});
             }
         });
 
@@ -136,7 +136,6 @@ router.post("/changeprofile", upload.single("myProfilePic"), (req, res) => {
 
         res.redirect("http://localhost:3002/users/account?token=" + req.query.token);
     } else {
-        console.log("ERRO: Não é uma imagem!");
         res.redirect("http://localhost:3002/users/account?token=" + req.query.token);
     }
 });

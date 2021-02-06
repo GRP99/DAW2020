@@ -30,7 +30,7 @@ module.exports.updateFile = (id, t, s, d) => {
 }
 
 // insert a new file
-module.exports.insert = (p, path) => { // console.log(JSON.stringify(p));
+module.exports.insert = (p, path) => { 
     var newFile = new Files(p)
     newFile.filepath = path
     estrelas = {

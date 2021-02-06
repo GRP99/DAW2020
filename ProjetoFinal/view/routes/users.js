@@ -28,7 +28,6 @@ router.get(['/account'], function (req, res, next) {
     if (req.query.alert == "1") {
         alert = 1
     }
-    console.log(alert)
     axios.all([requestUser, requestFicheiros, requestResourceTypes]).then(axios.spread((...response) => {
         var user = response[0].data;
         var ficheiros = response[1].data;
@@ -115,7 +114,6 @@ function renderConsumer(req, res, user) {
 }
 
 router.get(['/account/:id'], function (req, res, next) {
-    console.log(req.params.id)
     var requestUser = axios.get(api_serverURL + '/users/' + req.params.id + "?token=" + req.query.token);
     var requestFicheiros = axios.get(api_serverURL + '/files/autor/' + req.params.id + "?token=" + req.query.token);
     axios.all([requestUser, requestFicheiros]).then(axios.spread((...response) => {
@@ -194,7 +192,6 @@ router.get("/admin", (req, res) => {
     axios.all([requestUser, requestFiles]).then(axios.spread((...response) => {
         var users = response[0].data;
         var files = response[1].data;
-        console.log("Entrei")
         res.render("admin", {
             idUser: req.user._id,
             users: users,

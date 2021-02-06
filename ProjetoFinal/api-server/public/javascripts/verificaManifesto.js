@@ -9,7 +9,6 @@ module.exports.verifica = (path) => {
                 var file = require(manifesto)
             }
             catch{
-                console.log("Manifesto nao existe");
                 return false;
             }
             if (verificaDir(path + '/data/', file)){
@@ -17,7 +16,7 @@ module.exports.verifica = (path) => {
             }
     }
     } catch(err) {
-        console.error(err)
+        return false;
     }
     return false ;
 }
