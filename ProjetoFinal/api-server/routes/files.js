@@ -146,12 +146,8 @@ router.put("/classificar/:id", function (req, res, next) {
                         var media = 0
                     else 
                         var media = sub / (size - 1)
-<<<<<<< Updated upstream
-                    FControl.removeClassificacao(id_file, temp, media).then((data2) => {
-=======
                     media_n = media.toFixed(2)
                     FControl.removeClassificacao(id_file, temp, media_n).then((data2) => {
->>>>>>> Stashed changes
                         res.status(200).jsonp({classificacao: data2.numero});
                     }).catch((err) => {
                         res.status(200).jsonp(err);
