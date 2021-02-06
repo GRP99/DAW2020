@@ -48,8 +48,8 @@ block content
                         .u-container-style.u-custom-color-1.u-layout-cell.u-size-14.u-layout-cell-2
                             .u-border-2.u-border-custom-color-1.u-container-layout.u-valign-middle.u-container-layout-2
                                 h4(style="text-align:center;margin:auto;font-family: Copperplate, Papyrus, fantasy;")= fich.title
-                                    button(class="w3-button" onclick="editFile(\""+fich._id+"\",\""+fich.title+"\",\""+fich.subtitle+"\",\"" + fich.descricao + "\")")
-                                        i(class="fa fa-cogs" style="font-size:20px;color:black")
+                                    button(class="button-transparent" onclick="editFile(\""+fich._id+"\",\""+fich.title+"\",\""+fich.subtitle+"\",\"" + fich.descricao + "\")")
+                                        i(class="fa fa-cogs" style="font-size:20px;")
                                 .u-clearfix.u-custom-html.u-custom-html-1
                                     dl(style="font-size:12px")
                                         dt
@@ -95,48 +95,48 @@ block content
                                             dd
                                                 div(class="rating")
                                                     if temp == idUser+"?;5"
-                                                        span(onclick="classificar(5,\""+temp+"\",\""+fich._id+"\")") ★ 
+                                                        span(class="fa fa-star checked" onclick="classificar(5,\""+temp+"\",\""+fich._id+"\")") 
                                                     else 
-                                                        span(onclick="classificar(5,\""+temp+"\",\""+fich._id+"\")") ☆
+                                                        span(class="fa fa-star" onclick="classificar(5,\""+temp+"\",\""+fich._id+"\")")
                                                     if (temp == idUser+"?;5" || temp == idUser+"?;4") 
-                                                        span(onclick="classificar(4,\""+temp+"\",\""+fich._id+"\")") ★ 
+                                                        span(class="fa fa-star checked" onclick="classificar(4,\""+temp+"\",\""+fich._id+"\")") 
                                                     else 
-                                                        span(onclick="classificar(4,\""+temp+"\",\""+fich._id+"\")") ☆
+                                                        span(class="fa fa-star" onclick="classificar(4,\""+temp+"\",\""+fich._id+"\")")
                                                     if (temp == idUser+"?;5" || temp == idUser+"?;4" || temp == idUser+"?;3") 
-                                                        span(onclick="classificar(3,\""+temp+"\",\""+fich._id+"\")") ★ 
+                                                        span(class="fa fa-star checked" onclick="classificar(3,\""+temp+"\",\""+fich._id+"\")")
                                                     else 
-                                                        span(onclick="classificar(3,\""+temp+"\",\""+fich._id+"\")") ☆
+                                                        span(class="fa fa-star" onclick="classificar(3,\""+temp+"\",\""+fich._id+"\")")
                                                     if (temp == idUser+"?;5" || temp == idUser+"?;4" || temp == idUser+"?;3" || temp == idUser+"?;2") 
-                                                        span(onclick="classificar(2,\""+temp+"\",\""+fich._id+"\")") ★ 
+                                                        span(class="fa fa-star checked" onclick="classificar(2,\""+temp+"\",\""+fich._id+"\")") 
                                                     else 
-                                                        span(onclick="classificar(2,\""+temp+"\",\""+fich._id+"\")") ☆
+                                                        span(class="fa fa-star" onclick="classificar(2,\""+temp+"\",\""+fich._id+"\")")
                                                     if (temp == idUser+"?;5" || temp == idUser+"?;4" || temp == idUser+"?;3" || temp == idUser+"?;2" || temp == idUser+"?;1") 
-                                                        span(onclick="classificar(1,\""+temp+"\",\""+fich._id+"\")") ★ 
+                                                        span(class="fa fa-star checked" onclick="classificar(1,\""+temp+"\",\""+fich._id+"\")") 
                                                     else 
-                                                        span(onclick="classificar(1,\""+temp+"\",\""+fich._id+"\")") ☆
+                                                        span(class="fa fa-star" onclick="classificar(1,\""+temp+"\",\""+fich._id+"\")")
                                         else
                                             dd
                                                 div(class="rating")
-                                                    span(onclick="classificar(5,\"?;0\",\""+fich._id+"\")") ☆
-                                                    span(onclick="classificar(4,\"?;0\",\""+fich._id+"\")") ☆
-                                                    span(onclick="classificar(3,\"?;0\",\""+fich._id+"\")") ☆       
-                                                    span(onclick="classificar(2,\"?;0\",\""+fich._id+"\")") ☆
-                                                    span(onclick="classificar(1,\"?;0\",\""+fich._id+"\")") ☆
+                                                    span(class="fa fa-star" onclick="classificar(5,\"?;0\",\""+fich._id+"\")")
+                                                    span(class="fa fa-star" onclick="classificar(4,\"?;0\",\""+fich._id+"\")")
+                                                    span(class="fa fa-star" onclick="classificar(3,\"?;0\",\""+fich._id+"\")")     
+                                                    span(class="fa fa-star" onclick="classificar(2,\"?;0\",\""+fich._id+"\")")
+                                                    span(class="fa fa-star" onclick="classificar(1,\"?;0\",\""+fich._id+"\")")
                                     btn.u-align-center.u-btn.u-btn-round.u-button-style.u-dialog-link.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-1(onclick="showComments(\""+fich._id+"\",\""+idUser+"\")") Add Comment
                                     div(style="margin:10px; text-align:center")
-                                        button(class="w3-button" onclick="location.href='http://localhost:3001/files/download/"+fich.autor+"/"+fich._id+"?token="+token+"';")
-                                                i(class="fa fa-download" style="font-size:20px;color:green")
+                                        button(class="button-transparent" onclick="location.href='http://localhost:3001/files/download/"+fich.autor+"/"+fich._id+"?token="+token+"';")
+                                                i(class="fa fa-download" style="font-size:20px;")
                                         - var foundFavoritos = 0
                                         each fav in fich.favoritos
                                             // idUser is req.user._id
                                             if fav == idUser
                                                 - foundFavoritos = 1
                                         if foundFavoritos == 1    
-                                            button(class="w3-button" onclick="return confirm('Do you want to remove this file from your favourites?')?removeFavourite(\""+fich._id+"\"):'';")
-                                                i(class="fa fa-heart" style="font-size:20px;color:red")
+                                            button(class="button-transparent" onclick="return confirm('Do you want to remove this file from your favourites?')?removeFavourite(\""+fich._id+"\"):'';")
+                                                i(class="fa fa-heart fill" style="font-size:20px;")
                                         else  
-                                            button(class="w3-button" onclick="return confirm('Do you want to add this file as your favourite?')?addAsFavourite(\""+fich._id+"\"):'';")
-                                                i(class="fa fa-heart-o" style="font-size:20px;color:red")
+                                            button(class="button-transparent" onclick="return confirm('Do you want to add this file as your favourite?')?addAsFavourite(\""+fich._id+"\"):'';")
+                                                i(class="fa fa-heart" style="font-size:20px;")
         div(id="displayComments")
         div(id="display")
 

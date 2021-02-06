@@ -46,50 +46,50 @@ block content
                                                         td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
                                                             div(class="rating")
                                                                 if temp == idUser+"?;5"
-                                                                    span(onclick="classificar(5,\""+temp+"\",\""+a._id+"\")") ★ 
+                                                                    span(class="fa fa-star checked" onclick="classificar(5,\""+temp+"\",\""+a._id+"\")") 
                                                                 else 
-                                                                    span(onclick="classificar(5,\""+temp+"\",\""+a._id+"\")") ☆
+                                                                    span(class="fa fa-star" onclick="classificar(5,\""+temp+"\",\""+a._id+"\")")
                                                                 if (temp == idUser+"?;5" || temp == idUser+"?;4") 
-                                                                    span(onclick="classificar(4,\""+temp+"\",\""+a._id+"\")") ★ 
+                                                                    span(class="fa fa-star checked" onclick="classificar(4,\""+temp+"\",\""+a._id+"\")")
                                                                 else 
-                                                                    span(onclick="classificar(4,\""+temp+"\",\""+a._id+"\")") ☆
+                                                                    span(class="fa fa-star" onclick="classificar(4,\""+temp+"\",\""+a._id+"\")")
                                                                 if (temp == idUser+"?;5" || temp == idUser+"?;4" || temp == idUser+"?;3") 
-                                                                    span(onclick="classificar(3,\""+temp+"\",\""+a._id+"\")") ★ 
+                                                                    span(class="fa fa-star checked" onclick="classificar(3,\""+temp+"\",\""+a._id+"\")")
                                                                 else 
-                                                                    span(onclick="classificar(3,\""+temp+"\",\""+a._id+"\")") ☆
+                                                                    span(class="fa fa-star" onclick="classificar(3,\""+temp+"\",\""+a._id+"\")")
                                                                 if (temp == idUser+"?;5" || temp == idUser+"?;4" || temp == idUser+"?;3" || temp == idUser+"?;2") 
-                                                                    span(onclick="classificar(2,\""+temp+"\",\""+a._id+"\")") ★ 
+                                                                    span(class="fa fa-star checked" onclick="classificar(2,\""+temp+"\",\""+a._id+"\")")
                                                                 else 
-                                                                    span(onclick="classificar(2,\""+temp+"\",\""+a._id+"\")") ☆
+                                                                    span(class="fa fa-star" onclick="classificar(2,\""+temp+"\",\""+a._id+"\")")
                                                                 if (temp == idUser+"?;5" || temp == idUser+"?;4" || temp == idUser+"?;3" || temp == idUser+"?;2" || temp == idUser+"?;1") 
-                                                                    span(onclick="classificar(1,\""+temp+"\",\""+a._id+"\")") ★ 
+                                                                    span(class="fa fa-star checked" onclick="classificar(1,\""+temp+"\",\""+a._id+"\")")
                                                                 else 
-                                                                    span(onclick="classificar(1,\""+temp+"\",\""+a._id+"\")") ☆
+                                                                    span(class="fa fa-star" onclick="classificar(1,\""+temp+"\",\""+a._id+"\")")
                                                     else
                                                         td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
                                                             div(class="rating")
-                                                                span(onclick="classificar(5,\"?;0\",\""+a._id+"\")") ☆
-                                                                span(onclick="classificar(4,\"?;0\",\""+a._id+"\")") ☆
-                                                                span(onclick="classificar(3,\"?;0\",\""+a._id+"\")") ☆       
-                                                                span(onclick="classificar(2,\"?;0\",\""+a._id+"\")") ☆
-                                                                span(onclick="classificar(1,\"?;0\",\""+a._id+"\")") ☆
+                                                                span(class="fa fa-star" onclick="classificar(5,\"?;0\",\""+a._id+"\")")
+                                                                span(class="fa fa-star" onclick="classificar(4,\"?;0\",\""+a._id+"\")")
+                                                                span(class="fa fa-star" onclick="classificar(3,\"?;0\",\""+a._id+"\")")     
+                                                                span(class="fa fa-star" onclick="classificar(2,\"?;0\",\""+a._id+"\")")
+                                                                span(class="fa fa-star" onclick="classificar(1,\"?;0\",\""+a._id+"\")")
                                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
-                                                        button(class="w3-button" onclick="location.href='http://localhost:3001/files/download/"+a.autor+"/"+a._id+"?token="+token+"';")
-                                                            i(class="fa fa-download" style="font-size:14px; color:green;")
+                                                        button(class="button-transparent" onclick="location.href='http://localhost:3001/files/download/"+a.autor+"/"+a._id+"?token="+token+"';")
+                                                            i(class="fa fa-download" style="font-size:20px;")
                                                         b           
-                                                        button(class="w3-button" onclick="removeFavourite(\""+a._id+"\")")
-                                                            i(class="fa fa-close" style="font-size:14px; color:red;")
+                                                        button(class="button-transparent" onclick="removeFavourite(\""+a._id+"\")")
+                                                            i(class="fa fa-close" style="font-size:20px;")
                                                         b           
-                                                        button(class="w3-button" onclick="location.href='http://localhost:3002/files/"+a._id+"?token="+token+"'")
-                                                            i(class="fa fa-file" style="font-size:14px; color:grey;")
+                                                        button(class="button-transparent" onclick="location.href='http://localhost:3002/files/"+a._id+"?token="+token+"'")
+                                                            i(class="fa fa-file" style="font-size:20px;")
                                                         
                                             else 
                                                 td(style='height: 75px;') You don't have files added to your Favourites!
                         .u-container-style.u-custom-color-1.u-layout-cell.u-size-14.u-layout-cell-2
                             .u-border-2.u-border-custom-color-1.u-container-layout.u-valign-middle.u-container-layout-2
                                 h6(style="margin:auto;font-family: Copperplate, Papyrus, fantasy;") ABOUT ME    
-                                    button(class="w3-button" onclick="editProfile(\""+user_name+"\",\""+user_github+"\",\"" + user_course + "\",\"" + user_department + "\")")
-                                        i(class="fa fa-cogs" style="font-size:20px;color:black")
+                                    button(class="button-transparent" onclick="editProfile(\""+user_name+"\",\""+user_github+"\",\"" + user_course + "\",\"" + user_department + "\")")
+                                        i(class="fa fa-cogs" style="font-size:20px;")
                                 if path == 0
                                     img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src='https://www.inmosenna.com/wp-content/uploads/2018/07/avatar-user-business-man-399587fe24739d5a-512x512-300x300.png' alt='' data-image-width='300' data-image-height='300')
                                 else 

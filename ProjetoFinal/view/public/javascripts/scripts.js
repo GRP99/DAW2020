@@ -87,7 +87,7 @@ function classificar(nmr, temp, idF) {
         }
     }
     else {
-        var choice = window.confirm("Do you want to classify this file with rating " + nmr + "* ?");
+        var choice = window.confirm("Do you want to classify this file with rating " + nmr + "✰ ?");
         if(choice){
             $.ajax({
                 url: "http://localhost:3001/files/classificar/" + idF + "?token=" + token + "&class=" + nmr + "&atual=" + atual,
@@ -355,6 +355,7 @@ function deleteComment(idC, idF) {
     }
 }
 
+/* TABELES */
 $(document).ready( function () {
     var table = $('#example').DataTable( {
       pageLength : 6,
