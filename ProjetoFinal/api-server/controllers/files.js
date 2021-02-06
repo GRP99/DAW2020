@@ -17,7 +17,7 @@ module.exports.lookup = id => {
 }
 
 // update file fields
-module.exports.updateFile = (id,t,s,d) => {
+module.exports.updateFile = (id, t, s, d) => {
     return Files.update({
         _id: id
     }, {
@@ -192,7 +192,7 @@ module.exports.decrementarEstrelas = (idR, idU) => {
     }).exec();
 }
 
-// Search files
+// Search files by title
 module.exports.search = (text) => {
     return Files.find({
         title: {
@@ -202,6 +202,7 @@ module.exports.search = (text) => {
     }).sort({"title": -1, "resourceType": -1, "creationDate": -1}).exec();
 }
 
+// Search files by resource type
 module.exports.searchByType = (type) => {
     return Files.find({
         resourceType: {
@@ -211,6 +212,7 @@ module.exports.searchByType = (type) => {
     }).sort({"resourceType": -1, "title": -1, "creationDate": -1}).exec();
 }
 
+// Search files by creation date
 module.exports.searchByDate = (date) => {
     return Files.find({
         creationDate: {
@@ -219,10 +221,14 @@ module.exports.searchByDate = (date) => {
     }).sort({"creationDate": -1, "title": -1, "resourceType": -1}).exec();
 }
 
+// get the resources highest classified
 module.exports.topclassificados = () => {
-    return Files.find({privacy:0},{}).sort({"estrelas.numero": -1}).limit(3).exec();
+    return Files.find({
+        privacy: 0
+    }, {}).sort({"estrelas.numero": -1}).limit(3).exec();
 }
 
+// get top favourites
 module.exports.topfavoritos = () => {
     return Files.aggregate([
         {
@@ -237,20 +243,20 @@ module.exports.topfavoritos = () => {
             }
         }, {
             $limit: 3
-        },
-        {
+        }, {
             $match: {
-                privacy : 0
+                privacy: 0
             }
         }
     ]).exec()
 }
 
+// get top producers
 module.exports.topautores = () => {
     return Files.aggregate([
         {
             $match: {
-                privacy : 0
+                privacy: 0
             }
         },
         {
@@ -260,13 +266,15 @@ module.exports.topautores = () => {
                     $push: "$_id"
                 }
             }
-        }, {
+        },
+        {
             $addFields: {
                 nmrUploads: {
                     $size: "$filesbyA"
                 }
             }
-        }, {
+        },
+        {
             $sort: {
                 nmrUploads: -1
             }
@@ -276,6 +284,7 @@ module.exports.topautores = () => {
     ]).exec()
 }
 
+// get number of uploads from a given user
 module.exports.numberofUploads = (id) => {
     return Files.aggregate([
         {

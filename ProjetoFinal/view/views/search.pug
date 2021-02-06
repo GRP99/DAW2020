@@ -25,9 +25,9 @@ block content
                                     else
                                         td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
                                             img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src="http://localhost:3001/users/"+a._id+"/profilepic.jpeg?token="+token alt='' width="75" height="75")
-                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.name
+                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell(onclick="showProfile(\""+a._id+"\",\""+ a.level +"\",\""+a.registrationDate+"\",\""+a.lastAccessDate+"\",\""+a.role+"\",\""+a.course+"\",\""+a.department+"\");")=a.name
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell 
-                                        a(href="https://github.com/"+a.git)= a.git
+                                        a(href="https://github.com/"+a.git target="_blank")= a.git
     else                                
       section#sec-a877.u-clearfix.u-section-1
         .u-clearfix.u-sheet.u-sheet-1
@@ -54,7 +54,7 @@ block content
                             if a.privacy==0
                                 tr(style='height: 75px;')
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.creationDate
-                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.title
+                                    td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell(onclick="showFile(\""+a.subtitle +"\",\""+a.name+"\",\""+a.mimetype+"\",\""+a.size+"\",\""+a.descricao+"\");")= a.title
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.resourceType
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
                                         if (a.estrelas.numero >= 4.0)
@@ -123,4 +123,5 @@ block content
                                         td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
                                             button(class="w3-button w3-yellow" onclick="return confirm('Do you want to add this file as your favourite?')?addAsFavourite(\""+a._id+"\"):'';")
                                                 i(class="fa fa-star" style="font-size:15px")
-    div(id='display')                                         
+    div(id='display')
+    div(id="displayProfile")                                        

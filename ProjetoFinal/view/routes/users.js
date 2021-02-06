@@ -25,11 +25,11 @@ router.get(['/account'], function (req, res, next) {
     var requestResourceTypes = axios.get(api_serverURL + '/files/resourceTypes/?token=' + req.query.token);
 
     var alert = 0
-    if(req.query.alert == "1"){
+    if (req.query.alert == "1") {
         alert = 1
     }
     console.log(alert)
-    axios.all([requestUser, requestFicheiros,requestResourceTypes]).then(axios.spread((...response) => {
+    axios.all([requestUser, requestFicheiros, requestResourceTypes]).then(axios.spread((...response) => {
         var user = response[0].data;
         var ficheiros = response[1].data;
         var resourceTypes = response[2].data;
@@ -113,6 +113,47 @@ function renderConsumer(req, res, user) {
         })
     })
 }
+
+router.get(['/account/:id'], function (req, res, next) {
+    console.log(req.params.id)
+    var requestUser = axios.get(api_serverURL + '/users/' + req.params.id + "?token=" + req.query.token);
+    var requestFicheiros = axios.get(api_serverURL + '/files/autor/' + req.params.id + "?token=" + req.query.token);
+    axios.all([requestUser, requestFicheiros]).then(axios.spread((...response) => {
+        var user = response[0].data;
+        var ficheiros = response[1].data;
+        var profilepic = user.profilepic
+        var nome = user.name
+        var mail = user._id
+        var github = user.git
+        var role = user.role
+        var course = user.course
+        var department = user.department
+        var registrationDate = user.registrationDate
+        var lastAccessDate = user.lastAccessDate
+        var level = user.level
+        res.render('user', {
+            lista: ficheiros,
+            path: profilepic,
+            user_name: nome,
+            user_mail: mail,
+            user_github: github,
+            user_role: role,
+            user_course: course,
+            user_department: department,
+            user_level: level,
+            user_registrationDate: registrationDate,
+            user_lastAccessDate: lastAccessDate,
+            token: req.query.token,
+            mylevel: req.user.level
+        });
+    })).catch(e => {
+        res.render('errorUser', {
+            error: e,
+            token: req.query.token,
+            level: req.user.level
+        })
+    })
+});
 
 // favourites
 router.get("/favourites", (req, res) => {

@@ -47,7 +47,8 @@ router.get("/:id", function (req, res) {
             git: data.git,
             role: data.role,
             course: data.course,
-            department: data.department
+            department: data.department,
+            lastAccessDate: data.lastAccessDate
         }
         res.status(200).jsonp(user);
     }).catch((err) => {
@@ -96,14 +97,14 @@ router.post("/registar", function (req, res) {
 
 // Edit Profile
 router.post("/edit", (req, res) => {
-    
+
     var id = req.user._id
     var name = req.body.name
     var git = req.body.git
     var course = req.body.course
     var department = req.body.department
 
-    User.updateUser(id,name,git,course,department).then(() => {
+    User.updateUser(id, name, git, course, department).then(() => {
         res.redirect("http://localhost:3002/users/account?token=" + req.query.token);
     }).catch((err) => {
         res.redirect("http://localhost:3002/users/account?token=" + req.query.token);

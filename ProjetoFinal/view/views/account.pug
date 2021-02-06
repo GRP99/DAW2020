@@ -6,7 +6,7 @@ block content
     #display.w3-card-4.modal
     if alertValue == 1
         script.
-            if (window.confirm('Your file wasnt uploaded because of its format! Please verify your file format again!'))
+            if (window.confirm('Your file wasn\'t uploaded because of its format! Please verify your file format again!'))
             {
                 window.location.href = "http://localhost:3002/users/account?token=" + token
             }
@@ -23,7 +23,7 @@ block content
                         .u-container-style.u-layout-cell.u-size-46.u-layout-cell-1
                             .u-border-2.u-border-custom-color-1.u-container-layout.u-container-layout-1
                                 .u-table.u-table-responsive.u-table-1
-                                    table.u-table-entity(id="example", style="margin: 22px; font-size:12px;text-align:center;")
+                                    table.u-table-entity(id="example" style="margin: 22px; font-size:12px;text-align:center;")
                                         colgroup
                                             col(width='16.666666%')
                                             col(width='16.666666%')
@@ -71,7 +71,7 @@ block content
                                 else 
                                     img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src="http://localhost:3001/users/"+user_id+"/profilepic.jpeg?token="+token alt='' data-image-width='150' data-image-height='150')
                                 button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-1(type='button' onclick="mudafoto(\"" + user_id + "\",\"" + token +"\");") Profile Photo
-                                button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-1(type="button", onclick="openUploadModal(\"" + user_id + "\",\"" + token +"\")") Upload File
+                                button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-1-base.u-radius-50.u-btn-1(type="button" onclick="openUploadModal(\"" + user_id + "\",\"" + token +"\")") Upload File
                                 if (user_level=='admin')  
                                     button.u-btn.u-btn-round.u-button-style.u-hover-palette-1-light-1.u-palette-3.u-radius-50.u-btn-1(onclick="openWarningModal(\""+user_id+"\")") Warning 
                                 .u-clearfix.u-custom-html.u-custom-html-1
@@ -84,7 +84,8 @@ block content
                                             dd= user_mail
                                         dt
                                             b Your Github:
-                                            dd= user_github
+                                            dd
+                                                a(href="https://github.com/"+user_github target="_blank")= user_github
                                         if(user_level!="admin")
                                             dt
                                                 b Your Role:
@@ -95,4 +96,3 @@ block content
                                         dt
                                             b Your Department:
                                             dd= user_department
-

@@ -44,7 +44,14 @@ function verificaAdmin () {
 
 
 function showProfile(email, level, registrationDate, lastAccessDate, role, course, department) {
-    var profile = $("<pre><b>Email: </b>" + email + "</pre><pre><b>Level: </b>" + level + "</pre><pre><b>Registration Date: </b>" + registrationDate + "</pre><pre><b>Last Access Date: </b>" + lastAccessDate + "</pre><pre><b>Role: </b>" + role + "</pre><pre><b>Course: </b>" + course + "</pre><pre><b>Department: </b>" + department + "</pre>");
+    var profile = $("<pre><b>Email: </b>" + email 
+        + "</pre><pre><b>Level: </b>" + level 
+        + "</pre><pre><b>Registration Date: </b>" + registrationDate 
+        + "</pre><pre><b>Last Access Date: </b>" + lastAccessDate 
+        + "</pre><pre><b>Role: </b>" + role 
+        + "</pre><pre><b>Course: </b>" + course 
+        + "</pre><pre><b>Department: </b>" + department 
+        + "</pre>");
 
     $("#displayProfile").empty();
     $("#displayProfile").append(profile);
@@ -55,7 +62,19 @@ function showProfile(email, level, registrationDate, lastAccessDate, role, cours
 function showComments(idF, idU) {
     var d = new Date().toISOString().substr(0, 16);
     $("#displayComments").empty();
-    $("#displayComments").append("<form class=\"w3-container\" method=\"POST\" onSubmit=\"return confirm(&quot;Do you want to add this Comment?&quot;)\" action=\"http://localhost:3001/files/" + idF + "/comentarios?token=" + token + "\">" + "<fieldset class=\"w3-container w3-margin\">" + "<legend>New Comment</legend>" + "<input type=\"hidden\" name=\"autor\" value=\"" + idU + "\"/>" + "<input type=\"hidden\" name=\"data\" value=\"" + d + "\"/>" + "<table>" + "<tr>" + "<td> <textarea style=\"resize: none;\" rows=\"3\" cols=\"35\" name=\"descricao\"> </textarea> </td> </tr> </table>" + "<input class=\"w3-btn w3-blue-grey w3-margin\" type=\"submit\" value=\"Add Comment\"/>" + "</fieldset>" + "</form>");
+    $("#displayComments").append("<form class=\"w3-container\" method=\"POST\" onSubmit=\"return confirm(&quot;Do you want to add this Comment?&quot;)\" action=\"http://localhost:3001/files/" + idF + "/comentarios?token=" + token + "\">" 
+        + "<fieldset class=\"w3-container w3-margin\">" 
+        + "<legend>New Comment</legend>" 
+        + "<input type=\"hidden\" name=\"autor\" value=\"" + idU 
+        + "\"/>" 
+        + "<input type=\"hidden\" name=\"data\" value=\"" + d 
+        + "\"/>" 
+        + "<table>" 
+        + "<tr>" 
+        + "<td> <textarea style=\"resize: none;\" rows=\"3\" cols=\"35\" name=\"descricao\"> </textarea> </td> </tr> </table>" 
+        + "<input class=\"w3-btn w3-blue-grey w3-margin\" type=\"submit\" value=\"Add Comment\"/>" 
+        + "</fieldset>" 
+        + "</form>");
     $("#displayComments").modal();
 }
 
@@ -135,17 +154,27 @@ function removeFavourite(idF) {
     });
 }
 
-function showFile(size, id, name, type, autor, desc) {
-    var file = $("<pre><b>File name: </b>" + name + "</pre>" + "<pre><b>Size: </b>" + size + "</pre>" + "<pre><b>File Type: </b>" + type + "</pre>" + '<table><tr><pre><b>Description: </b></td><pre><textarea rows="4" cols="70" style="font-size: 11px; resize: none;" readonly>' + desc + "</textarea>" + "</td></tr></table>");
-    var download = $('<div style="margin: auto; width: 25%; border: 2px solid black; text-align: center;"><a href="http://localhost:3001/files/download/' + autor + "/" + id + "?token=" + token + '"> Download <i class="fa fa-download"></i></a></div>');
+function showFile(subtitle,name,mimetype,size,desc) {
+    var file = $("<pre><b>Subtitle: </b>" + subtitle + "</pre>" 
+        + "<pre><b>Name of file: </b>" + name + "</pre>" 
+        + "<pre><b>Mimetype: </b>" + mimetype + "</pre>"
+        + "<pre><b>Size : </b>" + size + " (bytes) </pre>"  
+        + '<table><tr><pre><b>Description: </b></td><pre><textarea rows="4" cols="70" style="font-size: 11px; resize: none;" readonly>' + desc 
+        + "</textarea>" 
+        + "</td></tr></table>");
 
     $("#display").empty();
-    $("#display").append(file, download);
+    $("#display").append(file);
     $("#display").modal();
 }
 
 function mudafoto(id, token) {
-    var file = $('<form class="w3-container" style="margin:50px; text-align:center" action="http://localhost:3001/users/changeprofile?token=' + token + '" method="POST" enctype="multipart/form-data">' + "<h5 class=\"w3-text-blue-grey\" style=\"margin:0 auto 20px auto; text-align:center\"> Change your profile pic </h5>" + '<input class="w3-input w3-border w3-light-grey" type="file" name="myProfilePic" accept="image/png, image/jpeg, image/jpg"/>' + '<input type="hidden" name="autor" value="' + id + '"/>' + '<input class="w3-btn w3-blue-grey fa" style="margin: 10px auto;" type="submit" value="Confirm &#xf00c;"/>' + "</form>");
+    var file = $('<form class="w3-container" style="margin:50px; text-align:center" action="http://localhost:3001/users/changeprofile?token=' + token + '" method="POST" enctype="multipart/form-data">' 
+        + "<h5 class=\"w3-text-blue-grey\" style=\"margin:0 auto 20px auto; text-align:center\"> Change your profile pic </h5>" 
+        + '<input class="w3-input w3-border w3-light-grey" type="file" name="myProfilePic" accept="image/png, image/jpeg, image/jpg"/>' 
+        + '<input type="hidden" name="autor" value="' + id + '"/>' 
+        + '<input class="w3-btn w3-blue-grey fa" style="margin: 10px auto;" type="submit" value="Confirm &#xf00c;"/>' 
+        + "</form>");
 
     $("#df").empty();
     $("#df").append(file);
@@ -164,7 +193,7 @@ function validate() {
 
     $.get("http://localhost:3001/users/" + mail + "?token=" + token, function (data) {
         if (data) {
-            alert("Email detalhado já em uso!");
+            alert("Email already detailed in use!");
             return false;
         } else {
             return true;
@@ -174,29 +203,28 @@ function validate() {
 }
 
 function openUploadModal(user, token, resourceTypes) {
-    console.log(resourceTypes);
     var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to submit?&quot;)" action="http://localhost:3001/files?token=' + token 
-    + ' "method="POST" enctype="multipart/form-data" id="myForm"><label class="w3-text-blue-grey"><b>Select file</b></label><!-- #addeds--><input class="w3-input w3-border w3-light-grey" type="file" name="myFile" required="required" accept=".zip"/>' 
-    + '<p><b class="w3-text-blue-grey">Acess: <select id="level" name="privacy" type="num" ><option value="0">Public</option><option value="1">Private</option></select></b></p>'
-    + "<table>" 
-    + "<tr>" 
-    + "<td>Description:</td>" 
-    + '<td><textarea style=\"resize: none;\" rows="3" cols="30" name="descricao"></textarea></td>' 
-    + "</tr>" 
-    + '<label class="w3-text-gray"><b>Title</b></label>' 
-    + '<input class="w3-input w3-border w3-light-grey" type="text" name="title" required="required" >' 
-    + '<label class="w3-text-gray"><b>SubTitle</b></label>' 
-    + '<input class="w3-input w3-border w3-light-grey" type="text" name="subtitle">' 
-    + '<label class="w3-text-gray"><b>Creation Date</b></label>' 
-    + '<input class="w3-input w3-border w3-light-grey" type="date" name="date" required="required">' 
-    + '<label class="w3-text-gray"> <b>New Resource type</b> </label> <input class="w3-input w3-border w3-light-grey" type="text" id="newType">'
-    + '<p> <button type="button" onclick="addNewType()"> Insert a new resource type </button> </p>'
-    + '<p> <b class="w3-text-blue-grey">Resource Type: <select id="resourceType" name="resourceType" required="required"> <option>Book</option><option>Article</option><option>Application</option><option>Student Work</option><option>Monograph</option><option>Report</option><option>Thesis</option><option>Slides</option><option>Test/Exam</option><option>Problem Solved</option> </select></b></p>'
-    + '</table><button.w3-btn.w3-teal(type=\'button\' onclick=\'add()\') +--><input type="hidden" name="autor" value="' + user 
-    + '" />'
-    + '<span><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />'
-    + '<a href="https://github.com/GRP99/PRI2020/blob/main/ProjetoFinal/_exemplos_/README.md" target="_blank" ><i class="fa fa-question-circle" style="font-size:30px; position: absolute; right: 20px;"></img></a>'
-    + "</span></form>");
+        + ' "method="POST" enctype="multipart/form-data" id="myForm"><label class="w3-text-blue-grey"><b>Select file</b></label><!-- #addeds--><input class="w3-input w3-border w3-light-grey" type="file" name="myFile" required="required" accept=".zip"/>' 
+        + '<p><b class="w3-text-blue-grey">Acess: <select id="level" name="privacy" type="num" ><option value="0">Public</option><option value="1">Private</option></select></b></p>'
+        + "<table>" 
+        + "<tr>" 
+        + "td>Description:</td>" 
+        + '<td><textarea style=\"resize: none;\" rows="3" cols="30" name="descricao"></textarea></td>' 
+        + "</tr>" 
+        + '<label class="w3-text-gray"><b>Title</b></label>' 
+        + '<input class="w3-input w3-border w3-light-grey" type="text" name="title" required="required" >' 
+        + '<label class="w3-text-gray"><b>SubTitle</b></label>' 
+        + '<input class="w3-input w3-border w3-light-grey" type="text" name="subtitle">' 
+        + '<label class="w3-text-gray"><b>Creation Date</b></label>' 
+        + '<input class="w3-input w3-border w3-light-grey" type="date" name="date" required="required">' 
+        + '<label class="w3-text-gray"> <b>New Resource type</b> </label> <input class="w3-input w3-border w3-light-grey" type="text" id="newType">'
+        + '<p> <button type="button" onclick="addNewType()"> Insert a new resource type </button> </p>'
+        + '<p> <b class="w3-text-blue-grey">Resource Type: <select id="resourceType" name="resourceType" required="required"> <option>Book</option><option>Article</option><option>Application</option><option>Student Work</option><option>Monograph</option><option>Report</option><option>Thesis</option><option>Slides</option><option>Test/Exam</option><option>Problem Solved</option> </select></b></p>'
+        + '</table><button.w3-btn.w3-teal(type=\'button\' onclick=\'add()\') +--><input type="hidden" name="autor" value="' + user 
+        + '" />'
+        + '<span><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />'
+        + '<a href="https://github.com/GRP99/PRI2020/blob/main/ProjetoFinal/_exemplos_/README.md" target="_blank" ><i class="fa fa-question-circle" style="font-size:30px; position: absolute; right: 20px;"></img></a>'
+        + "</span></form>");
 
     $("#display").empty();
     $("#display").append(file);
@@ -205,16 +233,16 @@ function openUploadModal(user, token, resourceTypes) {
 
 function editProfile(name, git, course, department){
     var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to change your profile properties?&quot;)" action="http://localhost:3001/users/edit?token=' + token 
-    + ' "method="POST" id="myFormProfile">'
-    + '<label class="w3-text-gray"><b>Your Name</b></label>' 
-    + '<input class="w3-input w3-border w3-light-grey" type="text" name="name" value="'+name+'" required="required" >' 
-    + '<label class="w3-text-gray"><b>Github</b></label>' 
-    + '<input class="w3-input w3-border w3-light-grey" type="text" name="git" value="'+git+'" required="required">' 
-    + '<label class="w3-text-gray"><b>Course</b></label>' 
-    + '<input class="w3-input w3-border w3-light-grey" type="text" name="course" value="'+course+'" required="required">' 
-    + '<label class="w3-text-gray"><b>Department</b></label>' 
-    + '<input class="w3-input w3-border w3-light-grey" type="text" name="department" value="'+department+'" required="required">' 
-    + '<input style="margin: 10px auto" class="w3-btn w3-blue-grey" type="submit" value="Edit Profile" id="editProfile" />' + "</form>");
+        + ' "method="POST" id="myFormProfile">'
+        + '<label class="w3-text-gray"><b>Your Name</b></label>' 
+        + '<input class="w3-input w3-border w3-light-grey" type="text" name="name" value="'+name+'" required="required" >' 
+        + '<label class="w3-text-gray"><b>Github</b></label>' 
+        + '<input class="w3-input w3-border w3-light-grey" type="text" name="git" value="'+git+'" required="required">' 
+        + '<label class="w3-text-gray"><b>Course</b></label>' 
+        + '<input class="w3-input w3-border w3-light-grey" type="text" name="course" value="'+course+'" required="required">' 
+        + '<label class="w3-text-gray"><b>Department</b></label>' 
+        + '<input class="w3-input w3-border w3-light-grey" type="text" name="department" value="'+department+'" required="required">' 
+        + '<input style="margin: 10px auto" class="w3-btn w3-blue-grey" type="submit" value="Edit Profile" id="editProfile" />' + "</form>");
 
     $("#display").empty();
     $("#display").append(file);
@@ -223,19 +251,19 @@ function editProfile(name, git, course, department){
 
 function editFile(id, title, subtitle, descricao){
     var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to change your file fields?&quot;)" action="http://localhost:3001/files/edit/' +id+'?token=' + token 
-    + ' "method="POST" id="myFormFile">'
-    + '<label class="w3-text-gray"><b>Title</b></label>' 
-    + '<input class="w3-input w3-border w3-light-grey" type="text" name="title" value="'+title+'" required="required" >' 
-    + '<label class="w3-text-gray"><b>Subtitle</b></label>' 
-    + '<input class="w3-input w3-border w3-light-grey" type="text" name="subtitle" value="'+subtitle+'" required="required">'
-    + "<table>"  
-    + "<tr>" 
-    + "<td>Description:</td>" 
-    + '<td><textarea style=\"resize: none;\" rows="3" cols="30" name="descricao">' + descricao 
-    + '</textarea></td>' 
-    + "</tr>"
-    + "</table>"
-    + '<input style="margin: 10px auto" class="w3-btn w3-blue-grey" type="submit" value="Edit File" id="editFile" />' + "</form>");
+        + ' "method="POST" id="myFormFile">'
+        + '<label class="w3-text-gray"><b>Title</b></label>' 
+        + '<input class="w3-input w3-border w3-light-grey" type="text" name="title" value="'+title+'" required="required" >' 
+        + '<label class="w3-text-gray"><b>Subtitle</b></label>' 
+        + '<input class="w3-input w3-border w3-light-grey" type="text" name="subtitle" value="'+subtitle+'" required="required">'
+        + "<table>"  
+        + "<tr>" 
+        + "<td>Description:</td>" 
+        + '<td><textarea style=\"resize: none;\" rows="3" cols="30" name="descricao">' + descricao 
+        + '</textarea></td>' 
+        + "</tr>"
+        + "</table>"
+        + '<input style="margin: 10px auto" class="w3-btn w3-blue-grey" type="submit" value="Edit File" id="editFile" />' + "</form>");
 
     $("#display").empty();
     $("#display").append(file);
@@ -253,7 +281,16 @@ function addNewType() {
 
 
 function openWarningModal(user) {
-    var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to submit?&quot;)" action="http://localhost:3001/news?token=' + token + ' "method="POST" enctype="multipart/form-data" id="myForm">' + "<table>" + "<tr>" + "<td>Warning:</td>" + '<td><textarea style=\"resize: none;\" rows="3" cols="30" name="descricao"></textarea></td>' + "</tr>" + '</table><button.w3-btn.w3-teal(type=\'button\' onclick=\'add()\') +--><input type="hidden" name="autor" value="' + user + '" /><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />' + "</form>");
+    var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to submit?&quot;)" action="http://localhost:3001/news?token=' + token 
+        + ' "method="POST" enctype="multipart/form-data" id="myForm">' 
+        + "<table>" 
+        + "<tr>" 
+        + "<td>Warning:</td>" 
+        + '<td><textarea style=\"resize: none;\" rows="3" cols="30" name="descricao"></textarea></td>' 
+        + "</tr>" 
+        + '</table><button.w3-btn.w3-teal(type=\'button\' onclick=\'add()\') +--><input type="hidden" name="autor" value="' + user 
+        + '" /><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />' 
+        + "</form>");
 
     $("#display").empty();
     $("#display").append(file);
@@ -271,12 +308,11 @@ window.onunload = function () {
 };
 
 function changePrivacy(id) {
-    console.log(id);
     $.ajax({
         url: "http://localhost:3001/files/changeprivacy/" + id + "?token=" + token,
         type: "PUT",
         success: function (response) {
-            console.log(document.getElementById("privacy " + id).innerHTML);
+            // console.log(document.getElementById("privacy " + id).innerHTML);
             if (document.getElementById("privacy " + id).innerHTML == "Private ") {
                 document.getElementById("privacy " + id).innerHTML = "Public ";
                 document.getElementById("button " + id).className = "fa fa-unlock";

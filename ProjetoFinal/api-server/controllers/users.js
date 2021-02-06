@@ -24,7 +24,7 @@ module.exports.insereUser = p => {
 }
 
 // update user profile
-module.exports.updateUser = (id,n,g,c,d) => {
+module.exports.updateUser = (id, n, g, c, d) => {
     return Users.update({
         _id: id
     }, {

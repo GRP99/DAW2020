@@ -48,8 +48,9 @@ block content
                         .u-container-style.u-custom-color-1.u-layout-cell.u-size-14.u-layout-cell-2
                             .u-border-2.u-border-custom-color-1.u-container-layout.u-valign-middle.u-container-layout-2
                                 h4(style="text-align:center;margin:auto;font-family: Copperplate, Papyrus, fantasy;")= fich.title
-                                    button(class="button-transparent" onclick="editFile(\""+fich._id+"\",\""+fich.title+"\",\""+fich.subtitle+"\",\"" + fich.descricao + "\")")
-                                        i(class="fa fa-cogs" style="font-size:20px;")
+                                    if(fich.autor == idUser)
+                                        button(class="button-transparent" onclick="editFile(\""+fich._id+"\",\""+fich.title+"\",\""+fich.subtitle+"\",\"" + fich.descricao + "\")")
+                                            i(class="fa fa-cogs" style="font-size:20px;")
                                 .u-clearfix.u-custom-html.u-custom-html-1
                                     dl(style="font-size:12px")
                                         dt

@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var jwt = require('jsonwebtoken');
+var favicon = require('serve-favicon')
 
 
 // #################### ROUTES ####################
@@ -18,6 +19,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.png')))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -70,7 +72,7 @@ app.use(function (err, req, res, next) { // set locals, only providing error in 
 
     // render the error page
     res.status(err.status || 500);
-    res.render('errorGIF');
+    res.render('errorBoring');
 });
 
 
