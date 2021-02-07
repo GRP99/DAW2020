@@ -163,20 +163,37 @@ router.put("/classificar/:id", function (req, res, next) {
     }
 });
 
-
-// add userid to favourites of a file
-router.put("/addAsFavourite/:id", (req, res) => { // console.log("mudar")
-    id_user = req.user._id
+// add or remove userid to favourites of a file
+router.put("/addremoveFavourite/:id", (req, res) => {
+    id_user = req.user._id;
     id_file = req.params.id;
-    FControl.addFav(id_file, id_user).then((data) => {
-        res.status(200).jsonp(data)
-    }).catch((err) => {
-        res.status(500).jsonp(err)
+
+    var found = 0;
+
+    FControl.lookup(id_file).then((result) => {
+        result.favoritos.forEach(f => {
+            if (f == id_user)
+                found = 1;
+        })
+        if (found == 0) {
+            FControl.addFav(id_file, id_user).then((data) => {
+                res.status(200).jsonp(data)
+            }).catch((err) => {
+                res.status(500).jsonp(err)
+            });
+        }
+        else {
+            FControl.removeFav(id_file, id_user).then((data) => {
+                res.status(200).jsonp(data)
+            }).catch((err) => {
+                res.status(500).jsonp(err)
+            });
+        }
     });
 });
 
 // remove userid to favourites of a file
-router.put("/removeFavourite/:id", function (req, res, next) { // console.log("mudar")
+router.put("/removeFavourite/:id", function (req, res, next) { 
     id_user = req.user._id
     id_file = req.params.id;
     FControl.removeFav(id_file, id_user).then((data) => {
@@ -186,8 +203,8 @@ router.put("/removeFavourite/:id", function (req, res, next) { // console.log("m
     });
 });
 
-// privacy (works with minor bug)
-router.put("/changeprivacy/:id", (req, res) => { // console.log("mudar")
+// privacy (works)
+router.put("/changeprivacy/:id", (req, res) => { 
     FControl.lookup(req.params.id).then((result) => {
         if (req.user._id == result.autor) {
             FControl.changeprivacy(req.params.id).then((data) => {
@@ -270,6 +287,7 @@ router.post("/", upload.single("myFile"), (req, res) => {
                                 var news = {
                                     file: result._id,
                                     date: d,
+                                    type: "File",
                                     autorID: req.body.autor,
                                     autor: dados.name,
                                     descricao: 'New submission: Producer ' + dados.name + ' has just released an ' + req.body.resourceType + ' entitled \"' + req.body.title + '\".'

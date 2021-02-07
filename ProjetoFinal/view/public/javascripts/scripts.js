@@ -91,12 +91,15 @@ function classificar(nmr, temp, idF) {
     }
 }
 
-function addAsFavourite(idF) {
+function addremoveFavourite(idF) {
     $.ajax({
-        url: "http://localhost:3001/files/addAsFavourite/" + idF + "?token=" + token,
+        url: "http://localhost:3001/files/addremoveFavourite/" + idF + "?token=" + token,
         type: "PUT",
         success: function () {
-            location.reload();
+            if (document.getElementById("fav " + idF).className == "fa fa-heart")
+                document.getElementById("fav "+idF).className = "fa fa-heart fill";
+            else
+                document.getElementById("fav "+idF).className = "fa fa-heart";
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I) for more information!');
@@ -110,7 +113,7 @@ function removeFavourite(idF) {
         url: "http://localhost:3001/files/removeFavourite/" + idF + "?token=" + token,
         type: "PUT",
         success: function () {
-            location.reload();
+            document.getElementById(idF).remove()
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I) for more information!');
@@ -246,15 +249,15 @@ function addNewType() {
 
 
 function openWarningModal(user) {
-    var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to submit?&quot;)" action="http://localhost:3001/news?token=' + token 
-        + ' "method="POST" enctype="multipart/form-data" id="myForm">' 
+    var file = $('<form class="w3-container" onSubmit="return confirm(&quot;Do you want to submit?&quot;)" action="http://localhost:3001/news?token=' + token + '' 
+        + ' "method="POST" id="myWarningForm">' 
         + "<table>" 
         + "<tr>" 
         + "<td>Warning:</td>" 
         + '<td><textarea style=\"resize: none;\" rows="3" cols="30" name="descricao"></textarea></td>' 
-        + "</tr>" 
+        + "</tr>"
         + '</table><button.w3-btn.w3-teal(type=\'button\' onclick=\'add()\') +--><input type="hidden" name="autor" value="' + user 
-        + '" /><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />' 
+        + '" /><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addWarning" />' 
         + "</form>");
 
     $("#display").empty();
@@ -282,7 +285,7 @@ function changePrivacy(id) {
                 document.getElementById("privacy " + id).innerHTML = "Public ";
                 document.getElementById("button " + id).className = "fa fa-unlock";
             } else {
-                document.getElementById("privacy " + id).innerHTML = "Privado ";
+                document.getElementById("privacy " + id).innerHTML = "Private ";
                 document.getElementById("button " + id).className = "fa fa-lock";
             }
         },

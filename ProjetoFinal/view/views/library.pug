@@ -95,11 +95,11 @@ block content
                                             - foundFavoritos = 1
                                     if foundFavoritos == 1    
                                         td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
-                                            button(class="button-transparent" onclick="return confirm('Do you want to remove this file from your favourites?')?removeFavourite(\""+a._id+"\"):'';")
-                                                i(class="fa fa-heart fill" style="font-size:20px;")
+                                            button(class="button-transparent" onclick="addremoveFavourite(\""+a._id+"\");")
+                                                i(id="fav "+a._id class="fa fa-heart fill" style="font-size:20px;")
                                     else  
                                         td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
-                                            button(class="button-transparent" onclick="return confirm('Do you want to add this file as your favourite?')?addAsFavourite(\""+a._id+"\"):'';")
-                                                i(class="fa fa-heart" style="font-size:20px;")
+                                            button(class="button-transparent" onclick="addremoveFavourite(\""+a._id+"\");")
+                                                i(id="fav "+a._id class="fa fa-heart" style="font-size:20px;")
         div(id="display")
         div(id="displayComments" style="height:75%; width:80%; margin:auto")

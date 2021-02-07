@@ -92,8 +92,8 @@
     width: 100%;
     max-width: 400px;
   }
-  
-  
+
+
   .overlay {
     position: absolute;
     top: 0;
@@ -131,3 +131,10 @@
     color:black;
     text-decoration: underline;
   } */
+
+  /* FOOTER */
+  .footerF{
+    position: relative;
+    left: 20px;
+    bottom: 20px;
+  }

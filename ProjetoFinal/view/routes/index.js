@@ -4,7 +4,7 @@ var router = express.Router();
 var axios = require('axios');
 var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhZG1pbiIsImxldmVsIjoiYWRtaW4iLCJleHBpcmVzSW4iOiIzbSIsImlhdCI6MTYxMDExODM1OX0.omYqB6hz4vSrRjIBEAi0mg6TNVti0OaqXW6n95JljiM';
 
-
+/* Router get homepage */
 router.get('/homepage', function (req, res, next) {
     var requestNews = axios.get("http://localhost:3001/news?token=" + req.query.token);
     var rUser = axios.get("http://localhost:3001/users?token=" + token);
@@ -40,6 +40,7 @@ router.get('/homepage', function (req, res, next) {
     });
 });
 
+/* Post a search in nav bar - checks if field is empty on scripts */
 router.post('/search', function (req, res) {
     var rUser = axios.get("http://localhost:3001/users?token=" + token);
     var rSearch = axios.get('http://localhost:3001/search/' + req.body.type + '/' + req.body.search + '?token=' + req.query.token);

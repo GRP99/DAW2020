@@ -133,7 +133,7 @@ router.post("/changeprofile", upload.single("myProfilePic"), (req, res) => {
     }
 });
 
-
+// get profilepic by id of user
 router.get('/:_id/profilepic.jpeg', function (req, res) {
     var userID = req.params._id;
     res.sendFile(path.resolve(__dirname + '/../public/images/' + userID + '/profilepic.jpeg'));

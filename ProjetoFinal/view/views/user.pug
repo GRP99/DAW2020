@@ -97,11 +97,11 @@ block content
                                                                     if fav == idUser
                                                                         - foundFavoritos = 1
                                                                 if foundFavoritos == 1    
-                                                                    button(class="button-transparent" onclick="return confirm('Do you want to remove this file from your favourites?')?removeFavourite(\""+a._id+"\"):'';")
-                                                                        i(class="fa fa-heart fill" style="font-size:20px;")
+                                                                    button(class="button-transparent" onclick="addremoveFavourite(\""+a._id+"\");")
+                                                                        i(id="fav "+a._id class="fa fa-heart fill" style="font-size:20px;")
                                                                 else
-                                                                    button(class="button-transparent" onclick="return confirm('Do you want to add this file as your favourite?')?addAsFavourite(\""+a._id+"\"):'';")
-                                                                        i(class="fa fa-heart" style="font-size:20px;")
+                                                                    button(class="button-transparent" onclick="addremoveFavourite(\""+a._id+"\");")
+                                                                        i(id="fav "+a._id class="fa fa-heart" style="font-size:20px;")
                                 .u-table.u-table-responsive.u-table-1
                                     h6(style="font-family:Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif;font-weight:bold;text-align:center;") #{user_name}'s Favourites Files
                                     table.u-table-entity(id="example2_user" style="margin: 22px; font-size:12px;text-align:center;")
@@ -187,11 +187,11 @@ block content
                                                                 if fav == idUser
                                                                     - foundFavoritos = 1
                                                             if foundFavoritos == 1    
-                                                                button(class="button-transparent" onclick="return confirm('Do you want to remove this file from your favourites?')?removeFavourite(\""+a._id+"\"):'';")
-                                                                    i(class="fa fa-heart fill" style="font-size:20px;")
+                                                                button(class="button-transparent" onclick="addremoveFavourite(\""+a._id+"\");")
+                                                                    i(id="fav "+a._id class="fa fa-heart fill" style="font-size:20px;")
                                                             else
-                                                                button(class="button-transparent" onclick="return confirm('Do you want to add this file as your favourite?')?addAsFavourite(\""+a._id+"\"):'';")
-                                                                    i(class="fa fa-heart" style="font-size:20px;")
+                                                                button(class="button-transparent" onclick="addremoveFavourite(\""+a._id+"\");")
+                                                                    i(id="fav "+a._id class="fa fa-heart" style="font-size:20px;")
                         .u-container-style.u-custom-color-1.u-layout-cell.u-size-14.u-layout-cell-2
                             .u-border-2.u-border-custom-color-1.u-container-layout.u-valign-middle.u-container-layout-2
                                 h4(style="margin:auto;text-align:center;font-family:Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif;") #{user_name}'s Profile

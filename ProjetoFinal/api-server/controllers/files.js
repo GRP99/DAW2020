@@ -121,12 +121,12 @@ module.exports.changeprivacy = (id) => {
         } else {
             p = 0;
         }
-        return Files.findOneAndUpdate(id, {
-            privacy: p
+        return Files.update({
+            _id: id
         }, {
-            new: true,
-            upsert: true,
-            rawResult: true // Return the raw result from the MongoDB driver
+            $set: {
+                "privacy": p
+            }
         });
     })
 }
