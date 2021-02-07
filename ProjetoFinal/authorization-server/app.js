@@ -4,6 +4,7 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
 var fs = require('fs');
+var cookieparser = require('cookie-parser');
 
 
 // #################### ROUTES ####################

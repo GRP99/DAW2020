@@ -6,11 +6,11 @@ var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhZG1pbiIsImxldmVsIj
 
 /* Router get homepage */
 router.get('/homepage', function (req, res, next) {
-    var requestNews = axios.get("http://localhost:3001/news?token=" + req.query.token);
+    var requestNews = axios.get("http://localhost:3001/news?token=" + req.cookies.token);
     var rUser = axios.get("http://localhost:3001/users?token=" + token);
-    var requestTopClassi = axios.get("http://localhost:3001/files/topClass?token=" + req.query.token);
-    var requestTopFavs = axios.get("http://localhost:3001/files/topFavs?token=" + req.query.token);
-    var requestTopAut = axios.get("http://localhost:3001/files/topAut?token=" + req.query.token);
+    var requestTopClassi = axios.get("http://localhost:3001/files/topClass?token=" + req.cookies.token);
+    var requestTopFavs = axios.get("http://localhost:3001/files/topFavs?token=" + req.cookies.token);
+    var requestTopAut = axios.get("http://localhost:3001/files/topAut?token=" + req.cookies.token);
     axios.all([
         requestNews,
         requestTopClassi,
@@ -24,7 +24,7 @@ router.get('/homepage', function (req, res, next) {
         authors = response[3].data
         users = response[4].data
         res.render('home', {
-            token: req.query.token,
+            token: req.cookies.token,
             level: req.user.level,
             noticias: news,
             classified: classified,
@@ -33,9 +33,10 @@ router.get('/homepage', function (req, res, next) {
             users: users
         });
     })).catch(e => {
-        res.render('errorHome', {
+        res.render('errorAll', {
+            text: "unable to display your main page !",
             error: e,
-            token: req.query.token
+            token: req.cookies.token
         });
     });
 });
@@ -43,7 +44,7 @@ router.get('/homepage', function (req, res, next) {
 /* Post a search in nav bar - checks if field is empty on scripts */
 router.post('/search', function (req, res) {
     var rUser = axios.get("http://localhost:3001/users?token=" + token);
-    var rSearch = axios.get('http://localhost:3001/search/' + req.body.type + '/' + req.body.search + '?token=' + req.query.token);
+    var rSearch = axios.get('http://localhost:3001/search/' + req.body.type + '/' + req.body.search + '?token=' + req.cookies.token);
 
     axios.all([rSearch, rUser]).then(axios.spread((...resposta) => {
         var search;
@@ -61,7 +62,8 @@ router.post('/search', function (req, res) {
             idUser: req.user._id
         });
     })).catch(e => {
-        res.render('errorSearch', {
+        res.render('errorAll', {
+            text: "search again !",
             error: e,
             token: req.query.token
         });

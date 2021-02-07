@@ -295,18 +295,18 @@ router.post("/", upload.single("myFile"), (req, res) => {
                                 NControl.insert(news)
                             })
                         }
-                        res.redirect("http://localhost:3002/users/account?token=" + req.query.token)
+                        res.redirect("http://localhost:3002/users/account")
                     }).catch(err => {
                         res.status(500).jsonp({error: "ERROR: Uploads folder error."});
                     });
 
                 } else {
                     Limpa.eliminaPasta(__dirname + '/../' + req.file.path + '_sip');
-                    res.redirect("http://localhost:3002/users/account?token=" + req.query.token + "&alert=1")
+                    res.redirect("http://localhost:3002/users/account?alert=1")
                 }
             } else {
                 Limpa.eliminaPasta(__dirname + '/../' + req.file.path);
-                res.redirect("http://localhost:3002/users/account?token=" + req.query.token)
+                res.redirect("http://localhost:3002/users/account")
             }
         } else {
             res.status(500).jsonp(err);
@@ -327,9 +327,9 @@ router.post("/edit/:id", (req, res) => {
         if (req.user._id == result.autor) {
 
             FControl.updateFile(id,title,subtitle,descricao).then(() => {
-                res.redirect("http://localhost:3002/files/" + id + "?token=" + req.query.token);
+                res.redirect("http://localhost:3002/files/" + id );
             }).catch((err) => {
-                res.redirect("http://localhost:3002/files/" + id + "?token=" + req.query.token);
+                res.redirect("http://localhost:3002/files/" + id );
             });
         }
         else {
@@ -385,9 +385,9 @@ router.get("/autorP/:id", function (req, res, next) {
 // add comment
 router.post('/:id/comentarios', function (req, res) {
     FControl.adicionarComentario(req.params.id, req.body).then(dados => {
-        res.redirect("http://localhost:3002/files/" + req.params.id + "?token=" + req.query.token)
+        res.redirect("http://localhost:3002/files/" + req.params.id )
     }).catch(erro => {
-        res.redirect("http://localhost:3002/files/" + req.params.id + "?token=" + req.query.token)
+        res.redirect("http://localhost:3002/files/" + req.params.id )
     })
 });
 

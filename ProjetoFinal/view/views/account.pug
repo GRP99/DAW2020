@@ -8,11 +8,11 @@ block content
         script.
             if (window.confirm('Your file wasn\'t uploaded because of its format! Please verify your file format again!'))
             {
-                window.location.href = "http://localhost:3002/users/account?token=" + token
+                window.location.href = "http://localhost:3002/users/account"
             }
             else
             {
-                window.location.href = "http://localhost:3002/users/account?token=" + token
+                window.location.href = "http://localhost:3002/users/account"
             }
             //alert("Your file wanst uploaded because of its format! Please verify your file format again!")
     section#sec-63c0.u-clearfix.u-section-1
@@ -60,7 +60,7 @@ block content
                                                         button(class="button-transparent" onclick="deleteFile(\""+a._id+"\")")
                                                             i(class="fa fa-trash" style="font-size:20px")        
                                                         b            
-                                                        button(class="button-transparent" onclick="location.href='http://localhost:3002/files/"+a._id+"?token="+token+"'")
+                                                        button(class="button-transparent" onclick="location.href='http://localhost:3002/files/"+a._id+"'")
                                                             i(class="fa fa-file" style="font-size:20px")
                         .u-container-style.u-custom-color-1.u-layout-cell.u-size-14.u-layout-cell-2
                             .u-border-2.u-border-custom-color-1.u-container-layout.u-valign-middle.u-container-layout-2

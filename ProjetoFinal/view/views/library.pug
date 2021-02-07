@@ -80,12 +80,12 @@ block content
                                     each u in users
                                         if u._id == a.autor
                                             td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
-                                                a(href="http://localhost:3002/users/account/"+u._id+"?token="+token)=u.name
+                                                a(href="http://localhost:3002/users/account/"+u._id)=u.name
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
                                         button(class="button-transparent" onclick="location.href='http://localhost:3001/files/download/"+a.autor+"/"+a._id+"?token="+token+"';")
                                             i(class="fa fa-download" style="font-size:20px;") 
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell         
-                                        button(class="button-transparent" onclick="location.href='http://localhost:3002/files/"+a._id+"?token="+token+"'")
+                                        button(class="button-transparent" onclick="location.href='http://localhost:3002/files/"+a._id+"'")
                                             i(class="fa fa-file" style="font-size:20px;")
                                     // if favoritos contains user
                                     - var foundFavoritos = 0

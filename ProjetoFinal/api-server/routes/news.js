@@ -28,7 +28,7 @@ router.post("/", function (req, res, next) {
                 descricao: desc
             };
             NControl.insert(news);
-            res.redirect("http://localhost:3002/users/account?token=" + req.query.token);
+            res.redirect("http://localhost:3002/users/account");
         });
     } else {
         res.status(401).jsonp({error: 'You do not have permissions for such an operation'});

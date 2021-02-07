@@ -24,14 +24,14 @@ block content
                                             .container
                                                 img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src='https://www.inmosenna.com/wp-content/uploads/2018/07/avatar-user-business-man-399587fe24739d5a-512x512-300x300.png' alt='' width="75" height="75")
                                                 .overlay
-                                                    a.icon(href="http://localhost:3002/users/account/"+a._id+"?token="+token title='User Profile')
+                                                    a.icon(href="http://localhost:3002/users/account/"+a._id title='User Profile')
                                                         i(class="icon-photo fa fa-user")
                                     else
                                         td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell(align="center")
                                             .container
                                                 img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src="http://localhost:3001/users/"+a._id+"/profilepic.jpeg?token="+token alt='' width="75" height="75")
                                                 .overlay
-                                                    a.icon(href="http://localhost:3002/users/account/"+a._id+"?token="+token title='User Profile')
+                                                    a.icon(href="http://localhost:3002/users/account/" title='User Profile')
                                                         i(class="icon-photo fa fa-user")
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell(onclick="showProfile(\""+a._id+"\",\""+ a.level +"\",\""+a.registrationDate+"\",\""+a.lastAccessDate+"\",\""+a.role+"\",\""+a.course+"\",\""+a.department+"\");")=a.name
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell 
@@ -115,12 +115,12 @@ block content
                                     each u in users
                                         if u._id == a.autor
                                             td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
-                                                a(href="http://localhost:3002/users/account/"+u._id+"?token="+token)=u.name
+                                                a(href="http://localhost:3002/users/account/"+u._id)=u.name
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
                                         button(class="button-transparent" onclick="location.href='http://localhost:3001/files/download/"+a.autor+"/"+a._id+"?token="+token+"';")
                                             i(class="fa fa-download" style="font-size:20px;") 
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell         
-                                        button(class="button-transparent" onclick="location.href='http://localhost:3002/files/"+a._id+"?token="+token+"'")
+                                        button(class="button-transparent" onclick="location.href='http://localhost:3002/files/"+a._id+"'")
                                             i(class="fa fa-file" style="font-size:20px;")
                                     // if favoritos contains user
                                     - var foundFavoritos = 0

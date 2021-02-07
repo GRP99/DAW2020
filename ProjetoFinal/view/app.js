@@ -4,6 +4,7 @@ var path = require('path');
 var logger = require('morgan');
 var jwt = require('jsonwebtoken');
 var favicon = require('serve-favicon')
+var cookieParser = require('cookie-parser')
 
 
 // #################### ROUTES ####################
@@ -14,6 +15,7 @@ var filesRouter = require('./routes/files');
 
 // #################### MIDDLEWARE ####################
 var app = express();
+app.use(cookieParser())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,7 +28,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function (req, res, next) {
-    if (req.query.token == null) {
+    if (req.cookies.token == null) {
         switch (req.url) {
             case "/users/signup": next();
                 break;
@@ -38,7 +40,7 @@ app.use(function (req, res, next) {
                 break;
         }
     } else { // authentication
-        jwt.verify(req.query.token, 'PRI2020', function (e, payload) {
+        jwt.verify(req.cookies.token, 'PRI2020', function (e, payload) {
             if (e) {
                 res.redirect('/users/login');
             } else {
@@ -72,7 +74,7 @@ app.use(function (err, req, res, next) { // set locals, only providing error in 
 
     // render the error page
     res.status(err.status || 500);
-    res.render('errorBoring');
+    res.render('errorGIF');
 });
 
 

@@ -20,9 +20,9 @@ axios.post(autenticaURL + '/autenticarApp', key).then(t => {
 router.get(['/account'], function (req, res, next) {
     var _id = req.user._id
 
-    var requestUser = axios.get(api_serverURL + '/users/' + _id + "?token=" + req.query.token);
-    var requestFicheiros = axios.get(api_serverURL + '/files/autor/' + _id + "?token=" + req.query.token);
-    var requestResourceTypes = axios.get(api_serverURL + '/files/resourceTypes/?token=' + req.query.token);
+    var requestUser = axios.get(api_serverURL + '/users/' + _id + "?token=" + req.cookies.token);
+    var requestFicheiros = axios.get(api_serverURL + '/files/autor/' + _id + "?token=" + req.cookies.token);
+    var requestResourceTypes = axios.get(api_serverURL + '/files/resourceTypes/?token=' + req.cookies.token);
 
     var alert = 0
     if (req.query.alert == "1") {
@@ -43,7 +43,7 @@ router.get(['/account'], function (req, res, next) {
             case 'consumer': renderConsumer(req, res, user)
                 break;
             default: res.render('account', {
-                    token: req.query.token,
+                    token: req.cookies.token,
                     lista: ficheiros,
                     user_level: req.user.level,
                     user_id: _id,
@@ -61,9 +61,10 @@ router.get(['/account'], function (req, res, next) {
                 break;
         }
     })).catch(e => {
-        res.render('errorAccount', {
+        res.render('errorAll', {
+            text: "your page could not be displayed !",
             error: e,
-            token: req.query.token,
+            token: req.cookies.token,
             level: req.user.level
         })
     })
@@ -71,7 +72,7 @@ router.get(['/account'], function (req, res, next) {
 
 function renderConsumer(req, res, user) {
     var rUser = axios.get("http://localhost:3001/users?token=" + token2);
-    var rFicheiros = axios.get("http://localhost:3001/files/public?token=" + req.query.token);
+    var rFicheiros = axios.get("http://localhost:3001/files/public?token=" + req.cookies.token);
     var arr = []
 
     axios.all([rFicheiros, rUser]).then(axios.spread((...resposta) => {
@@ -90,7 +91,7 @@ function renderConsumer(req, res, user) {
         var course = user.course
         var department = user.department
         res.render('consumer', {
-            token: req.query.token,
+            token: req.cookies.token,
             lista: arr,
             user_id: mail,
             user_name: nome,
@@ -105,18 +106,19 @@ function renderConsumer(req, res, user) {
             level: req.user.level
         });
     })).catch(e => {
-        res.render('error', {
+        res.render('errorAll', {
+            text: "your page could not be displayed !",
             error: e,
-            token: req.query.token,
+            token: req.cookies.token,
             level: req.user.level
         })
     })
 }
 
 router.get(['/account/:id'], function (req, res, next) {
-    var requestUser = axios.get(api_serverURL + '/users/' + req.params.id + "?token=" + req.query.token);
-    var requestFicheirosbyAutor = axios.get(api_serverURL + '/files/autorP/' + req.params.id + "?token=" + req.query.token);
-    var requestallFichs = axios.get("http://localhost:3001/files/public?token=" + req.query.token);
+    var requestUser = axios.get(api_serverURL + '/users/' + req.params.id + "?token=" + req.cookies.token);
+    var requestFicheirosbyAutor = axios.get(api_serverURL + '/files/autorP/' + req.params.id + "?token=" + req.cookies.token);
+    var requestallFichs = axios.get("http://localhost:3001/files/public?token=" + req.cookies.token);
     var arr = []
 
     axios.all([requestUser, requestFicheirosbyAutor, requestallFichs]).then(axios.spread((...response) => {
@@ -156,7 +158,7 @@ router.get(['/account/:id'], function (req, res, next) {
                 user_registrationDate: registrationDate,
                 user_lastAccessDate: lastAccessDate,
                 idUser: req.user._id,
-                token: req.query.token,
+                token: req.cookies.token,
                 level: req.user.level
             });
         }
@@ -175,14 +177,15 @@ router.get(['/account/:id'], function (req, res, next) {
                 user_registrationDate: registrationDate,
                 user_lastAccessDate: lastAccessDate,
                 idUser: req.user._id,
-                token: req.query.token,
+                token: req.cookies.token,
                 level: req.user.level
             });
         }
     })).catch(e => {
-        res.render('errorUser', {
+        res.render('errorAll', {
+            text: "the user page could not be displayed !",
             error: e,
-            token: req.query.token,
+            token: req.cookies.token,
             level: req.user.level
         })
     })
@@ -191,7 +194,7 @@ router.get(['/account/:id'], function (req, res, next) {
 // favourites
 router.get("/favourites", (req, res) => {
     var requestUser = axios.get("http://localhost:3001/users?token=" + token2);
-    var requestFicheiros = axios.get("http://localhost:3001/files/public?token=" + req.query.token);
+    var requestFicheiros = axios.get("http://localhost:3001/files/public?token=" + req.cookies.token);
     var arr = []
 
     axios.all([requestUser, requestFicheiros]).then(axios.spread((...response) => {
@@ -205,14 +208,15 @@ router.get("/favourites", (req, res) => {
         res.render("library", {
             lista: arr,
             users: users,
-            token: req.query.token,
+            token: req.cookies.token,
             idUser: req.user._id,
             level: req.user.level
         });
     })).catch(e => {
-        res.render('errorFavourites', {
+        res.render('errorAll', {
+            text: "could not display your favorites !",
             error: e,
-            token: req.query.token,
+            token: req.cookies.token,
             level: req.user.level
         })
     })
@@ -221,8 +225,8 @@ router.get("/favourites", (req, res) => {
 
 // Admin Page :)
 router.get("/admin", (req, res) => {
-    var requestUser = axios.get("http://localhost:3001/users?token=" + req.query.token);
-    var requestFiles = axios.get("http://localhost:3001/files?token=" + req.query.token);
+    var requestUser = axios.get("http://localhost:3001/users?token=" + req.cookies.token);
+    var requestFiles = axios.get("http://localhost:3001/files?token=" + req.cookies.token);
 
     axios.all([requestUser, requestFiles]).then(axios.spread((...response) => {
         var users = response[0].data;
@@ -231,13 +235,14 @@ router.get("/admin", (req, res) => {
             idUser: req.user._id,
             users: users,
             files: files,
-            token: req.query.token,
+            token: req.cookies.token,
             level: req.user.level
         });
     })).catch(e => {
-        res.render('error', {
+        res.render('errorAll', {
             error: e,
-            token: req.query.token,
+            text: "the admin page could not be displayed !",
+            token: req.cookies.token,
             level: req.user.level
         })
     })
@@ -251,13 +256,14 @@ router.get("/all", (req, res) => {
         var users = response[0].data;
         res.render("users", {
             users: users,
-            token: req.query.token,
+            token: req.cookies.token,
             level: req.user.level
         });
     })).catch(e => {
         res.render('errorAll', {
+            text: "could not display all users !",
             error: e,
-            token: req.query.token,
+            token: req.cookies.token,
             level: req.user.level
         })
     })
@@ -275,7 +281,8 @@ router.post('/signup', function (req, res) {
     axios.post(autenticaURL + '/registar?token=' + token, req.body).then(dados => {
         res.redirect('/login');
     }).catch(e => {
-        res.render('errorSignUp', {
+        res.render('errorAll', {
+            text: "registration failed, try again with a new email !",
             error: e,
             token: token
         })
@@ -284,9 +291,11 @@ router.post('/signup', function (req, res) {
 
 router.post('/login', function (req, res) {
     axios.post(autenticaURL + '/login?token=' + token, req.body).then(dados => {
-        res.redirect("/homepage?token=" + dados.data.token);
+        res.cookie('token', dados.data.token)
+        res.redirect("/homepage");
     }).catch(e => {
-        res.render('errorLogin', {
+        res.render('errorAll', {
+            text: "check your credentials !",
             error: e,
             token: token
         });
@@ -295,11 +304,13 @@ router.post('/login', function (req, res) {
 
 router.get('/logout', function (req, res) {
     axios.post(autenticaURL + '/logout/' + req.user._id + '?token=' + token).then(() => {
-        res.redirect('/login');
+        res.clearCookie('token')
+        res.redirect('/users/login');
     }).catch(e => {
-        res.render('errorLogout', {
+        res.render('errorAll', {
+            text: "unable to log out !",
             error: e,
-            token: req.query.token
+            token: req.cookies.token
         })
     })
 })

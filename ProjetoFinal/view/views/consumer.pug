@@ -36,7 +36,7 @@ block content
                                                     each u in users
                                                         if u._id == a.autor
                                                             td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
-                                                                a(href="http://localhost:3002/users/account/"+u._id+"?token="+token)=u.name
+                                                                a(href="http://localhost:3002/users/account/"+u._id)=u.name
                                                     - var found = 0
                                                     - var match = idUser + "[?][;][0-9]"
                                                     - var temp = ""
@@ -82,7 +82,7 @@ block content
                                                         button(class="button-transparent" onclick="removeFavourite(\""+a._id+"\")")
                                                             i(class="fa fa-close" style="font-size:20px;")
                                                         b           
-                                                        button(class="button-transparent" onclick="location.href='http://localhost:3002/files/"+a._id+"?token="+token+"'")
+                                                        button(class="button-transparent" onclick="location.href='http://localhost:3002/files/"+a._id+"'")
                                                             i(class="fa fa-file" style="font-size:20px;")
                                                         
                                             else 

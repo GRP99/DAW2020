@@ -41,9 +41,9 @@ block content
                                                     each u in users
                                                         if u._id == c.autor
                                                             td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
-                                                                a(href="http://localhost:3002/users/account/"+u._id+"?token="+token)=u.name
+                                                                a(href="http://localhost:3002/users/account/"+u._id)=u.name
                                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
-                                                        button(class="button-transparent" onclick="location.href='http://localhost:3002/files/"+c._id+"?token="+token+"'")
+                                                        button(class="button-transparent" onclick="location.href='http://localhost:3002/files/"+c._id+"'")
                                                             i(class="fa fa-file" style="font-size:20px;")
                                 .u-expanded-width.u-table.u-table-responsive.u-table-1(style="margin-top:80px")    
                                     h6(style="font-family:Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif;font-weight:bold;text-align:center;") Top 3 Favourites
@@ -69,9 +69,9 @@ block content
                                                     each u in users
                                                         if u._id == f.autor
                                                             td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell 
-                                                                a(href="http://localhost:3002/users/account/"+u._id+"?token="+token)=u.name
+                                                                a(href="http://localhost:3002/users/account/"+u._id)=u.name
                                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell
-                                                        button(class="button-transparent" onclick="location.href='http://localhost:3002/files/"+f._id+"?token="+token+"'")
+                                                        button(class="button-transparent" onclick="location.href='http://localhost:3002/files/"+f._id+"'")
                                                             i(class="fa fa-file" style="font-size:20px;")
                                 .u-expanded-width.u-table.u-table-responsive.u-table-1(style="margin-top:80px")  
                                     h6(style="font-family:Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif;font-weight:bold;text-align:center;") Top 3 Authors
@@ -91,7 +91,7 @@ block content
                                                         each u in users
                                                             if u._id == a._id
                                                                 td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell 
-                                                                    a(href="http://localhost:3002/users/account/"+u._id+"?token="+token)=u.name
+                                                                    a(href="http://localhost:3002/users/account/"+u._id)=u.name
                                                                 td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell=a.nmrUploads
                         .u-container-style.u-custom-color-1.u-layout-cell.u-size-14.u-layout-cell-2
                             .u-border-2.u-border-custom-color-1.u-container-layout.u-valign-middle.u-container-layout-2
@@ -108,7 +108,7 @@ block content
                                                         if(not.type != "Warning")
                                                             p
                                                                 b
-                                                                    a(href="http://localhost:3002/files/"+not.file+"?token="+token)         Check this!
+                                                                    a(href="http://localhost:3002/files/"+not.file)         Check this!
                                                         p=not.date
                                                         p -------
         footer(class="footerF") 

@@ -34,22 +34,22 @@ html
                             .u-menu-close
                             ul.u-align-center.u-nav.u-popupmenu-items.u-unstyled.u-nav-2(id="nav")
                                 li.u-nav-item
-                                    a.u-button-style.u-nav-link(href='/homepage?token='+token) Home
+                                    a.u-button-style.u-nav-link(href='/homepage') Home
                                 li.u-nav-item
-                                    a.u-button-style.u-nav-link(href='/files/biblioteca?token='+token) Library
+                                    a.u-button-style.u-nav-link(href='/files/biblioteca') Library
                                 li.u-nav-item
-                                    a.u-button-style.u-nav-link(href='/users/favourites?token='+token) Favourites
+                                    a.u-button-style.u-nav-link(href='/users/favourites') Favourites
                                 li.u-nav-item
-                                    a.u-button-style.u-nav-link(href='/users/all?token='+token) Other Users
+                                    a.u-button-style.u-nav-link(href='/users/all') Other Users
                                 li.u-nav-item
-                                    a.u-button-style.u-nav-link(href='/users/account?token='+token) My Account
+                                    a.u-button-style.u-nav-link(href='/users/account') My Account
                                 if level == "admin"
                                     li.u-nav-item
-                                        a.u-button-style.u-nav-link(href='/users/admin?token='+token) Admin Room
+                                        a.u-button-style.u-nav-link(href='/users/admin') Admin Room
                                 li.u-nav-item
-                                    a.u-button-style.u-nav-link(href='/users/logout?token='+token) Logout
+                                    a.u-button-style.u-nav-link(href='/users/logout') Logout
                     .u-black.u-menu-overlay.u-opacity.u-opacity-70
-            form.u-align-right.u-border-1.u-border-grey-30.u-search.u-search-right.u-search-1(onsubmit="return validateSearchForm()" name="SearchForm" action='http://localhost:3002/search?token='+token, method='POST')
+            form.u-align-right.u-border-1.u-border-grey-30.u-search.u-search-right.u-search-1(onsubmit="return validateSearchForm()" name="SearchForm" action='http://localhost:3002/search', method='POST')
                 button.u-search-button(type='submit')
                     span.u-search-icon.u-spacing-10
                         svg.u-svg-link(preserveaspectratio='xMidYMin slice' viewbox='0 0 56.966 56.966' style='')
@@ -62,7 +62,7 @@ html
                     option(value='date') Date
                     option(value='types') Type
                 input.u-search-input(type='search' name='search' value='' placeholder='Search')
-            p.u-align-center.u-custom-font.u-text.u-text-1(onclick="location.href='http://localhost:3002/homepage?token="+token+"'")
+            p.u-align-center.u-custom-font.u-text.u-text-1(onclick="location.href='http://localhost:3002/homepage'")
                 | School File Manager
                 span(style='font-weight: 700;')
     body

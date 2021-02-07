@@ -10,7 +10,7 @@ var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhZG1pbiIsImxldmVsIj
 // all files library
 router.get("/biblioteca", (req, res) => {
     var requestUser = axios.get("http://localhost:3001/users?token=" + token);
-    var requestFicheiros = axios.get("http://localhost:3001/files/public?token=" + req.query.token);
+    var requestFicheiros = axios.get("http://localhost:3001/files/public?token=" + req.cookies.token);
 
     axios.all([requestUser, requestFicheiros]).then(axios.spread((...response) => {
         var user = response[0].data;
@@ -18,14 +18,15 @@ router.get("/biblioteca", (req, res) => {
         res.render("library", {
             lista: ficheiros,
             users: user,
-            token: req.query.token,
+            token: req.cookies.token,
             idUser: req.user._id,
             level: req.user.level
         });
     })).catch(e => {
-        res.render('errorLibrary', {
+        res.render('errorAll', {
+            text: "it was not possible to present the library with public resources !",
             error: e,
-            token: req.query.token,
+            token: req.cookies.token,
             level: req.user.level
         });
     });
@@ -34,7 +35,7 @@ router.get("/biblioteca", (req, res) => {
 // get profile of file
 router.get("/:id", (req, res) => {
     var requestUser = axios.get("http://localhost:3001/users?token=" + token);
-    var requestFich = axios.get("http://localhost:3001/files/" + req.params.id + "?token=" + req.query.token);
+    var requestFich = axios.get("http://localhost:3001/files/" + req.params.id + "?token=" + req.cookies.token);
 
     axios.all([requestFich, requestUser]).then(axios.spread((...response) => {
         var fich = response[0].data;
@@ -43,13 +44,14 @@ router.get("/:id", (req, res) => {
             fich: fich,
             idUser: req.user._id,
             users: users,
-            token: req.query.token,
+            token: req.cookies.token,
             level: req.user.level
         });
     })).catch(e => {
-        res.render('errorFile', {
+        res.render('errorAll', {
+            text: "it was not possible to obtain the resource in question !",
             error: e,
-            token: req.query.token,
+            token: req.cookies.token,
             level: req.user.level
         });
     });

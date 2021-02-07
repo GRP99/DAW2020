@@ -44,7 +44,7 @@ router.post("/login", function (req, res) {
                         expiresIn: "1d"
                     }, function (err, token) {
                     if (err) {
-                        res.status(400).jsonp({error: "Não foi possível efectuar o login!"});
+                        res.status(400).jsonp({error: "It wasn't possible to login!"});
                     } else {
                         res.status(200).jsonp({token: token});
                     }

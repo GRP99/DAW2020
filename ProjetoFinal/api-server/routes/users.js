@@ -104,9 +104,9 @@ router.post("/edit", (req, res) => {
     var department = req.body.department;
 
     User.updateUser(id, name, git, course, department).then(() => {
-        res.redirect("http://localhost:3002/users/account?token=" + req.query.token);
+        res.redirect("http://localhost:3002/users/account");
     }).catch((err) => {
-        res.redirect("http://localhost:3002/users/account?token=" + req.query.token);
+        res.redirect("http://localhost:3002/users/account");
     });
 });
 
@@ -127,9 +127,9 @@ router.post("/changeprofile", upload.single("myProfilePic"), (req, res) => {
 
         User.updatePhoto(req.body.autor);
 
-        res.redirect("http://localhost:3002/users/account?token=" + req.query.token);
+        res.redirect("http://localhost:3002/users/account");
     } else {
-        res.redirect("http://localhost:3002/users/account?token=" + req.query.token);
+        res.redirect("http://localhost:3002/users/account");
     }
 });
 
