@@ -226,36 +226,7 @@ router.get("/download/:id_autor/:id", function (req, res) {
 
 // upload file (works)
 router.post("/", upload.single("myFile"), (req, res) => {
-    if (req.user.level != "consumer") { /*
-        let quarantinePath = __dirname + "/../" + req.file.path;
-        let dirpath = __dirname + "/../public/fileStore/" + req.body.autor;
-        fs.mkdirSync(dirpath, {recursive: true});
-        let newPath = dirpath + "/" + req.file.originalname;
-
-        // let dpath = "/../public/fileStore/" + req.body.autor + "/" + req.files[i].originalname
-        var normalizedPath = path.normalize(newPath);
-        var correctedPath = normalizedPath.replace(/\\/g, "/");
-
-        /* dá move do ficheiro 
-        fs.rename(quarantinePath, newPath, function (error) {
-            if (error) {
-                console.log("ERROR" + error);
-            }
-        });
-
-        var d = new Date().toISOString().substr(0, 16);
-
-        var fD = {
-            date: d,
-            autor: req.body.autor,
-            name: req.file.originalname,
-            mimetype: req.file.mimetype,
-            size: req.file.size,
-            privacy: req.body.privacy,
-            descricao: req.body.descricao
-        };
-        */
-
+    if (req.user.level != "consumer") { 
         if (req.file != null) {
             if (req.file.mimetype == 'application/x-zip-compressed') {
                 SIP.unzip(req.file.path);
@@ -355,14 +326,8 @@ router.delete("/:id", (req, res) => {
     FControl.lookup(req.params.id).then((result) => {
         if (req.user.level == "admin" || req.user._id == result.autor) { // apagar ficheiro da pasta
             let fpath = "public/fileStore/" + result.autor + "/uploads/" + result.name;
-            /* fs.unlink(fpath, (error) => {
-                if (error) {
-                    console.error(error);
-                    return;
-                }
-                FControl.remove(req.params.id).then((data) => res.status(200).jsonp(data)).catch((err) => res.status(500).jsonp(err));
-            }); */
-            // Dá delete à pasta
+
+            // Delete folder
             rimraf(fpath, function () {
                 // console.log("Filepath deleted.");
             });
@@ -429,29 +394,5 @@ router.delete('/:id/comentarios', function (req, res) {
         }
     })
 });
-
-/*
-// classify
-router.post('/:id/estrelas/:idU', function (req, res) {
-    var flag;
-    FControl.getEstrelas(req.params.id).then(estrelas => {
-        flag = estrelas.toString().includes(req.params.idU);
-        if (! flag) {
-            FControl.incrementarEstrelas(req.params.id, req.params.idU).then(dados => {
-                res.jsonp(dados)
-            }).catch(e => {
-                res.status(500).jsonp(console.log(e))
-            })
-        } else {
-            FControl.decrementarEstrelas(req.params.id, req.params.idU).then(dados => {
-                res.jsonp(dados)
-            }).catch(e => {
-                res.status(500).jsonp(e)
-            })
-        }
-    }).catch(e => {
-        res.status(500).jsonp(e)
-    })
-}); */
 
 module.exports = router;

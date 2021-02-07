@@ -49,7 +49,7 @@ router.get("/:id", function (req, res) {
             course: data.course,
             department: data.department,
             lastAccessDate: data.lastAccessDate
-        }
+        };
         res.status(200).jsonp(user);
     }).catch((err) => {
         res.status(500).jsonp(err)
@@ -97,12 +97,11 @@ router.post("/registar", function (req, res) {
 
 // Edit Profile
 router.post("/edit", (req, res) => {
-
-    var id = req.user._id
-    var name = req.body.name
-    var git = req.body.git
-    var course = req.body.course
-    var department = req.body.department
+    var id = req.user._id;
+    var name = req.body.name;
+    var git = req.body.git;
+    var course = req.body.course;
+    var department = req.body.department;
 
     User.updateUser(id, name, git, course, department).then(() => {
         res.redirect("http://localhost:3002/users/account?token=" + req.query.token);
@@ -120,12 +119,6 @@ router.post("/changeprofile", upload.single("myProfilePic"), (req, res) => {
         fs.mkdirSync(dirpath, {recursive: true});
         let newPath = dirpath + "/" + "profilepic.jpeg";
 
-        /*
-        let dpath = "/../public/images/" + req.body.autor + "/" + "profilepic.jpeg"
-        var normalizedPath = path.normalize(newPath);
-        var correctedPath = normalizedPath.replace(/\\/g, '/');
-        */
-
         fs.rename(quarantinePath, newPath, function (error) {
             if (error) {
                 res.status(500).jsonp({error: "Rename the quarantinePath to newPath !"});
@@ -142,9 +135,9 @@ router.post("/changeprofile", upload.single("myProfilePic"), (req, res) => {
 
 
 router.get('/:_id/profilepic.jpeg', function (req, res) {
-    var userID = req.params._id
+    var userID = req.params._id;
     res.sendFile(path.resolve(__dirname + '/../public/images/' + userID + '/profilepic.jpeg'));
-})
+});
 
 
 module.exports = router;

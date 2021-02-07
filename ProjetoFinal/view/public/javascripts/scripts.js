@@ -3,41 +3,6 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const token = urlParams.get("token");
 
-/*
-function showComments(idF, idU) {
-    $.ajax({
-        url: "http://localhost:3001/files/" + idF + "?token=" + token,
-        type: "GET",
-        success: function (data) {
-            let cdiv = "<fieldset class=\"w3-container w3-margin\">" + 
-                "<legend>Comments</legend>"
-                + "<table id=\"tableComentarios\">"
-            data.comentarios.forEach(c =>{
-                    cdiv +=
-                    "<tr style=\"font-size:10px\"> " + c.autor + " commented: </tr>" + 
-                    "<tr style=\"font-size:6px\">" + c.data + "<tr>" +
-                    "<tr> <textarea style=\"resize: none;\" rows=\"3\" cols=\"37\" readonly>" + c.descricao + "</textarea> </tr>"
-            }) 
-            cdiv+= "</table> </fieldset>"
-            var d= new Date().toISOString().substr(0,16);
-            $("#displayComments").empty();
-            $("#displayComments").append(cdiv)
-            $("#displayComments").append("<form class=\"w3-container\" method=\"POST\" onSubmit=\"return confirm(&quot;Do you want to add this Comment?&quot;)\" action=\"http://localhost:3001/files/"+idF+"/adicionarComentario?token="+token+"\">"+
-            "<fieldset class=\"w3-container w3-margin\">" + 
-                "<legend>New Comment</legend>"
-                + "<input type=\"hidden\" name=\"autor\" value=\""+idU+"\"/>"
-                + "<input type=\"hidden\" name=\"data\" value=\""+d+"\"/>"
-                + "<table>" +
-                    "<tr>"
-                        + "<td> <textarea style=\"resize: none;\" rows=\"3\" cols=\"35\" name=\"descricao\"> </textarea> </td> </tr> </table>" +
-                "<input class=\"w3-btn w3-blue-grey w3-margin\" type=\"submit\" value=\"Add Comment\"/>"
-            + "</fieldset>" +
-        "</form>");
-            $("#displayComments").modal();
-        }
-    });
-} */
-
 function verificaAdmin () {
     return true
 }

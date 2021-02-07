@@ -9,7 +9,7 @@ router.post('/autenticarApp', function (req, res, next) {
     if (req.body.key != undefined) {
         switch (req.body.key) {
             case "2cf7a71be6dc9665aba1f32451e887442cb5a9a208b29e1598611236e60b490":
-                var privateKey = fs.readFileSync(__dirname + '/../keys/mykey.pem')
+                var privateKey = fs.readFileSync(__dirname + '/../keys/mykey.pem');
                 jwt.sign({
                     expiresIn: "1d"
                 }, privateKey, {
@@ -78,6 +78,6 @@ router.post("/logout/:id", function (req, res) {
     }).catch((err) => {
         res.status(500).jsonp({error: err})
     });
-})
+});
 
 module.exports = router;

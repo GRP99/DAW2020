@@ -42,7 +42,6 @@ router.get('/homepage', function (req, res, next) {
 
 router.post('/search', function (req, res) {
     var rUser = axios.get("http://localhost:3001/users?token=" + token);
-    //var rFiles = axios.get("http://localhost:3001/files/public?token=" + req.query.token);
     var rSearch = axios.get('http://localhost:3001/search/' + req.body.type + '/' + req.body.search + '?token=' + req.query.token);
 
     axios.all([rSearch, rUser]).then(axios.spread((...resposta) => {
@@ -52,14 +51,6 @@ router.post('/search', function (req, res) {
         } else {
             authors = 0
         }
-        /*
-            if (req.body.search == ""){
-                search = resposta[3].data
-            }
-            else {
-                search = resposta[0].data
-            } 
-        */
         res.render("search", {
             lista: resposta[0].data,
             users: resposta[1].data,

@@ -7,7 +7,7 @@ module.exports.list = () => {
     return News.find().sort({"date": -1}).exec()
 }
 
-// return the last 10 news
+// return the last 5 news
 module.exports.last5News = () => {
     return News.find().sort({"date": -1}).limit(5).exec()
 }

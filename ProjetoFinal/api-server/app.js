@@ -59,11 +59,9 @@ app.use(function (req, res, next) {
                 next();
             }
         });
-    } else 
+    } else{
         res.status(401).jsonp({error: "Client did not send any token"});
-    
-
-
+    }
 });
 
 

@@ -24,7 +24,7 @@ router.post("/", function (req, res, next) {
                 autorID: req.body.autor,
                 autor: dados.name,
                 descricao: req.body.descricao
-            }
+            };
             NControl.insert(news);
             res.redirect("http://localhost:3002/users/account?token=" + req.query.token);
         });
