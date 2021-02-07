@@ -3,14 +3,13 @@ extends layout
 block content
     link(rel='stylesheet' href='/stylesheets/error.css' media='screen')
     section.page_404
-        .container
-            .row
-            .col-sm-12
-            .col-sm-10.col-sm-offset-1.text-center
-            .four_zero_four_bg
-                h1.text-center Error
-                h3.h2 Look like you're lost,
-                    p it was not possible to present the library with public resources !
-                    p 
-                        i ... débrouillez-vous ...
-                    a.link_404(href='/homepage?token='+token) Go to Home
+        .row
+        .col-sm-12
+        .col-sm-10.col-sm-offset-1.text-center
+        .four_zero_four_bg
+            h1.text-center Error
+            h3.h2 Look like you're lost,
+                p it was not possible to present the library with public resources !
+                p 
+                    i ... débrouillez-vous ...
+                a.link_404(href='/homepage?token='+token) Go to Home
