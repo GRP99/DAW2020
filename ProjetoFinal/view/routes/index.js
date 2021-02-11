@@ -57,7 +57,7 @@ router.post('/search', function (req, res) {
             lista: resposta[0].data,
             users: resposta[1].data,
             autor: authors,
-            token: req.query.token,
+            token: req.cookies.token,
             level: req.user.level,
             idUser: req.user._id
         });
@@ -65,7 +65,7 @@ router.post('/search', function (req, res) {
         res.render('errorAll', {
             text: "search again !",
             error: e,
-            token: req.query.token
+            token: req.cookies.token
         });
     });
 });

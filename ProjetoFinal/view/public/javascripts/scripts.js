@@ -208,7 +208,7 @@ function openUploadModal(user, token, resourceTypes) {
         + '</table><button.w3-btn.w3-teal(type=\'button\' onclick=\'add()\') +--><input type="hidden" name="autor" value="' + user 
         + '" />'
         + '<span><input class="w3-btn w3-blue-grey" type="submit" value="Submit" id="addFile" />'
-        + '<a href="https://github.com/GRP99/PRI2020/blob/main/ProjetoFinal/_exemplos_/README.md" target="_blank" ><i class="fa fa-question-circle" style="font-size:30px; position: absolute; right: 20px;"></img></a>'
+        + '<a href="https://github.com/GRP99/PRI2020-Projeto/blob/main/_exemplos_/README.md" target="_blank" ><i class="fa fa-question-circle" style="font-size:30px; position: absolute; right: 20px;"></img></a>'
         + "</span></form>");
 
     $("#display").empty();
@@ -282,15 +282,13 @@ function openWarningModal(user) {
     $("#display").modal();
 }
 
-function preventBack() {
-    window.history.forward();
-}
-
-setTimeout("preventBack()", 0);
-
-window.onunload = function () {
-    null;
-};
+window.addEventListener( "pageshow", function ( event ) {
+    var historyTraversal = event.persisted ||( typeof window.performance != "undefined" && window.performance.navigation.type === 2 );
+    if ( historyTraversal ) {
+      // Handle page restore.
+      window.location.reload();
+    }
+});
 
 function changePrivacy(id) {
     $.ajax({

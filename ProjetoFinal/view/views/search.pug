@@ -31,7 +31,7 @@ block content
                                             .container
                                                 img.u-image.u-image-circle.u-preserve-proportions.u-image-1(src="http://localhost:3001/users/"+a._id+"/profilepic.jpeg?token="+token alt='' width="75" height="75")
                                                 .overlay
-                                                    a.icon(href="http://localhost:3002/users/account/" title='User Profile')
+                                                    a.icon(href="http://localhost:3002/users/account/"+a._id title='User Profile')
                                                         i(class="icon-photo fa fa-user")
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell(onclick="showProfile(\""+a._id+"\",\""+ a.level +"\",\""+a.registrationDate+"\",\""+a.lastAccessDate+"\",\""+a.role+"\",\""+a.course+"\",\""+a.department+"\");")=a.name
                                     td.u-border-1.u-border-grey-40.u-border-no-left.u-border-no-right.u-table-cell 
@@ -73,7 +73,7 @@ block content
                                         if (a.estrelas.numero < 2.0 && a.estrelas.numero > 0)
                                             b(style="color: red")= a.estrelas.numero
                                         if (a.estrelas.numero == 0)
-                                            b No classification
+                                            b --
                                     - var found = 0
                                     - var match = idUser + "[?][;][0-9]"
                                     - var temp = ""

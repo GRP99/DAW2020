@@ -304,7 +304,7 @@ router.post('/login', function (req, res) {
 
 router.get('/logout', function (req, res) {
     axios.post(autenticaURL + '/logout/' + req.user._id + '?token=' + token).then(() => {
-        res.clearCookie('token')
+        res.clearCookie('token');
         res.redirect('/users/login');
     }).catch(e => {
         res.render('errorAll', {

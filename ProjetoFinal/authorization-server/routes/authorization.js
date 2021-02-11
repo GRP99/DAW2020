@@ -40,9 +40,10 @@ router.post("/login", function (req, res) {
             if (req.body.password == user.password) {
                 jwt.sign({
                     _id: user._id,
-                    level: user.level}, "PRI2020",{
-                        expiresIn: "1d"
-                    }, function (err, token) {
+                    level: user.level
+                }, "PRI2020", {
+                    expiresIn: "1d"
+                }, function (err, token) {
                     if (err) {
                         res.status(400).jsonp({error: "It wasn't possible to login!"});
                     } else {
