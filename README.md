@@ -1,12 +1,17 @@
-# Processamento e Representação de Informação 2020/2021
-## U.C. incluída no perfil de Processamento de Linguagens e Conhecimento
-### Mestrado Integrado em Eng. Informática na Universidade do Minho 
+# Processamento e Representação de Informação 20/21
+## Processamento de Linguagens e Conhecimento
+### MiEI - UM
+<br/>
 
-Esta Unidade Curricular enquadra-se no 1ºSemestre do 4ºAno de MiEI e é concretizada por diferentes instrumentos de avaliação:
-  * [Trabalhos práticos individuais realizados fora do período de funcionamento da respectiva UC];
-  * [Projeto Final] ;
-  * Teste Prático ;
-
-
-[Trabalhos práticos individuais realizados fora do período de funcionamento da respectiva UC]: https://github.com/GRP99/PRI2020/tree/main/TPCs
-[Projeto Final]: https://github.com/GRP99/PRI2020/tree/main/ProjetoFinal
+<b> Trabalhos Semanais </b>
+  * [TPC1](TPC1/) - Realização de uma página HTML;
+  * [TPC2](TPC2/) - Concretização de um ficheiro DTD e posterior geração de documentos em XML;
+  * [TPC3](TPC3/) - Execução de um ficheiro DTD como também a criação de um ficheiro XSLT de forma a gerar um Website;
+  * [TPC4](TPC4/) - Efetuação de um XSLT para gerar um website bem como um servidor em Node.js de modo a responder a pedidos devolvendo páginas HTML. TPC acompanhado do project record respectivo;
+  * [TPC5](TPC5/) - Criação de um servidor em Node.js de forma a responder a pedidos devolvendo páginas com auxílio JSON-Server para criar uma API REST.
+  * [TPC6](TPC6/) - Realização de um servidor em Node.js de forma a responder a pedidos devolvendo uma SPA com auxílio JSON-Server para criar uma API REST.
+  * [TPC7](TPC7/) - Concretização de um servidor em Node.js de forma a responder a pedidos devolvendo páginas HTML com dados na base de dados utilizada, MongoDB, com auxílio Express.js para criar uma aplicação WEB.
+  * [TPC8](TPC8/) - Execução de um servidor em Node.js de forma a efectuar o download e upload de ficheiros.
+- - - -
+<div dir="rtl"> 
+realizado por <i>Gonçalo Pinto - A83732</i>
